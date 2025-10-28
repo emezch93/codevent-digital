@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - CodeVent Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+
+        /* Community Header */
+        .community-header {
+            margin-top: 80px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .community-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .community-header h1 span {
+            color: var(--primary);
+        }
+
+        .community-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Community Container */
+        .community-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        /* Premium Section */
+        .premium-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .premium-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .premium-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .premium-text h2 span {
+            color: var(--primary);
+        }
+
+        .premium-text p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .premium-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .premium-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .premium-features li i {
+            color: var(--secondary);
+            background: rgba(16, 185, 129, 0.1);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .premium-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .premium-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .premium-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .premium-btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .premium-btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .premium-btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .premium-image {
+            text-align: center;
+        }
+
+        .premium-image img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Announcement Section */
+        .announcement-section {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-align: center;
+        }
+
+        .announcement-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .announcement-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            min-width: 80px;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Community Links Section */
+        .community-links-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .community-links-section h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .community-links-section h2 span {
+            color: var(--primary);
+        }
+
+        .community-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .community-link {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .community-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .community-link:hover::before {
+            opacity: 1;
+        }
+
+        .community-link i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .community-link h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .community-link p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .telegram { background: linear-gradient(135deg, #0088cc, #005a87); }
+        .discord { background: linear-gradient(135deg, #5865F2, #4752C4); }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: auto;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .premium-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .premium-image {
+                order: -1;
+            }
+            
+            .premium-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                gap: 2rem;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .community-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .community-header p {
+                font-size: 1.1rem;
+            }
+            
+            .premium-section,
+            .announcement-section,
+            .community-links-section {
+                padding: 2rem;
+            }
+            
+            .countdown {
+                gap: 1rem;
+            }
+            
+            .countdown-item {
+                padding: 1rem;
+                min-width: 60px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container {
+                padding: 1rem;
+            }
+            
+            .community-header {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .community-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .premium-section,
+            .announcement-section,
+            .community-links-section {
+                padding: 1.5rem;
+            }
+            
+            .premium-text h2 {
+                font-size: 1.8rem;
+            }
+            
+            .premium-buttons {
+                flex-direction: column;
+            }
+            
+            .premium-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                CodeVent Digital
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" target="_blank">Home</a></li>
+                <li><a href="service.html" target="_blank">Services</a></li>
+                <li><a href="product.html" target="_blank">Products</a></li>
+                <li><a href="community.html" target="_blank" class="active">Community</a></li>
+                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="Contact.html" target="_blank">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Community Header -->
+    <section class="community-header">
+        <h1>Join Our <span>Community</span></h1>
+        <p>Connect with like-minded developers, digital creators, and entrepreneurs in our exclusive community spaces.</p>
+    </section>
+
+    <!-- Community Container -->
+    <div class="community-container">
+        <!-- Premium Section -->
+        <section class="premium-section">
+            <div class="premium-content">
+                <div class="premium-text">
+                    <h2>Premium <span>Mentorship</span> & Content</h2>
+                    <p>Unlock exclusive access to personalized mentorship sessions, premium digital products, and advanced learning resources designed to accelerate your journey from beginner to professional.</p>
+                    <ul class="premium-features">
+                        <li><i class="fas fa-check"></i> 1-on-1 mentorship with industry experts</li>
+                        <li><i class="fas fa-check"></i> Access to all premium digital products</li>
+                        <li><i class="fas fa-check"></i> Exclusive community events and workshops</li>
+                        <li><i class="fas fa-check"></i> Priority support and feedback</li>
+                        <li><i class="fas fa-check"></i> Career guidance and portfolio reviews</li>
+                    </ul>
+                    <div class="premium-buttons">
+                        <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20premium content" target="_blank" rel="noopener" class ="premium-btn" >Get Started <i class="fas fa-arrow-right"></i>
+                        
+                        <a href="service.html" target="_blank" class="premium-btn premium-btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="premium-image">
+                    <img src="https://placehold.co/400x300/6366f1/ffffff?text=Premium+Mentorship" alt="Premium Mentorship">
+                </div>
+            </div>
+        </section>
+
+        <!-- Announcement Section -->
+        <section class="announcement-section">
+            <div class="announcement-content">
+                <h2>🚀 Premium Content Launch</h2>
+                <p>Get ready for our biggest release yet! New premium digital products dropping soon.</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                </div>
+                <p>Don't miss out on exclusive early-bird pricing and bonus content!</p>
+            </div>
+        </section>
+
+        <!-- Community Links Section -->
+        <section class="community-links-section">
+            <h2>Connect on <span>Community</span> Platforms</h2>
+            <div class="community-links">
+                <a href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz?mode=wwt" class="community-link whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>WhatsApp Group</h3>
+                    <p>Real-time discussions and quick help</p>
+                </a>
+                <a href="https://t.me/+2348185947780" class="community-link telegram" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    <h3>Telegram Channel</h3>
+                    <p>Announcements and resource sharing</p>
+                </a>
+                <!--a href="https://discord.gg/" class="community-link discord" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    <h3>Discord Server</h3>
+                    <p>24/7 community and voice chats</p>
+                </a-->
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeVent Digital</h3>
+                <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
+                <div class="social-links">
+                
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              
+                    <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent community%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" target="_blank">Home</a></li>
+                    <li><a href="service.html" target="_blank">Services</a></li>
+                    <li><a href="product.html" target="_blank">Products</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="learning.html" target="_blank">Web Development</a></li>
+                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
+                    
+                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            // Set the launch date (30 days from now)
+            const launchDate = new Date();
+            launchDate.setDate(launchDate.getDate() + 30);
+            
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<p>Launch Complete! 🎉</p>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
+        }
+        
+        // Update countdown every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

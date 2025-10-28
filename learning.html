@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master HTML5 with interactive lessons, live editor, and real-world projects. Join CodeVent Digital's developer community.">
+    <title>HTML5 | CSS3 | Javascript... Learning - CodeVent Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0077b6;
+            --primary-dark: #005f8d;
+            --secondary: #00b4d8;
+            --accent: #90e0ef;
+            --dark: #03045e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --light: #0a192f;
+            --dark: #e6f1ff;
+            --gray: #a0aec0;
+            --light-gray: #172a45;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.25rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,119,182,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.25rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2rem;
+            transition: transform 0.2s ease;
+        }
+
+        body.dark-mode .card {
+            background: var(--light-gray);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        h1, h2, h3 {
+            margin: 0 0 1rem;
+            color: var(--primary);
+        }
+
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+            color: var(--secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.6rem 1.25rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: 2px solid var(--secondary);
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,180,216,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .hide { display: none; }
+
+        pre {
+            background: var(--light-gray);
+            padding: 1.25rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+        }
+
+        body.dark-mode pre {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        code {
+            background: var(--light-gray);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        body.dark-mode code {
+            background: #334155;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        body.dark-mode .editor-label {
+            color: var(--secondary);
+        }
+
+        #editorArea, #output {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+
+        body.dark-mode #editorArea, body.dark-mode #output {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-color: #334155;
+        }
+
+        #output {
+            background: white;
+        }
+
+        body.dark-mode #output {
+            background: #0f172a;
+        }
+
+        .lesson-item {
+            background: rgba(0, 119, 182, 0.05);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        body.dark-mode .lesson-item {
+            background: rgba(0, 180, 216, 0.1);
+            border-left-color: var(--secondary);
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .lesson-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .lesson-status {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.75rem;
+            background: var(--light);
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        body.dark-mode .quiz-option {
+            background: var(--light-gray);
+            border-color: #334155;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary);
+        }
+
+        .quiz-option input {
+            margin-right: 0.75rem;
+        }
+
+        .forum-post {
+            background: var(--light);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .forum-post {
+            background: var(--light-gray);
+        }
+
+        .comet-banner {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .comet-banner p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .premium-cta {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0 1.5rem;
+            background: var(--light-gray);
+            color: var(--gray);
+            margin-top: 3rem;
+        }
+
+        body.dark-mode footer {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 1.25rem; }
+            h1 { font-size: 1.75rem; }
+            .nav-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CodeVent Digital</h1>
+        <nav class="navbar">
+            <button class="nav-btn active" data-tab="home">Home</button>
+            <button class="nav-btn" data-tab="lesson">Lessons</button>
+            <button class="nav-btn" data-tab="editor">Editor</button>
+            <button class="nav-btn" data-tab="quiz">Quiz</button>
+            <button class="nav-btn" data-tab="resources">Resources learning</button>
+            <!--button class="nav-btn" data-tab="forum">Forum</button-->
+            <!--button class="nav-btn" data-tab="certificate">Certificate</button-->
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home -->
+        <section id="home" class="card">
+            <h2>Welcome to CodeVent Digital!</h2>
+            <p>Master HTML5 with interactive lessons, real-world projects, and community support. Start your journey to becoming an industry-ready developer using our learning resource</p>
+            
+            <div class="comet-banner">
+                <h3>💡 Pro Tip: Use w3 school Browser</h3>
+                <p>Built for developer, multiple language learning resourse.</p>
+                <a href="https://www.w3schools.com/html/" class="btn btn-outline" target="_self" rel="noopener">Learn More</a>
+            </div>
+            
+            <a href="#" class="btn" onclick="showTab('lesson')">Start Learning HTML5</a>
+            
+            <div class="premium-cta">
+                <h3>🚀 Unlock Premium Content</h3>
+                <p>Access advanced projects, private mentorship, and source code for any working projects.</p>
+                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
+                    <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4?mode=ems_copy_t" class="btn btn-outline" target="_blank" rel="noopener">
+                        <i class="fab fa-whatsapp"></i> Join Community
+                    </a>
+                    <a href="contact.html" class="btn" style="background:white;color:var(--primary);">
+                        <i class="fas fa-user-headset"></i> Contact for Mentorship
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lessons -->
+        <section id="lesson" class="card hide">
+            <h2>HTML5 Lessons</h2>
+            <p>Complete each lesson and mark it as completed to track your progress.</p>
+            
+            <div class="lesson-item">
+                <div class="lesson-header">
+                    <div class="lesson-title">Lesson 1: HTML5 Basics</div>
+                    <div class="lesson-status" id="l1-status"></div>
+                </div>
+                <button onclick="toggleLesson('l1')" class="btn btn-outline">View Lesson</button>
+                <div id="l1" class="hide" style="margin-top:1rem;">
+                    <h3>What is HTML5?</h3>
+                    <p>HTML5 is the latest version of Hypertext Markup Language, the code that describes web pages.</p>
+                    <h4>Basic Structure:</h4>
+                    <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My First HTML5 Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;p&gt;This is my first HTML5 web page.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+                    <button onclick="markCompleted('l1')" class="btn">Mark as Completed</button>
+                </div>
+            </div>
+            
+            <div class="lesson-item">
+                <div class="lesson-header">
+                    <div class="lesson-title">Lesson 2: Common HTML5 Elements</div>
+                    <div class="lesson-status" id="l2-status"></div>
+                </div>
+                <button onclick="toggleLesson('l2')" class="btn btn-outline">View Lesson</button>
+                <div id="l2" class="hide" style="margin-top:1rem;">
+                    <h3>Essential Elements</h3>
+                    <ul>
+                        <li><code>&lt;header&gt;</code> - Defines the header section</li>
+                        <li><code>&lt;nav&gt;</code> - Navigation links</li>
+                        <li><code>&lt;main&gt;</code> - Main content area</li>
+                        <li><code>&lt;footer&gt;</code> - Footer section</li>
+                        <li><code>&lt;section&gt;</code> - Logical sections of the page</li>
+                    </ul>
+                    <button onclick="markCompleted('l2')" class="btn">Mark as Completed</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Editor -->
+        <section id="editor" class="card hide">
+            <h2>HTML5 Interactive Editor</h2>
+            <p>Edit the code below and click "Run" to see your changes in real-time.</p>
+            
+            <div class="editor-container">
+                <div class="editor-panel">
+                    <div class="editor-label">HTML Code</div>
+                    <textarea id="editorArea">&lt;h1&gt;Hello HTML5!&lt;/h1&gt;
+&lt;p&gt;Edit this code and click Run.&lt;/p&gt;</textarea>
+                </div>
+                <div class="editor-panel">
+                    <div class="editor-label">Live Preview</div>
+                    <div id="output"></div>
+                </div>
+            </div>
+            
+            <button onclick="runEditorCode()" class="btn" style="margin-top:1.5rem;">Run Code</button>
+            <button onclick="resetEditor()" class="btn btn-outline" style="margin-left:0.75rem;">Reset</button>
+        </section>
+
+        <!-- Quiz -->
+        <section id="quiz" class="card hide">
+            <h2>HTML5 Basics Quiz</h2>
+            <p>Test your knowledge with this quick quiz!</p>
+            
+            <form id="quizForm">
+                <p>1. What does HTML stand for?</p>
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="a"> HyperText Markup Language
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="b"> Home Tool Markup Language
+                </label>
+                <label class="quiz-option">
+                    <input type="radio" name="q1" value="c"> Hyperlinks and Text Markup Language
+                </label>
+                
+                <button type="button" onclick="checkQuiz()" class="btn" style="margin-top:1.5rem;">Submit Quiz</button>
+            </form>
+            <div id="quizResult" style="margin-top:1rem; font-weight:600;"></div>
+        </section>
+
+        <!-- Resources -->
+        <section id="resources" class="card hide">
+            <h2>Resource Library</h2>
+            <p>Expand your knowledge with these trusted resources:</p>
+            <ul style="padding-left:1.5rem; margin:1rem 0;">
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_self" rel="noopener">MDN HTML Guide</a></li>
+                <li><a href="https://www.w3schools.com/html/" target="_self" rel="noopener">W3Schools HTML Tutorial</a></li>
+                <li><a href="https://www.freecodecamp.org/news/tag/html/" target="_self" rel="noopener">FreeCodeCamp HTML Articles</a></li>
+            </ul>
+            
+            <div class="comet-banner" style="margin:1.5rem 0;">
+                <h3>Comet Browser for Developers</h3>
+                <p>Enhance your learning with AI-powered coding assistance and native debugging tools</p>
+                <a href="https://www.clcoding.com/2025/10/why-every-developer-should-start-using.html" class="btn btn-outline" target="_self" rel="noopener">Learn More</a>
+            </div>
+        </section>
+
+        <!-- Forum -->
+        <section id="forum" class="card hide">
+            <h2>Community Forum</h2>
+            <p>Connect with other learners and get help from our community.</p>
+            
+            <form id="forumForm" style="margin:1.5rem 0;">
+                <input type="text" id="username" placeholder="Your name" required style="width:100%;padding:0.75rem;margin-bottom:1rem;border:2px solid var(--light-gray);border-radius:6px;">
+                <textarea id="question" placeholder="Ask your question..." required style="width:100%;padding:0.75rem;margin-bottom:1rem;border:2px solid var(--light-gray);border-radius:6px;min-height:100px;"></textarea>
+                <button type="submit" class="btn">Post Question</button>
+            </form>
+            
+            <div id="forumPosts">
+                <div class="forum-post">
+                    <strong>CodeVent Team:</strong> Welcome to our HTML5 learning community! Ask questions and share your progress.
+                </div>
+            </div>
+        </section>
+
+        <!--Certificate -->
+        <!--section id="certificate" class="card hide">
+            <h2>Certificate of Completion</h2>
+            <p id="certMsg">Complete all lessons to unlock your certificate!</p>
+            
+            <div id="certContainer" style="text-align:center; margin-top:1.5rem;">
+                <img id="certImg" src="https://placehold.co/600x400/0077b6/ffffff?text=CodeVent+Digital+Certificate" style="max-width:100%;border-radius:8px;display:none;" alt="Certificate">
+            </div-->
+            
+            <!--button onclick="downloadCert()" class="btn" style="margin-top:1.5rem;">Download Certificate</button-->
+        <!--/section-->
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        <p>Empowering developers through learning and community mentorship.</p>
+    </footer>
+
+    <script>
+        // Theme toggle (optional - add if needed)
+        // Tab navigation
+        const tabs = ["home","lesson","editor","quiz","resources","forum","certificate"];
+        
+        function showTab(tab) {
+            tabs.forEach(t => {
+                document.getElementById(t).classList.toggle('hide', t !== tab);
+                const btn = document.querySelector(`.nav-btn[data-tab='${t}']`);
+                if (btn) btn.classList.toggle('active', t === tab);
+            });
+            
+            if (tab === "certificate") updateCertificateMsg();
+            if (tab === "lesson") updateLessonStatuses();
+            if (tab === "editor") runEditorCode();
+        }
+        
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => showTab(btn.dataset.tab));
+        });
+        
+        // Lesson functionality
+        function toggleLesson(lid) {
+            document.getElementById(lid).classList.toggle('hide');
+        }
+        
+        function markCompleted(lid) {
+            localStorage.setItem('lesson_' + lid, 'completed');
+            updateLessonStatuses();
+            alert('Lesson marked as completed! 🎉');
+        }
+        
+        function updateLessonStatuses() {
+            ['l1','l2'].forEach(lid => {
+                const status = localStorage.getItem('lesson_' + lid) === 'completed' ? "✅ Completed" : "";
+                document.getElementById(`${lid}-status`).textContent = status;
+            });
+        }
+        
+        // Editor functionality
+        function runEditorCode() {
+            const code = document.getElementById('editorArea').value;
+            document.getElementById('output').innerHTML = code;
+        }
+        
+        function resetEditor() {
+            document.getElementById('editorArea').value = '<h1>Hello HTML5!</h1>\n<p>Edit this code and click Run.</p>';
+            runEditorCode();
+        }
+        
+        // Quiz functionality
+        function checkQuiz() {
+            const answer = document.querySelector('input[name="q1"]:checked');
+            const result = document.getElementById('quizResult');
+            if (answer && answer.value === "a") {
+                result.textContent = "✅ Correct! Well done.";
+                result.style.color = "#00b4d8";
+            } else if (answer) {
+                result.textContent = "❌ Incorrect. The correct answer is: HyperText Markup Language";
+                result.style.color = "#e63946";
+            } else {
+                result.textContent = "Please select an answer!";
+                result.style.color = "#ff9e00";
+            }
+        }
+        
+        // Forum functionality
+        document.getElementById('forumForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('username').value.trim();
+            const question = document.getElementById('question').value.trim();
+            if (name && question) {
+                const post = document.createElement('div');
+                post.className = 'forum-post';
+                post.innerHTML = `<strong>${name}:</strong> ${question}`;
+                document.getElementById('forumPosts').appendChild(post);
+                document.getElementById('forumForm').reset();
+            }
+        });
+        
+        // Certificate functionality
+        function updateCertificateMsg() {
+            const allDone = ['l1','l2'].every(lid => localStorage.getItem('lesson_' + lid) === 'completed');
+            const msg = document.getElementById('certMsg');
+            if (allDone) {
+                msg.textContent = "🎉 Congratulations! You have completed all HTML5 lessons.";
+                msg.style.color = "#00b4d8";
+                document.getElementById('certImg').style.display = 'block';
+            } else {
+                msg.textContent = "Complete all lessons to unlock your certificate!";
+                msg.style.color = "#6c757d";
+                document.getElementById('certImg').style.display = 'none';
+            }
+        }
+        
+        function downloadCert() {
+            const allDone = ['l1','l2'].every(lid => localStorage.getItem('lesson_' + lid) === 'completed');
+            if (allDone) {
+                const img = document.getElementById('certImg');
+                const link = document.createElement('a');
+                link.href = img.src;
+                link.download = 'CodeVent_HTML5_Certificate.png';
+                link.click();
+            } else {
+                alert('Complete all lessons to unlock your certificate!');
+            }
+        }
+        
+        // Initialize
+        updateLessonStatuses();
+        runEditorCode();
+    </script>
+</body>
+</html>

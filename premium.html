@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Content - CodeVent Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+         
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+
+        /* Premium Header */
+        .premium-header {
+            margin-top: 80px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .premium-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .premium-header h1 span {
+            color: var(--primary);
+        }
+
+        .premium-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Lock Banner */
+        .lock-banner {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 800px;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lock-banner::before {
+            content: "🔒";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 6rem;
+            opacity: 0.1;
+        }
+
+        .lock-banner h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lock-banner p {
+            opacity: 0.95;
+        }
+
+        /* Premium Container */
+        .premium-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Premium Card */
+        .premium-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .premium-card:hover .lock-overlay {
+            opacity: 1;
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .lock-text {
+            color: var(--dark);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .premium-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .premium-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .premium-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .code-preview {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            opacity: 0.6;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .modal p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .modal-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .modal-btn-secondary {
+            background-color: transparent;
+            color: var(--gray);
+            border-color: var(--light-gray);
+        }
+
+        .modal-btn-secondary:hover {
+            background-color: var(--light-gray);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: auto;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                gap: 2rem;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .premium-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .premium-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container {
+                padding: 1rem;
+            }
+            
+            .premium-header {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .premium-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .premium-card {
+                padding: 2rem;
+                
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                CodeVent Digital
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" target="_blank">Home</a></li>
+                <li><a href="service.html" target="_blank">Services</a></li>
+                <li><a href="product.html" target="_blank">Products</a></li>
+                <li><a href="community.html" target="_blank">Community</a></li>
+                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="Contact.html" target="_blank">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Premium Header -->
+    <section class="premium-header">
+        <h1>Premium <span>Content</span></h1>
+        <p>Unlock exclusive source code, advanced lessons, and professional mini-projects</p>
+    </section>
+
+    <!-- Lock Banner -->
+    <div class="lock-banner">
+        <h2>🔒 Premium Content Locked</h2>
+        <p>This content is available only to mentorship members and premium subscribers.</p>
+    </div>
+
+    <!-- Premium Container -->
+    <div class="premium-container">
+        <div class="premium-grid">
+            <!-- Source Code -->
+            <div class="premium-card" data-content="source">
+                <div class="premium-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="premium-title">Advanced Source Code</h3>
+                <p class="premium-description">Production-ready React, Vue, and Node.js applications with clean architecture and best practices.</p>
+                <div class="code-preview">
+// Advanced React Hook with error boundaries
+const useAsync = (asyncFn, deps = []) => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    setLoading(true);
+    asyncFn()
+      .then(setData)
+      .catch(setError)
+      .finally(() => setLoading(false));
+  }, deps);
+  
+  return { data, error, loading };
+};
+                </div>
+                <div class="lock-overlay">
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lock-text">Click to unlock access</div>
+                </div>
+            </div>
+
+            <!-- Advanced Lessons -->
+            <div class="premium-card" data-content="lessons">
+                <div class="premium-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="premium-title">Advanced Lessons</h3>
+                <p class="premium-description">Deep dives into WebSockets, WebAssembly, performance optimization, and modern DevOps workflows.</p>
+                <div class="code-preview">
+// Real-time WebSocket implementation
+const createWebSocket = (url) => {
+  const ws = new WebSocket(url);
+  
+  ws.onopen = () => console.log('Connected');
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    // Handle real-time updates
+  };
+  ws.onerror = (error) => console.error('WS Error:', error);
+  
+  return ws;
+};
+                </div>
+                <div class="lock-overlay">
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lock-text">Click to unlock access</div>
+                </div>
+            </div>
+
+            <!-- Mini-Projects -->
+            <div class="premium-card" data-content="projects">
+                <div class="premium-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3 class="premium-title">Professional Mini-Projects</h3>
+                <p class="premium-description">Complete projects including AI-powered chatbots, e-commerce dashboards, and real-time collaboration tools.</p>
+                <div class="code-preview">
+// AI Chatbot Integration
+const AIChatbot = () => {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+  
+  const sendMessage = async () => {
+    const response = await fetch('/api/ai', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input })
+    });
+    const data = await response.json();
+    setMessages(prev => [...prev, { user: input }, { bot: data.reply }]);
+  };
+  
+  return (
+    <div className="chat-container">
+      {/* Chat UI */}
+    </div>
+  );
+};
+                </div>
+                <div class="lock-overlay">
+                    <div class="lock-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="lock-text">Click to unlock access</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <h3>Unlock Premium Content</h3>
+            <p>Join our mentorship program or contact us to gain access to exclusive source code, advanced lessons, and professional mini-projects.</p>
+            <div class="modal-buttons">
+                <a href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz?mode=wwt" target="_blank" class="modal-btn modal-btn-primary">Join Mentorship</a>
+                <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20source%20code,%20would%20love%20to%20know%20more" target="_blank" class="modal-btn modal-btn-secondary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeVent Digital</h3>
+                <p>Empowering developers with premium learning resources and mentorship.</p>
+                <div class="social-links">
+                  
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                  
+                    <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent premium content%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+            <ul class="footer-links">
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="learning.html" target="_blank" rel="noopener">Web Development</a></li>
+                    <li><a href="product.html" target="_blank" rel="noopener">Digital Product & Marketing</a></li>
+                    <li><a href="AI-Integration.html" target="_blank" rel="noopener">AI Integration</a></li>
+                </ul>
+                
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere Lagos</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Modal Functionality
+        const premiumCards = document.querySelectorAll('.premium-card');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModal = document.getElementById('closeModal');
+
+        premiumCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

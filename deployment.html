@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Guide - CodeVent Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+
+        /* Header */
+        .guide-header {
+            margin-top: 80px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .guide-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .guide-header h1 span {
+            color: var(--primary);
+        }
+
+        .guide-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Guide Container */
+        .guide-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+        }
+
+        .steps-container {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .step-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.5;
+        }
+
+        .note {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            color: var(--dark);
+        }
+
+        .note strong {
+            color: var(--secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                gap: 2rem;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .guide-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .guide-header p {
+                font-size: 1.1rem;
+            }
+            
+            .step {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .step-number {
+                margin-right: 0;
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container {
+                padding: 1rem;
+            }
+            
+            .guide-header {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .guide-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .steps-container {
+                padding: 1.5rem;
+            }
+            
+            .step-title {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                CodeVent Digital
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" target="_blank">Home</a></li>
+                <li><a href="service.html" target="_blank">Services</a></li>
+                <li><a href="product.html" target="_blank">Products</a></li>
+                <li><a href="community.html" target="_blank">Community</a></li>
+                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="deployment.html" target="_blank" class="active">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="guide-header">
+        <h1>GitHub Pages <span>Deployment Guide</span></h1>
+        <p>Step-by-step instructions to deploy your CodeVent Digital React website on GitHub Pages for free</p>
+    </section>
+
+    <!-- Guide Container -->
+    <div class="guide-container">
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3 class="step-title">Create a GitHub Repository</h3>
+                    <p class="step-description">First, create a new repository on GitHub to host your CodeVent Digital project.</p>
+                    <div class="code-block">
+# Go to https://github.com/new
+# Repository name: my-reponame
+# Make sure it's public (GitHub Pages only works with public repos for free accounts)
+# Click "Create repository"
+                    </div>
+                    <p class="step-description">After creating the repository, you'll see the repository URL: <code>https://github.com/your-username/codevent-digital.git</code></p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3 class="step-title">Push Your React Project</h3>
+                    <p class="step-description">Initialize your local React project as a Git repository and push it to GitHub.</p>
+                    <div class="code-block">
+# In your project root directory
+git init
+git add .
+git commit -m "Initial commit: my-mini-project"
+
+# Add remote repository (replace with your actual URL)
+git remote add origin https://github.com/your-username/my-mini-project
+
+# Push to GitHub
+git branch -M main
+git push -u origin main
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3 class="step-title">Install gh-pages and Configure package.json</h3>
+                    <p class="step-description">Install the <code>gh-pages</code> package and configure your <code>package.json</code> file to enable GitHub Pages deployment.</p>
+                    <div class="code-block">
+# Install gh-pages as a dev dependency
+npm install --save-dev gh-pages
+                    </div>
+                    <p class="step-description">Then, add these lines to your <code>package.json</code> file:</p>
+                    <div class="code-block">
+{
+  "name": "codevent-digital",
+  "version": "0.1.0",
+  "homepage": "https://your-username.github.io/my-mini-project",
+  "dependencies": {
+    // ... your existing dependencies
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    // ... your existing scripts
+  }
+}
+                    </div>
+                    <div class="note">
+                        <strong>Important:</strong> Replace <code>your-username</code> with your actual GitHub username in the <code>homepage</code> field.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3 class="step-title">Run the Deploy Script</h3>
+                    <p class="step-description">Execute the deploy script to build your React app and publish it to GitHub Pages.</p>
+                    <div class="code-block">
+# Run the deploy script
+npm run deploy
+                    </div>
+                    <p class="step-description">This command will:</p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem; color: var(--gray);">
+                        <li>Run <code>npm run build</code> to create an optimized production build</li>
+                        <li>Deploy the contents of the <code>build</code> folder to the <code>gh-pages</code> branch</li>
+                        <li>Push the changes to GitHub automatically</li>
+                    </ul>
+                    <p class="step-description">You should see output similar to this:</p>
+                    <div class="code-block">
+> my-mini-project@0.1.0 predeploy
+> npm run build
+
+> my-mini-project@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+> codevent-digital@0.1.0 deploy
+> gh-pages -d build
+
+Published
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3 class="step-title">Access Your Live Website</h3>
+                    <p class="step-description">Your website is now live! You can access it at the following URL:</p>
+                    <div class="code-block">
+https://your-username.github.io/codevent-digital
+                    </div>
+                    <p class="step-description">It may take a few minutes for GitHub Pages to process your deployment. If you see a 404 error initially, wait a few minutes and refresh.</p>
+                    <div class="note">
+                        <strong>Pro Tip:</strong> You can customize your GitHub Pages settings by going to your repository → Settings → Pages. Here you can set a custom domain, choose the source branch, and view deployment status.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeVent Digital</h3>
+                <p>Deploy your projects with confidence using our comprehensive guides and resources.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" target="_blank">Home</a></li>
+                    <li><a href="service.html" target="_blank">Services</a></li>
+                    <li><a href="product.html" target="_blank">Products</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="deployment.html" target="_blank">Deployment</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/emezch93">GitHub Pages Docs</a></li>
+                   
+                
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li>codeventdigitalinfo@gmail.com</li>
+                    <li>+2348185947780</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+    </script>
+</body>
+</html>

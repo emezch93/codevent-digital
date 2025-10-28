@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - CodeVent Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+           
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+
+        /* Contact Header */
+        .contact-header {
+            margin-top: 80px;
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .contact-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .contact-header h1 span {
+            color: var(--primary);
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Contact Container */
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        /* Premium Instructions Section */
+        .premium-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .premium-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .premium-section h2 span {
+            color: var(--primary);
+        }
+
+        .premium-section p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .premium-steps {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .premium-steps li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--dark);
+        }
+
+        .step-number {
+            background: var(--primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .premium-benefits {
+            background: rgba(99, 102, 241, 0.1);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .premium-benefits h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .premium-benefits ul {
+            list-style: none;
+        }
+
+        .premium-benefits li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-benefits li i {
+            color: var(--secondary);
+        }
+
+        /* Contact Form */
+        .contact-form-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .contact-form-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-control.error {
+            border-color: #ef4444;
+        }
+
+        .form-control.success {
+            border-color: var(--secondary);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: auto;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+                gap: 2rem;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .contact-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-header p {
+                font-size: 1.1rem;
+            }
+            
+            .premium-section,
+            .contact-form-section {
+                padding: 2rem;
+            }
+            
+            .contact-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container {
+                padding: 1rem;
+            }
+            
+            .contact-header {
+                padding: 3rem 1rem 2rem;
+            }
+            
+            .contact-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .premium-section,
+            .contact-form-section {
+                padding: 1.5rem;
+            }
+            
+            .premium-section h2,
+            .contact-form-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                CodeVent Digital
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" target="_blank">Home</a></li>
+                <li><a href="service.html" target="_blank">Services</a></li>
+                <li><a href="product.html" target="_blank">Products</a></li>
+                <li><a href="community.html" target="_blank">Community</a></li>
+                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="Contact.html" target="_blank" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contact Header -->
+    <section class="contact-header">
+        <h1>Get in <span>Touch</span></h1>
+        <p>Have questions about our services, products, or want to join our premium community? Reach out to us!</p>
+    </section>
+
+    <!-- Contact Container -->
+    <div class="contact-container">
+        <!-- Premium Instructions Section -->
+        <section class="premium-section">
+            <h2>Access <span>Premium Content</span></h2>
+            <p>To unlock our premium digital products and mentorship services, follow these simple steps:</p>
+            <!ol class="premium-steps">
+                <li>
+                    <div class="step-number">1</div>
+                    <div>Use our contact details below to reach out and get started</div>
+                </li>
+                <li>
+                    <div class="step-number">2</div>
+                    <div>Our team will review your request and send you personalized pricing and access options</div>
+                </li>
+                <li>
+                    <div class="step-number">3</div>
+                    <div>Complete the payment process and gain immediate access to exclusive resources</div>
+                </li>
+            </ol>
+            <div class="premium-benefits">
+                <h3>What You'll Get:</h3>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> All premium digital products (Notion templates, ebooks, mini-courses)</li>
+                    <li><i class="fas fa-check-circle"></i> Personalized 1-on-1 mentorship sessions</li>
+                    <li><i class="fas fa-check-circle"></i> Exclusive community access and events</li>
+                    <li><i class="fas fa-check-circle"></i> Priority support and career guidance</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact Form -->
+        <!--section class="contact-form-section">
+            <h2>Send us a Message</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                    <div class="error-message" id="nameError">Please enter your full name</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" class="form-control" required placeholder="Tell us about your project, questions, or interest in premium content..."></textarea>
+                    <div class="error-message" id="messageError">Please enter your message</div>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
+            </form>
+        </section-->
+   
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeVent Digital</h3>
+                <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
+                <div class="social-links">
+          
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            
+                    <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href=" https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" target="_blank">Home</a></li>
+                    <li><a href="service.html" target="_blank">Services</a></li>
+                    <li><a href="product.html" target="_blank">Products</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="learning.html" target="_blank">Web Development</a></li>
+                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
+               
+                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Form Validation
+        const contactForm = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function validateName() {
+            const name = nameInput.value.trim();
+            const nameError = document.getElementById('nameError');
+            
+            if (name === '') {
+                nameInput.classList.add('error');
+                nameInput.classList.remove('success');
+                nameError.classList.add('show');
+                return false;
+            } else {
+                nameInput.classList.remove('error');
+                nameInput.classList.add('success');
+                nameError.classList.remove('show');
+                return true;
+            }
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailError = document.getElementById('emailError');
+            
+            if (email === '') {
+                emailInput.classList.add('error');
+                emailInput.classList.remove('success');
+                emailError.classList.add('show');
+                return false;
+            } else if (!emailRegex.test(email)) {
+                emailInput.classList.add('error');
+                emailInput.classList.remove('success');
+                emailError.classList.add('show');
+                return false;
+            } else {
+                emailInput.classList.remove('error');
+                emailInput.classList.add('success');
+                emailError.classList.remove('show');
+                return true;
+            }
+        }
+
+        function validateMessage() {
+            const message = messageInput.value.trim();
+            const messageError = document.getElementById('messageError');
+            
+            if (message === '') {
+                messageInput.classList.add('error');
+                messageInput.classList.remove('success');
+                messageError.classList.add('show');
+                return false;
+            } else {
+                messageInput.classList.remove('error');
+                messageInput.classList.add('success');
+                messageError.classList.remove('show');
+                return true;
+            }
+        }
+
+        // Add event listeners for real-time validation
+        nameInput.addEventListener('blur', validateName);
+        emailInput.addEventListener('blur', validateEmail);
+        messageInput.addEventListener('blur', validateMessage);
+
+        // Form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isMessageValid = validateMessage();
+            
+            if (isNameValid && isEmailValid && isMessageValid) {
+                // Simulate form submission
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+                
+                // In a real application, you would send the form data to a server here
+                setTimeout(() => {
+                    alert('Thank you for your message! We will get back to you soon.');
+                    contactForm.reset();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                    
+                    // Reset validation states
+                    nameInput.classList.remove('success', 'error');
+                    emailInput.classList.remove('success', 'error');
+                    messageInput.classList.remove('success', 'error');
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>

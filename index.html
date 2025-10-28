@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeVent Digital - Empowering Developers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 220px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.75rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            z-index: 1001;
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding-right: 2rem;
+        }
+
+        .hero-tagline {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .hero-tagline span {
+            color: var(--primary);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            loading: lazy;
+        }
+
+        .hero-overview {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-overview h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero-overview p {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin:auto ;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: white;
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: var(--card-shadow);
+            transform: scale(0.95);
+            transition: transform 0.4s ease;
+        }
+
+        .modal.active .modal-card {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 5000;
+            transform: translateX(200%);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Chatbot */
+        .chat-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+            cursor: pointer;
+            z-index: 1500;
+            transition: all 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            background: var(--primary-dark);
+        }
+
+        .chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 2rem;
+            width: 380px;
+            height: 520px;
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1400;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            visibility: hidden;
+        }
+
+        .chat-container.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1.25rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .bot-message {
+            background: var(--light-gray);
+            color: var(--dark);
+            align-self: flex-start;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid var(--light-gray);
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 0.5rem;
+        }
+
+        .suggestion {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.375rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .typing {
+            align-self: flex-start;
+            background: var(--light-gray);
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            border-bottom-left-radius: 0.25rem;
+            display: none;
+        }
+
+        .typing span {
+            height: 8px;
+            width: 8px;
+            float: left;
+            margin: 0 2px;
+            background-color: #9E9EA1;
+            display: block;
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+
+        .typing span:nth-of-type(1) { animation: typing 1s infinite; }
+        .typing span:nth-of-type(2) { animation: typing 1s infinite 0.2s; }
+        .typing span:nth-of-type(3) { animation: typing 1s infinite 0.4s; }
+
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Comet Banner */
+        .comet-banner {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .comet-banner::before {
+            content: "🚀";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 5rem;
+            opacity: 0.1;
+        }
+
+        .comet-banner p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .comet-btn {
+            display: inline-block;
+            background: white;
+            color: #6366f1;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-tagline { font-size: 2.8rem; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+            .hero-content { padding-right: 0; }
+            .hero-buttons { justify-content: center; }
+            .stats { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2.5rem;
+                transition: left 0.3s ease;
+                gap: 2rem;
+                z-index: 999;
+            }
+            .nav-links.active { left: 0; }
+            .hero-tagline { font-size: 2.2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 200px; text-align: center; }
+
+            .chat-container {
+                width: calc(100% - 2rem);
+                height: 550px;
+                bottom: 80px;
+                right: 1rem;
+            }
+            .toast {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-container { padding: 1rem; }
+            .hero { padding: 3rem 1rem; margin-top: 70px; }
+            .btn { width: 180px; padding: 0.8rem 1.5rem; font-size: 1rem; }
+            .modal-card, .popup-content { padding: 1.75rem; }
+            .chat-toggle { bottom: 1.5rem; right: 1.5rem; }
+            .chat-container { bottom: 70px; right: 1rem; }
+        }
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+        }
+        .popup-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 0.625rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .popup-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Welcome back, <span id="toastUser"></span>!</div>
+
+    <!-- Loading Overlay -->
+    <div class="modal" id="loadingOverlay">
+        <div class="modal-card" style="text-align:center;">
+            <div class="spinner" style="width:50px;height:50px;border:4px solid rgba(99,102,241,0.2);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.5rem;"></div>
+            <div class="loading-text">Authenticating your session...</div>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        </div>
+    </div>
+
+    <!-- Welcome Popup -->
+    <div class="modal" id="welcomePopup">
+        <div class="modal-card" style="text-align:center;">
+            <div style="font-size:3.5rem;margin-bottom:1.25rem;color:var(--primary);">🚀</div>
+            <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1rem;">Welcome to CodeVent Digital!</h2>
+            <p style="color:var(--gray);font-size:1.1rem;line-height:1.6;margin-bottom:1.5rem;">Where your skillset is maximized, creativity is unleashed, and your developer journey transforms into mastery. 💻✨</p>
+            <button class="login-btn" id="closeWelcome">Get Started</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-card">
+            <button class="close-modal" id="closeLogin"><i class="fas fa-times"></i></button>
+            <div style="text-align:center;margin-bottom:2rem;">
+                <h2>Sign In</h2>
+                <p>Access premium content and community features</p>
+            </div>
+            <form id="loginForm">
+                <div style="margin-bottom:1.25rem;">
+                    <label for="loginEmail" style="display:block;margin-bottom:0.5rem;font-weight:600;">Email Address</label>
+                    <input type="email" id="loginEmail" style="width:100%;padding:0.875rem;border:2px solid var(--light-gray);border-radius:0.5rem;font-size:1rem;" required placeholder="you@example.com">
+                </div>
+                <div style="margin-bottom:1.25rem;">
+                    <label for="loginPassword" style="display:block;margin-bottom:0.5rem;font-weight:600;">Password</label>
+                    <input type="password" id="loginPassword" style="width:100%;padding:0.875rem;border:2px solid var(--light-gray);border-radius:0.5rem;font-size:1rem;" required minlength="6" placeholder="••••••">
+                </div>
+                <button type="submit" class="login-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-code"></i>
+                CodeVent Digital
+            </a>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
+                <li><a href="service.html" target="_blank" rel="noopener">Services</a></li>
+                <li><a href="product.html" target="_blank" rel="noopener">Products</a></li>
+                <li><a href="community.html" target="_blank" rel="noopener">Community</a></li>
+                <li><a href="learning.html" target="_blank" rel="noopener">Learning</a></li>
+                <li><a href="Contact.html" target="_blank" rel="noopener">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-tagline">Empowering Developers, <span>Building Digital Creators</span></h1>
+                <div class="hero-buttons">
+                    <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4?mode=ems_copy_t" target="_blank" rel="noopener" class="btn btn-primary">Join Community</a>
+                    <a href="learning.html" class="btn btn-secondary" target="_blank" rel="noopener">Explore Courses</a>
+                </div>
+                
+                <!-- Comet Browser Banner -->
+                <div class="comet-banner">
+                    <p>💡 <strong>Pro Tip:</strong> Use <strong>Comet Browser</strong> for the best dev experience</p>
+                    <p>Built for developers with AI assistance, native debugging & privacy-first design</p>
+                    <a href="https://www.clcoding.com/2025/10/why-every-developer-should-start-using.html" target="_self" rel="noopener" class="comet-btn">Learn More</a>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="devCount">0</div>
+                        <div class="stat-label">Developers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="courseCount">0</div>
+                        <div class="stat-label">Courses</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="projectCount">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                </div>
+
+                <div class="hero-overview">
+                    <h3>Our Mission</h3>
+                    <p>CodeVent Digital is dedicated to bridging the gap between aspiring developers and industry-ready professionals. We provide cutting-edge learning resources, collaborative community spaces, and innovative tools that transform passionate learners into confident digital creators who shape the future of technology.</p>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/500x400/6366f1/ffffff?text=CodeVent+Digital" alt="CodeVent Digital Team" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CodeVent Digital</h3>
+                <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
+                <div class="social-links">
+                   
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+               
+                    <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                   <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20CodeVent%20and%20would%20love%20to%20know%20more"target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
+                    <li><a href="service.html" target="_blank" rel="noopener">Services</a></li>
+                    <li><a href="product.html" target="_blank" rel="noopener">Products</a></li>
+                    <li><a href="community.html" target="_blank" rel="noopener">Community</a></li>
+                    <li><a href="learning.html" target="_blank" rel="noopener">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank" rel="noopener">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="learning.html" target="_blank" rel="noopener">Web Development</a></li>
+                    <li><a href="product.html" target="_blank" rel="noopener">Digital Product & Marketing</a></li>
+                    <li><a href="AI-Integration.html" target="_blank" rel="noopener">AI Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chat-toggle" id="chatToggle">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>CodeVent Assistant</h3>
+            <button class="close-chat" id="closeChat"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hi! I'm your CodeVent Digital assistant. Ask me about our services, Comet Browser, or how to get started! 💬
+            </div>
+        </div>
+        <div class="typing" id="typingIndicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="chat-input">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="userInput" placeholder="Ask our bot... (e.g., Where is CodeVent located?)">
+            </div>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('codevent_logged_in');
+            const savedEmail = localStorage.getItem('codevent_user');
+            
+            if (isLoggedIn && savedEmail) {
+                showWelcomeToast(savedEmail.split('@')[0]);
+                animateStats();
+            } else {
+                document.getElementById('loginModal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            // ✅ FIXED: Chatbot close button
+            document.getElementById('closeChat').addEventListener('click', () => {
+                document.getElementById('chatContainer').classList.remove('active');
+            });
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = document.getElementById('loginPassword').value;
+
+                if (email && password.length >= 6) {
+                    document.getElementById('loginModal').classList.remove('active');
+                    document.getElementById('loadingOverlay').classList.add('active');
+                    
+                    setTimeout(() => {
+                        localStorage.setItem('codevent_logged_in', 'true');
+                        localStorage.setItem('codevent_user', email);
+                        
+                        document.getElementById('loadingOverlay').classList.remove('active');
+                        document.getElementById('welcomePopup').classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }, 1500);
+                }
+            });
+
+            // Close modals
+            document.getElementById('closeLogin').addEventListener('click', () => {
+                document.getElementById('loginModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            document.getElementById('closeWelcome').addEventListener('click', () => {
+                document.getElementById('welcomePopup').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                const savedEmail = localStorage.getItem('codevent_user');
+                if (savedEmail) {
+                    showWelcomeToast(savedEmail.split('@')[0]);
+                    animateStats();
+                }
+            });
+
+            // Mobile menu
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+
+            hamburger.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                const icon = hamburger.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    const icon = hamburger.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                });
+            });
+
+            // Stats & Chatbot logic
+            initChatbot();
+        });
+
+        // Toast
+        function showWelcomeToast(name) {
+            document.getElementById('toastUser').textContent = name;
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Stats Animation
+        function animateStats() {
+            animateCounter('devCount', 10000, 2000);
+            animateCounter('courseCount', 500, 1500);
+            animateCounter('projectCount', 2500, 1800);
+        }
+
+        function animateCounter(id, target, duration) {
+            const element = document.getElementById(id);
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target.toLocaleString();
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.ceil(current).toLocaleString();
+                }
+            }, 16);
+        }
+
+        // Chatbot
+        function initChatbot() {
+            const allQuestions = [
+                "Where is CodeVent Digital located?",
+                "What services do you offer?",
+                "What is Comet Browser?",
+                "How do I join the community?",
+                "Do you have courses for beginners?",
+                "What digital products do you sell?",
+                "How does Comet Browser help developers?",
+                "What is your mission?",
+                "How can I contact you?",
+                "Why should I use Comet Browser?"
+            ];
+
+            const chatToggle = document.getElementById('chatToggle');
+            const chatContainer = document.getElementById('chatContainer');
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const suggestionsContainer = document.getElementById('suggestions');
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            function renderSuggestions(list) {
+                suggestionsContainer.innerHTML = '';
+                list.slice(0, 4).forEach(q => {
+                    const span = document.createElement('span');
+                    span.className = 'suggestion';
+                    span.textContent = q;
+                    suggestionsContainer.appendChild(span);
+                });
+            }
+
+            function addMessage(text, sender) {
+                const div = document.createElement('div');
+                div.className = `message ${sender}-message`;
+                div.textContent = text;
+                chatMessages.appendChild(div);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function getBotResponse(input) {
+                const lower = input.toLowerCase();
+
+                if (lower.includes('where') && (lower.includes('located') || lower.includes('office') || lower.includes('address'))) {
+                    return "We're located in Surulere, Lagos, Nigeria. 📍";
+                }
+                if (lower.includes('contact') || lower.includes('email') || lower.includes('phone')) {
+                    return "You can reach us at codeventdigitalinfo@gmail.com or call +2348185947780. We're also on WhatsApp!";
+                }
+                if (lower.includes('mission') || lower.includes('what do you do')) {
+                    return "We bridge the gap between aspiring developers and industry-ready professionals through learning resources, community, and innovative tools.";
+                }
+                if (lower.includes('service') || lower.includes('offer')) {
+                    return "We offer: 1) Web Development Mentorship, 2) Digital Product Creation (Notion templates, ebooks, courses), and 3) Freelance Skill Training.";
+                }
+                if (lower.includes('comet') || lower.includes('browser') || lower.includes('ai') || lower.includes('artificial intelligence')) {
+                    return "Comet Browser features AI-powered coding assistance — get real-time syntax help, documentation lookup, and code suggestions right in your browser console! It's built for developers with native debugging, privacy protection, and seamless tool integration.";
+                }
+                if (lower.includes('community') || lower.includes('whatsapp') || lower.includes('join')) {
+                    return "Join our WhatsApp community via the 'Join Community' button! Connect with developers, get support, and share knowledge.";
+                }
+                if (lower.includes('course') || lower.includes('learn') || lower.includes('beginner')) {
+                    return "Yes! We offer structured courses from beginner to pro in HTML, CSS, and JavaScript — with interactive editors and real-world projects.";
+                }
+                if (lower.includes('product') || lower.includes('notion') || lower.includes('ebook')) {
+                    return "We sell premium digital products: Notion templates, mini-courses, and ebooks to accelerate your learning and productivity.";
+                }
+                if (lower.includes('how') && lower.includes('start')) {
+                    return "Start by exploring our Learning Resources, joining the community, or enrolling in a course. Everything you need is on this site!";
+                }
+                return "I specialize in CodeVent Digital and Comet Browser! Try asking: 'Where are you located?' or 'What is Comet Browser?'";
+            }
+
+            renderSuggestions(allQuestions);
+
+            chatToggle.addEventListener('click', () => {
+                chatContainer.classList.toggle('active');
+                if (chatContainer.classList.contains('active')) userInput.focus();
+            });
+
+            userInput.addEventListener('input', () => {
+                const q = userInput.value.toLowerCase();
+                renderSuggestions(q ? allQuestions.filter(x => x.toLowerCase().includes(q)) : allQuestions);
+            });
+
+            suggestionsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('suggestion')) {
+                    userInput.value = e.target.textContent;
+                    sendMessage();
+                }
+            });
+
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            function sendMessage() {
+                const msg = userInput.value.trim();
+                if (!msg) return;
+                addMessage(msg, 'user');
+                userInput.value = '';
+                renderSuggestions(allQuestions);
+                typingIndicator.style.display = 'block';
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    addMessage(getBotResponse(msg), 'bot');
+                }, 1000);
+            }
+        }
+    
+    </script>
+</body>
+</html>

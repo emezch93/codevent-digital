@@ -61,6 +61,10 @@
             min-width: 220px;
         }
 
+        .logo i {
+            color: var(--secondary);
+        }
+
         .nav-links {
             display: flex;
             list-style: none;
@@ -81,10 +85,26 @@
             color: var(--primary);
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         .hamburger {
             display: none;
             cursor: pointer;
             font-size: 1.5rem;
+            z-index: 1001;
         }
 
         /* Header */
@@ -275,6 +295,30 @@
             color: var(--primary);
         }
 
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
         .copyright {
             text-align: center;
             padding-top: 3rem;
@@ -347,6 +391,9 @@
             text-decoration: none;
             transition: all 0.3s ease;
             border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .modal-btn-primary {
@@ -377,6 +424,11 @@
             font-size: 1.5rem;
             color: var(--gray);
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--dark);
         }
 
         /* Responsive */
@@ -421,6 +473,13 @@
             .ai-card {
                 padding: 1.5rem;
             }
+            .modal-buttons {
+                flex-direction: column;
+            }
+            .modal-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -440,7 +499,7 @@
                 <li><a href="service.html" target="_blank">Services</a></li>
                 <li><a href="product.html" target="_blank">Products</a></li>
                 <li><a href="community.html" target="_blank">Community</a></li>
-                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="learning.html"target="_blank">Learning</a></li>
                 <li><a href="Contact.html" target="_blank">Contact</a></li>
             </ul>
         </div>
@@ -468,7 +527,7 @@
                 </div>
                 <h3 class="ai-title">AI-Powered Freelancing</h3>
                 <p class="ai-description">Leverage AI tools to deliver projects 3x faster, charge premium rates, and dominate platforms like Upwork and Fiverr with automated workflows.</p>
-                <a href="#" class="learn-more-btn" onclick="openPremiumModal()">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="learn-more-btn" onclick="openPremiumModal()" target="_blank">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <!-- Opportunity 2 -->
@@ -478,7 +537,7 @@
                 </div>
                 <h3 class="ai-title">Digital Product Creation</h3>
                 <p class="ai-description">Use AI to generate Notion templates, eBooks, and mini-courses in minutes — then sell them repeatedly for passive income.</p>
-                <a href="#" class="learn-more-btn" onclick="openPremiumModal()">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="learn-more-btn" onclick="openPremiumModal()" target="_blank">Learn More <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <!-- Opportunity 3 -->
@@ -488,7 +547,7 @@
                 </div>
                 <h3 class="ai-title">Automated Web Development</h3>
                 <p class="ai-description">Build full-stack apps with AI-assisted coding, auto-deployment, and intelligent debugging — cutting development time by 70%.</p>
-                <a href="#" class="learn-more-btn" onclick="openPremiumModal()">Learn More <i class="fas fa-arrow-right"></i></a>
+                <a href="#" class="learn-more-btn" onclick="openPremiumModal()" target="_blank">Learn More <i class="fas fa-arrow-right" ></i></a>
             </div>
         </div>
     </div>
@@ -499,6 +558,12 @@
             <div class="footer-section">
                 <h3>CodeVent Digital</h3>
                 <p>Empowering developers with AI-driven learning and mentorship.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20AI%20Integration%20services" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -507,14 +572,24 @@
                     <li><a href="service.html" target="_blank">Services</a></li>
                     <li><a href="product.html" target="_blank">Products</a></li>
                     <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>Contact</h3>
+                <h3>Services</h3>
                 <ul class="footer-links">
-                    <li>codeventdigitalinfo@gmail.com</li>
-                    <li>+2348185947780</li>
-                    <li>Surulere, Lagos</li>
+                    <li><a href="learning.html" target="_blank">Web Development</a></li>
+                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
+                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
                 </ul>
             </div>
         </div>
@@ -535,8 +610,12 @@
             <h3 class="modal-title">Unlock AI Premium Content</h3>
             <p class="modal-message">Join our mentorship program to access exclusive AI strategies, source code, and 1-on-1 guidance to monetize AI in your developer journey.</p>
             <div class="modal-buttons">
-                <a href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz?mode=wwt" class="modal-btn modal-btn-primary" target="_blank" rel="noopener">Join Community</a>
-                <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20AI Integration%20would%20love%20to%20know%20more" target="_blank" class="modal-btn modal-btn-secondary">Contact Us</a>
+                <a href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz" class="modal-btn modal-btn-primary" target="_blank" rel="noopener">
+                    <i class="fab fa-whatsapp"></i> Join Community
+                </a>
+                <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20AI%20Integration%20would%20love%20to%20know%20more" target="_blank" class="modal-btn modal-btn-secondary">
+                    <i class="fas fa-user-headset"></i> Contact Us
+                </a>
             </div>
         </div>
     </div>
@@ -581,6 +660,14 @@
         // Close modal on outside click
         document.getElementById('premiumModal').addEventListener('click', (e) => {
             if (e.target === document.getElementById('premiumModal')) {
+                document.getElementById('premiumModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('premiumModal').classList.contains('active')) {
                 document.getElementById('premiumModal').classList.remove('active');
                 document.body.style.overflow = 'auto';
             }

@@ -190,7 +190,6 @@
             border-radius: 1rem;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
             max-width: 500px;
-            loading: lazy;
         }
 
         .hero-overview {
@@ -302,7 +301,6 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
-            margin:auto ;
         }
 
         .social-links a:hover {
@@ -658,7 +656,7 @@
             .navbar-container { padding: 1rem; }
             .hero { padding: 3rem 1rem; margin-top: 70px; }
             .btn { width: 180px; padding: 0.8rem 1.5rem; font-size: 1rem; }
-            .modal-card, .popup-content { padding: 1.75rem; }
+            .modal-card { padding: 1.75rem; }
             .chat-toggle { bottom: 1.5rem; right: 1.5rem; }
             .chat-container { bottom: 70px; right: 1rem; }
         }
@@ -696,21 +694,7 @@
 </head>
 <body>
     <!-- Toast Notification -->
-    <div class="toast" id="toast">Welcome back, <span id="toastUser"></span>!</div>
-
-    <!-- Loading Overlay -->
-    <div class="modal" id="loadingOverlay">
-        <div class="modal-card" style="text-align:center;">
-            <div class="spinner" style="width:50px;height:50px;border:4px solid rgba(99,102,241,0.2);border-top:4px solid var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1.5rem;"></div>
-            <div class="loading-text">Authenticating your session...</div>
-            <style>
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            </style>
-        </div>
-    </div>
+    <div class="toast" id="toast">Welcome to CodeVent Digital!</div>
 
     <!-- Welcome Popup -->
     <div class="modal" id="welcomePopup">
@@ -719,28 +703,6 @@
             <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:1rem;">Welcome to CodeVent Digital!</h2>
             <p style="color:var(--gray);font-size:1.1rem;line-height:1.6;margin-bottom:1.5rem;">Where your skillset is maximized, creativity is unleashed, and your developer journey transforms into mastery. 💻✨</p>
             <button class="login-btn" id="closeWelcome">Get Started</button>
-        </div>
-    </div>
-
-    <!-- Login Modal -->
-    <div class="modal" id="loginModal">
-        <div class="modal-card">
-            <button class="close-modal" id="closeLogin"><i class="fas fa-times"></i></button>
-            <div style="text-align:center;margin-bottom:2rem;">
-                <h2>Sign In</h2>
-                <p>Access premium content and community features</p>
-            </div>
-            <form id="loginForm">
-                <div style="margin-bottom:1.25rem;">
-                    <label for="loginEmail" style="display:block;margin-bottom:0.5rem;font-weight:600;">Email Address</label>
-                    <input type="email" id="loginEmail" style="width:100%;padding:0.875rem;border:2px solid var(--light-gray);border-radius:0.5rem;font-size:1rem;" required placeholder="you@example.com">
-                </div>
-                <div style="margin-bottom:1.25rem;">
-                    <label for="loginPassword" style="display:block;margin-bottom:0.5rem;font-weight:600;">Password</label>
-                    <input type="password" id="loginPassword" style="width:100%;padding:0.875rem;border:2px solid var(--light-gray);border-radius:0.5rem;font-size:1rem;" required minlength="6" placeholder="••••••">
-                </div>
-                <button type="submit" class="login-btn">Continue</button>
-            </form>
         </div>
     </div>
 
@@ -755,12 +717,12 @@
                 <i class="fas fa-bars"></i>
             </div>
             <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
-                <li><a href="service.html" target="_blank" rel="noopener">Services</a></li>
-                <li><a href="product.html" target="_blank" rel="noopener">Products</a></li>
-                <li><a href="community.html" target="_blank" rel="noopener">Community</a></li>
-                <li><a href="learning.html" target="_blank" rel="noopener">Learning</a></li>
-                <li><a href="Contact.html" target="_blank" rel="noopener">Contact</a></li>
+                <li><a href="index.html" target="_blank">Home</a></li>
+                <li><a href="service.html" target="_blank">Services</a></li>
+                <li><a href="product.html" target="_blank">Products</a></li>
+                <li><a href="community.html" target="_blank">Community</a></li>
+                <li><a href="learning.html" target="_blank">Learning</a></li>
+                <li><a href="Contact.html" target="_blank">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -772,14 +734,14 @@
                 <h1 class="hero-tagline">Empowering Developers, <span>Building Digital Creators</span></h1>
                 <div class="hero-buttons">
                     <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4?mode=ems_copy_t" target="_blank" rel="noopener" class="btn btn-primary">Join Community</a>
-                    <a href="learning.html" class="btn btn-secondary" target="_blank" rel="noopener">Explore Courses</a>
+                    <a href="learning.html" target="_blank" class="btn btn-secondary">Explore Courses</a>
                 </div>
                 
                 <!-- Comet Browser Banner -->
                 <div class="comet-banner">
                     <p>💡 <strong>Pro Tip:</strong> Use <strong>Comet Browser</strong> for the best dev experience</p>
                     <p>Built for developers with AI assistance, native debugging & privacy-first design</p>
-                    <a href="https://www.clcoding.com/2025/10/why-every-developer-should-start-using.html" target="_self" rel="noopener" class="comet-btn">Learn More</a>
+                    <a href="https://www.clcoding.com/2025/10/why-every-developer-should-start-using.html" target="_blank" rel="noopener" class="comet-btn">Learn More</a>
                 </div>
 
                 <!-- Stats -->
@@ -804,7 +766,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://placehold.co/500x400/6366f1/ffffff?text=CodeVent+Digital" alt="CodeVent Digital Team" loading="lazy">
+                <img src="https://placehold.co/500x400/6366f1/ffffff?text=CodeVent+Digital" alt="CodeVent Digital Team">
             </div>
         </div>
     </section>
@@ -816,31 +778,29 @@
                 <h3>CodeVent Digital</h3>
                 <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
                 <div class="social-links">
-                   
                     <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-               
                     <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
                     <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                   <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20CodeVent%20and%20would%20love%20to%20know%20more"target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20CodeVent%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
-                    <li><a href="service.html" target="_blank" rel="noopener">Services</a></li>
-                    <li><a href="product.html" target="_blank" rel="noopener">Products</a></li>
-                    <li><a href="community.html" target="_blank" rel="noopener">Community</a></li>
-                    <li><a href="learning.html" target="_blank" rel="noopener">Learning</a></li>
-                    <li><a href="Contact.html" target="_blank" rel="noopener">Contact</a></li>
+                    <li><a href="index.html" target="_blank">Home</a></li>
+                    <li><a href="service.html" target="_blank">Services</a></li>
+                    <li><a href="product.html" target="_blank">Products</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Services</h3>
                 <ul class="footer-links">
-                    <li><a href="learning.html" target="_blank" rel="noopener">Web Development</a></li>
-                    <li><a href="product.html" target="_blank" rel="noopener">Digital Product & Marketing</a></li>
-                    <li><a href="AI-Integration.html" target="_blank" rel="noopener">AI Integration</a></li>
+                    <li><a href="learning.html" target="_blank">Web Development</a></li>
+                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
+                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -889,57 +849,23 @@
     <script>
         // DOM Ready
         document.addEventListener('DOMContentLoaded', () => {
-            const isLoggedIn = localStorage.getItem('codevent_logged_in');
-            const savedEmail = localStorage.getItem('codevent_user');
-            
-            if (isLoggedIn && savedEmail) {
-                showWelcomeToast(savedEmail.split('@')[0]);
-                animateStats();
-            } else {
-                document.getElementById('loginModal').classList.add('active');
+            // Show welcome popup on load
+            setTimeout(() => {
+                document.getElementById('welcomePopup').classList.add('active');
                 document.body.style.overflow = 'hidden';
-            }
+            }, 500);
+
+            // Close modals
+            document.getElementById('closeWelcome').addEventListener('click', () => {
+                document.getElementById('welcomePopup').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                showWelcomeToast();
+                animateStats();
+            });
 
             // ✅ FIXED: Chatbot close button
             document.getElementById('closeChat').addEventListener('click', () => {
                 document.getElementById('chatContainer').classList.remove('active');
-            });
-
-            // Login form
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value.trim();
-                const password = document.getElementById('loginPassword').value;
-
-                if (email && password.length >= 6) {
-                    document.getElementById('loginModal').classList.remove('active');
-                    document.getElementById('loadingOverlay').classList.add('active');
-                    
-                    setTimeout(() => {
-                        localStorage.setItem('codevent_logged_in', 'true');
-                        localStorage.setItem('codevent_user', email);
-                        
-                        document.getElementById('loadingOverlay').classList.remove('active');
-                        document.getElementById('welcomePopup').classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }, 1500);
-                }
-            });
-
-            // Close modals
-            document.getElementById('closeLogin').addEventListener('click', () => {
-                document.getElementById('loginModal').classList.remove('active');
-                document.body.style.overflow = 'auto';
-            });
-
-            document.getElementById('closeWelcome').addEventListener('click', () => {
-                document.getElementById('welcomePopup').classList.remove('active');
-                document.body.style.overflow = 'auto';
-                const savedEmail = localStorage.getItem('codevent_user');
-                if (savedEmail) {
-                    showWelcomeToast(savedEmail.split('@')[0]);
-                    animateStats();
-                }
             });
 
             // Mobile menu
@@ -972,8 +898,7 @@
         });
 
         // Toast
-        function showWelcomeToast(name) {
-            document.getElementById('toastUser').textContent = name;
+        function showWelcomeToast() {
             const toast = document.getElementById('toast');
             toast.classList.add('show');
             setTimeout(() => {
@@ -1114,7 +1039,7 @@
                 }, 1000);
             }
         }
-    
+       
     </script>
 </body>
 </html>

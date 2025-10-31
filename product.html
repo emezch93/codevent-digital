@@ -47,7 +47,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
         }
 
         .logo {
@@ -154,7 +153,6 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
 
         .product-card:hover {
@@ -409,7 +407,6 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
-            margin: auto;
         }
 
         .social-links a:hover {
@@ -424,6 +421,14 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--light-gray);
             font-size: 0.9rem;
+        }
+
+        /* Get Started Button */
+        .get-started-btn {
+            text-align: center;
+            margin: 0 auto 4rem;
+            max-width: 1200px;
+            padding: 0 2rem;
         }
 
         /* Responsive Design */
@@ -470,6 +475,10 @@
             .modal-buttons {
                 flex-direction: column;
             }
+            
+            .get-started-btn {
+                margin-bottom: 3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -505,18 +514,13 @@
                 font-size: 0.8rem;
             }
         }
-        .get-started-btn{
-            text-align: center;
-            margin-bottom: 30px;
-            
-        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-code"></i>
                 CodeVent Digital
             </a>
@@ -526,7 +530,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html" target="_blank">Home</a></li>
                 <li><a href="service.html" target="_blank">Services</a></li>
-                <li><a href="product.html" target="_blank" class="active">Products</a></li>
+                <li><a href="product.html" class="active" target="_blank">Products</a></li>
                 <li><a href="community.html" target="_blank">Community</a></li>
                 <li><a href="learning.html" target="_blank">Learning</a></li>
                 <li><a href="Contact.html" target="_blank">Contact</a></li>
@@ -544,7 +548,7 @@
     <div class="products-container">
         <div class="products-grid">
             <!-- Product Card 1 - Notion Templates -->
-            <div class="product-card" data-product="notion">
+            <div class="product-card">
                 <div class="premium-badge">
                     <i class="fas fa-lock"></i>
                 </div>
@@ -553,11 +557,11 @@
                 </div>
                 <h3 class="product-title">Notion Templates</h3>
                 <p class="product-description">Professional Notion templates for developers, freelancers, and digital creators to organize workflows, track projects, and boost productivity.</p>
-                <a href="learn-more-view-details.html" target="_blank" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
+                <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20Notion%20Templates" target="_blank" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <!-- Product Card 2 - Ebooks -->
-            <div class="product-card" data-product="ebook">
+            <div class="product-card">
                 <div class="premium-badge">
                     <i class="fas fa-lock"></i>
                 </div>
@@ -566,12 +570,11 @@
                 </div>
                 <h3 class="product-title">Ebooks</h3>
                 <p class="product-description">Comprehensive ebooks covering web development, freelancing strategies, and digital product creation to accelerate your learning journey.</p>
-                <a href="learn-more-view-details.html" target="_blank" rel="noopener" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
-              
+                <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20Ebooks" target="_blank" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
 
             <!-- Product Card 3 - Mini-Courses -->
-            <div class="product-card" data-product="course">
+            <div class="product-card">
                 <div class="premium-badge">
                     <i class="fas fa-lock"></i>
                 </div>
@@ -580,13 +583,13 @@
                 </div>
                 <h3 class="product-title">Mini-Courses</h3>
                 <p class="product-description">Focused mini-courses on specific topics like Notion mastery, freelance proposal writing, and digital product marketing strategies.</p>
-                <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4?mode=wwt" target="_blank" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
+                <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" class="view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
+
     <div class="get-started-btn">
-        <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20Services" target="_blank" rel="noopener" class ="view-details-btn" >Get Started »»»
-        </a>
+        <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20Services" target="_blank" class="view-details-btn">Get Started »»»</a>
     </div>
 
     <!-- Modal -->
@@ -598,15 +601,11 @@
             <h3>Unlock Premium Content</h3>
             <p>Visit Contact / Mentorship / Payment to unlock this premium digital product and start your journey to becoming a successful digital creator.</p>
             <div class="modal-buttons">
-                <a href="#contact" class="modal-btn modal-btn-primary">Contact Us</a>
-                <a href="service.html" class="modal-btn modal-btn-secondary">Mentorship</a>
-                
+                <a href="Contact.html" class="modal-btn modal-btn-primary" target="_blank">Contact Us</a>
+                <a href="service.html" class="modal-btn modal-btn-secondary" target="_blank">Mentorship</a>
             </div>
-            
         </div>
-        
     </div>
-    
 
     <!-- Footer -->
     <footer class="footer">
@@ -615,31 +614,29 @@
                 <h3>CodeVent Digital</h3>
                 <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
                 <div class="social-links">
-                
                     <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                
                     <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
                     <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20Product" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20Product" target="_blank"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                    <li><a href="index.html" target="_blank" rel="noopener">Home</a></li>
-                    <li><a href="service.html" target="_blank" rel="noopener">Services</a></li>
-                    <li><a href="product.html" target="_blank" rel="noopener">Products</a></li>
-                    <li><a href="community.html" target="_blank" rel="noopener">Community</a></li>
-                    <li><a href="learning.html" target="_blank" rel="noopener">Learning</a></li>
-                    <li><a href="Contact.html" target="_blank" rel="noopener">Contact</a></li>
+                    <li><a href="index.html" target="_blank">Home</a></li>
+                    <li><a href="service.html" target="_blank">Services</a></li>
+                    <li><a href="product.html" target="_blank">Products</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="learning.html" target="_blank">Learning</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-     <h3>Services</h3>
+                <h3>Services</h3>
                 <ul class="footer-links">
-                    <li><a href="learning.html" target="_blank" rel="noopener">Web Development</a></li>
-                    <li><a href="product.html" target="_blank" rel="noopener">Digital Product & Marketing</a></li>
-                    <li><a href="AI-Integration.html" target="_blank" rel="noopener">AI Integration</a></li>
+                    <li><a href="learning.html" target="_blank">Web Development</a></li>
+                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
+                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -683,34 +680,13 @@
             });
         });
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
         // Modal functionality
         const productCards = document.querySelectorAll('.product-card');
         const modalOverlay = document.getElementById('modalOverlay');
         const closeModal = document.getElementById('closeModal');
 
-        productCards.forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (e.target.closest('.view-details-btn') || e.target.classList.contains('view-details-btn')) {
-                    return;
-                }
-                modalOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
+        // Remove modal click functionality since all products now have direct links
+        // Keep modal for potential future use or if needed for other purposes
 
         closeModal.addEventListener('click', () => {
             modalOverlay.classList.remove('active');
@@ -724,7 +700,6 @@
             }
         });
 
-        // Close modal with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
                 modalOverlay.classList.remove('active');

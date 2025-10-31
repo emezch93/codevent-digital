@@ -47,7 +47,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-           
         }
 
         .logo {
@@ -231,97 +230,84 @@
             color: var(--secondary);
         }
 
-        /* Contact Form */
-        .contact-form-section {
+        /* Contact Info Section */
+        .contact-info-section {
             background: white;
             border-radius: 1.5rem;
             padding: 3rem;
             box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
-        .contact-form-section h2 {
+        .contact-info-section h2 {
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: var(--dark);
             text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 1rem;
+            transition: transform 0.2s ease;
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
+        .contact-method:hover {
+            transform: translateY(-3px);
+            background: rgba(99, 102, 241, 0.05);
         }
 
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: white;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .form-control.error {
-            border-color: #ef4444;
-        }
-
-        .form-control.success {
-            border-color: var(--secondary);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem;
+        .contact-icon {
+            width: 50px;
+            height: 50px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            border: none;
-            border-radius: 0.75rem;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-details h3 {
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-details p, .contact-details a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
             font-weight: 600;
-            cursor: pointer;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin-top: 0.5rem;
+            width: fit-content;
         }
 
-        .submit-btn:hover {
+        .whatsapp-btn:hover {
+            background: #128C7E;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
         }
 
         /* Footer Styles */
@@ -391,7 +377,6 @@
             color: white;
             text-decoration: none;
             transition: all 0.3s ease;
-            margin: auto;
         }
 
         .social-links a:hover {
@@ -448,7 +433,7 @@
             }
             
             .premium-section,
-            .contact-form-section {
+            .contact-info-section {
                 padding: 2rem;
             }
             
@@ -471,13 +456,17 @@
             }
             
             .premium-section,
-            .contact-form-section {
+            .contact-info-section {
                 padding: 1.5rem;
             }
             
             .premium-section h2,
-            .contact-form-section h2 {
+            .contact-info-section h2 {
                 font-size: 1.8rem;
+            }
+            
+            .contact-method {
+                padding: 1rem;
             }
         }
     </style>
@@ -486,7 +475,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-code"></i>
                 CodeVent Digital
             </a>
@@ -499,7 +488,7 @@
                 <li><a href="product.html" target="_blank">Products</a></li>
                 <li><a href="community.html" target="_blank">Community</a></li>
                 <li><a href="learning.html" target="_blank">Learning</a></li>
-                <li><a href="Contact.html" target="_blank" class="active">Contact</a></li>
+                <li><a href="Contact.html" class="active" target="_blank">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -516,7 +505,7 @@
         <section class="premium-section">
             <h2>Access <span>Premium Content</span></h2>
             <p>To unlock our premium digital products and mentorship services, follow these simple steps:</p>
-            <!ol class="premium-steps">
+            <ol class="premium-steps">
                 <li>
                     <div class="step-number">1</div>
                     <div>Use our contact details below to reach out and get started</div>
@@ -541,29 +530,54 @@
             </div>
         </section>
 
-        <!-- Contact Form -->
-        <!--section class="contact-form-section">
-            <h2>Send us a Message</h2>
-            <form id="contactForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
-                    <div class="error-message" id="nameError">Please enter your full name</div>
+        <!-- Contact Info Section -->
+        <section class="contact-info-section">
+            <h2>Contact Information</h2>
+            
+            <div class="contact-method">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
-                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                <div class="contact-details">
+                    <h3>Email</h3>
+                    <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank">codeventdigitalinfo@gmail.com</a>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" class="form-control" required placeholder="Tell us about your project, questions, or interest in premium content..."></textarea>
-                    <div class="error-message" id="messageError">Please enter your message</div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
                 </div>
-                <button type="submit" class="submit-btn" id="submitBtn">Send Message</button>
-            </form>
-        </section-->
-   
+                <div class="contact-details">
+                    <h3>Phone</h3>
+                    <p>+234 818 594 7780</p>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-details">
+                    <h3>WhatsApp</h3>
+                    <p>Chat with us directly on WhatsApp</p>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20services" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Message Us
+                    </a>
+                </div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="contact-details">
+                    <h3>Location</h3>
+                    <p>Surulere, Lagos</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -572,12 +586,10 @@
                 <h3>CodeVent Digital</h3>
                 <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
                 <div class="social-links">
-          
-                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            
-                    <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href=" https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20services" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-section">
@@ -596,7 +608,6 @@
                 <ul class="footer-links">
                     <li><a href="learning.html" target="_blank">Web Development</a></li>
                     <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
-               
                     <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
                 </ul>
             </div>
@@ -639,119 +650,6 @@
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
             });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Form Validation
-        const contactForm = document.getElementById('contactForm');
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Email validation regex
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        function validateName() {
-            const name = nameInput.value.trim();
-            const nameError = document.getElementById('nameError');
-            
-            if (name === '') {
-                nameInput.classList.add('error');
-                nameInput.classList.remove('success');
-                nameError.classList.add('show');
-                return false;
-            } else {
-                nameInput.classList.remove('error');
-                nameInput.classList.add('success');
-                nameError.classList.remove('show');
-                return true;
-            }
-        }
-
-        function validateEmail() {
-            const email = emailInput.value.trim();
-            const emailError = document.getElementById('emailError');
-            
-            if (email === '') {
-                emailInput.classList.add('error');
-                emailInput.classList.remove('success');
-                emailError.classList.add('show');
-                return false;
-            } else if (!emailRegex.test(email)) {
-                emailInput.classList.add('error');
-                emailInput.classList.remove('success');
-                emailError.classList.add('show');
-                return false;
-            } else {
-                emailInput.classList.remove('error');
-                emailInput.classList.add('success');
-                emailError.classList.remove('show');
-                return true;
-            }
-        }
-
-        function validateMessage() {
-            const message = messageInput.value.trim();
-            const messageError = document.getElementById('messageError');
-            
-            if (message === '') {
-                messageInput.classList.add('error');
-                messageInput.classList.remove('success');
-                messageError.classList.add('show');
-                return false;
-            } else {
-                messageInput.classList.remove('error');
-                messageInput.classList.add('success');
-                messageError.classList.remove('show');
-                return true;
-            }
-        }
-
-        // Add event listeners for real-time validation
-        nameInput.addEventListener('blur', validateName);
-        emailInput.addEventListener('blur', validateEmail);
-        messageInput.addEventListener('blur', validateMessage);
-
-        // Form submission
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const isNameValid = validateName();
-            const isEmailValid = validateEmail();
-            const isMessageValid = validateMessage();
-            
-            if (isNameValid && isEmailValid && isMessageValid) {
-                // Simulate form submission
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
-                
-                // In a real application, you would send the form data to a server here
-                setTimeout(() => {
-                    alert('Thank you for your message! We will get back to you soon.');
-                    contactForm.reset();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Send Message';
-                    
-                    // Reset validation states
-                    nameInput.classList.remove('success', 'error');
-                    emailInput.classList.remove('success', 'error');
-                    messageInput.classList.remove('success', 'error');
-                }, 1500);
-            }
         });
     </script>
 </body>

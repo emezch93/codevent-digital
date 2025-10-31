@@ -47,7 +47,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            
         }
 
         .logo {
@@ -58,6 +57,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        .logo i {
+            color: var(--secondary);
         }
 
         .nav-links {
@@ -71,10 +74,26 @@
             color: var(--dark);
             font-weight: 600;
             transition: color 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
             color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         .hamburger {
@@ -384,6 +403,30 @@
             color: var(--primary);
         }
 
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
         .copyright {
             text-align: center;
             padding-top: 3rem;
@@ -453,7 +496,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-code"></i>
                 CodeVent Digital
             </a>
@@ -465,7 +508,7 @@
                 <li><a href="service.html" target="_blank">Services</a></li>
                 <li><a href="product.html" target="_blank">Products</a></li>
                 <li><a href="community.html" target="_blank">Community</a></li>
-                <!--li><a href="mini_project.html" target="_blank" class="active">Mini-Projects</a></li-->
+                <li><a href="mini_project.html" class="active" target="_blank">Mini-Projects</a></li>
                 <li><a href="Contact.html" target="_blank">Contact</a></li>
             </ul>
         </div>
@@ -570,6 +613,12 @@
             <div class="footer-section">
                 <h3>CodeVent Digital</h3>
                 <p>Empowering developers with interactive learning experiences.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://github.com/emezch93" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20Mini-Projects" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
@@ -585,18 +634,17 @@
             <div class="footer-section">
                 <h3>Learning</h3>
                 <ul class="footer-links">
-                    <li><a href="learning.html"   target = "_blank">HTML5</a></li>
+                    <li><a href="learning.html" target="_blank">HTML5</a></li>
                     <li><a href="learning.html" target="_blank">CSS3</a></li>
                     <li><a href="learning.html" target="_blank">JavaScript</a></li>
-              
-                    <!--li><a href="mini_project.html" target="_blank">Projects</a></li-->
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Contact</h3>
                 <ul class="footer-links">
-                    <li>codeventdigitalinfo@gmail.com</li>
-                    <li>+2348185947780</li>
+                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +2348185947780</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
                 </ul>
             </div>
         </div>

@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Master HTML5 with interactive lessons, live editor, and real-world projects. Join CodeVent Digital's developer community.">
-    <title>HTML5 | CSS3 | Javascript... Learning - CodeVent Digital</title>
+    <title>HTML5 Learning - CodeVent Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0077b6;
-            --primary-dark: #005f8d;
-            --secondary: #00b4d8;
-            --accent: #90e0ef;
-            --dark: #03045e;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
         }
 
         body {
@@ -26,7 +26,6 @@
             color: var(--dark);
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
-            overflow: hidden;
         }
 
         body.dark-mode {
@@ -36,87 +35,6 @@
             --light-gray: #172a45;
         }
 
-        /* Loading Screen Styles */
-        #loadingScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        .loading-content {
-            text-align: center;
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        .loading-logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        .loading-logo i {
-            color: var(--secondary);
-        }
-
-        .loading-text {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 2rem;
-            min-height: 2.5rem;
-        }
-
-        .loading-bar {
-            width: 300px;
-            height: 6px;
-            background: var(--light-gray);
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .loading-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        .loading-dot {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: var(--primary);
-            border-radius: 50%;
-            margin: 0 3px;
-            opacity: 0;
-            animation: dotPulse 1.4s infinite ease-in-out both;
-        }
-
-        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
-        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
-
-        @keyframes dotPulse {
-            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Original Styles */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -192,6 +110,7 @@
             font-weight: 600;
             transition: all 0.2s ease;
             border: 2px solid var(--secondary);
+            cursor: pointer;
         }
 
         .btn:hover {
@@ -267,29 +186,38 @@
             color: var(--secondary);
         }
 
-        #editorArea, #output {
+        #editorArea {
             width: 100%;
-            min-height: 200px;
+            min-height: 300px;
             padding: 1rem;
             border: 2px solid var(--light-gray);
             border-radius: 8px;
             font-family: 'Consolas', 'Monaco', monospace;
             font-size: 0.95rem;
             resize: vertical;
+            box-sizing: border-box;
         }
 
-        body.dark-mode #editorArea, body.dark-mode #output {
+        body.dark-mode #editorArea {
             background: #1e293b;
             color: #e2e8f0;
             border-color: #334155;
         }
 
         #output {
+            width: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
             background: white;
+            box-sizing: border-box;
+            overflow: auto;
         }
 
         body.dark-mode #output {
             background: #0f172a;
+            border-color: #334155;
         }
 
         .lesson-item {
@@ -347,39 +275,44 @@
             margin-right: 0.75rem;
         }
 
-        .forum-post {
-            background: var(--light);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-
-        body.dark-mode .forum-post {
-            background: var(--light-gray);
-        }
-
-        .comet-banner {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            color: white;
+        .resource-card {
+            background: linear-gradient(135deg, rgba(0,119,182,0.08), rgba(0,180,216,0.08));
             padding: 1.5rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 1.25rem;
+            border: 2px solid var(--light-gray);
+            transition: all 0.3s ease;
         }
 
-        .comet-banner p {
-            margin: 0.5rem 0;
-            font-size: 1rem;
+        .resource-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,119,182,0.15);
         }
 
-        .premium-cta {
+        .resource-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .resource-card h3 i {
+            color: var(--secondary);
+        }
+
+        .info-banner {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 2rem;
-            border-radius: 12px;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
             text-align: center;
-            margin: 2rem 0;
+        }
+
+        .info-banner h3 {
+            color: white;
+            margin-top: 0;
         }
 
         footer {
@@ -399,74 +332,32 @@
             .card { padding: 1.25rem; }
             h1 { font-size: 1.75rem; }
             .nav-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
-            .loading-logo { font-size: 2rem; }
-            .loading-text { font-size: 1.2rem; }
-            .loading-bar { width: 250px; }
+        }
+        .ftr{
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loadingScreen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <i class="fas fa-code"></i>
-                CodeVent Digital
-            </div>
-            <div class="loading-text" id="loadingText">Loading learning resources</div>
-            <div class="loading-bar">
-                <div class="loading-progress" id="loadingProgress"></div>
-            </div>
-            <div style="margin-top: 2rem;">
-                <span class="loading-dot"></span>
-                <span class="loading-dot"></span>
-                <span class="loading-dot"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Original Content -->
     <header>
-        <h1>CodeVent Digital</h1>
+        <h1>CodeVent Digital - HTML | CSS | Javascript Learning</h1>
         <nav class="navbar">
-            <button class="nav-btn active" data-tab="home">Home</button>
-            <button class="nav-btn" data-tab="lesson">Lessons</button>
-            <button class="nav-btn" data-tab="editor">Editor</button>
+            <button class="nav-btn active" data-tab="lesson">Lessons</button>
+            <button class="nav-btn" data-tab="editor">Practice Editor</button>
             <button class="nav-btn" data-tab="quiz">Quiz</button>
             <button class="nav-btn" data-tab="resources">Resources</button>
         </nav>
     </header>
 
     <main>
-        <!-- Home -->
-        <section id="home" class="card">
-            <h2>Welcome to CodeVent Digital!</h2>
-            <p>Master HTML5 with interactive lessons, real-world projects, and community support. Start your journey to becoming an industry-ready developer using our learning resource</p>
-            
-            <div class="comet-banner">
-                <h3>💡 Pro Tip: Use W3Schools Browser</h3>
-                <p>Built for developers, multiple language learning resources.</p>
-                <a href="https://www.w3schools.com/html/" class="btn btn-outline" target="_blank" rel="noopener">Learn More</a>
-            </div>
-            
-            <a href="#" class="btn" onclick="showTab('lesson')">Start Learning HTML5</a>
-            
-            <div class="premium-cta">
-                <h3>🚀 Unlock Premium Content</h3>
-                <p>Access advanced projects, private mentorship, and source code for any working projects.</p>
-                <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem;">
-                    <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" class="btn btn-outline" target="_blank" rel="noopener">
-                        <i class="fab fa-whatsapp"></i> Join Community
-                    </a>
-                    <a href="Contact.html" class="btn" style="background:white;color:var(--primary);" target="_blank">
-                        <i class="fas fa-user-headset"></i> Contact for Mentorship
-                    </a>
-                </div>
-            </div>
-        </section>
-
         <!-- Lessons -->
-        <section id="lesson" class="card hide">
+        <section id="lesson" class="card">
+            <div class="info-banner">
+                <h3><i class="fas fa-graduation-cap"></i> Start Your HTML5 Journey</h3>
+                <p>Begin with our lessons below, then check the <strong>Resources</strong> tab for comprehensive learning materials from W3Schools, MDN, and FreeCodeCamp. Also join our WhatsApp group below for free coding tips.</p>
+            </div>
+
             <h2>HTML5 Lessons</h2>
             <p>Complete each lesson and mark it as completed to track your progress.</p>
             
@@ -513,18 +404,30 @@
                     <button onclick="markCompleted('l2')" class="btn">Mark as Completed</button>
                 </div>
             </div>
+
+            <div style="margin-top:2rem; padding:1.5rem; background:rgba(0,119,182,0.05); border-radius:8px;">
+                <h3>Need Help?</h3>
+                <p>Join our community for support and mentorship</p>
+                <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" class="btn" rel="noopener">
+                    <i class="fab fa-whatsapp"></i> Join Community
+                </a>
+            </div>
         </section>
 
         <!-- Editor -->
         <section id="editor" class="card hide">
-            <h2>HTML5 Interactive Editor</h2>
+            <h2>HTML5 Practice Editor</h2>
             <p>Edit the code below and click "Run" to see your changes in real-time.</p>
             
             <div class="editor-container">
                 <div class="editor-panel">
                     <div class="editor-label">HTML Code</div>
-                    <textarea id="editorArea">&lt;h1&gt;Hello HTML5!&lt;/h1&gt;
-&lt;p&gt;Edit this code and click Run.&lt;/p&gt;</textarea>
+                    <textarea id="editorArea">&lt;h1 style="color: #0077b6;"&gt;Hello HTML5!&lt;/h1&gt;
+&lt;p&gt;Edit this code and click Run.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Item 1&lt;/li&gt;
+  &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;</textarea>
                 </div>
                 <div class="editor-panel">
                     <div class="editor-label">Live Preview</div>
@@ -532,17 +435,21 @@
                 </div>
             </div>
             
-            <button onclick="runEditorCode()" class="btn" style="margin-top:1.5rem;">Run Code</button>
-            <button onclick="resetEditor()" class="btn btn-outline" style="margin-left:0.75rem;">Reset</button>
+            <button onclick="runEditorCode()" class="btn" style="margin-top:1.5rem;">
+                <i class="fas fa-play"></i> Run Code
+            </button>
+            <button onclick="resetEditor()" class="btn btn-outline" style="margin-left:0.75rem;">
+                <i class="fas fa-redo"></i> Reset
+            </button>
         </section>
 
         <!-- Quiz -->
         <section id="quiz" class="card hide">
-            <h2>HTML5 Basics Quiz</h2>
-            <p>Test your knowledge with this quick quiz!</p>
+            <h2>HTML5 Knowledge Check</h2>
+            <p>Test your understanding of the lessons</p>
             
             <form id="quizForm">
-                <p>1. What does HTML stand for?</p>
+                <p><strong>1. What does HTML stand for?</strong></p>
                 <label class="quiz-option">
                     <input type="radio" name="q1" value="a"> HyperText Markup Language
                 </label>
@@ -560,71 +467,53 @@
 
         <!-- Resources -->
         <section id="resources" class="card hide">
-            <h2>Resource Library</h2>
-            <p>Expand your knowledge with these trusted resources:</p>
-            <ul style="padding-left:1.5rem; margin:1rem 0;">
-                <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener">MDN HTML Guide</a></li>
-                <li><a href="https://www.w3schools.com/html/" target="_blank" rel="noopener">W3Schools HTML Tutorial</a></li>
-                <li><a href="https://www.freecodecamp.org/news/tag/html/" target="_blank" rel="noopener">FreeCodeCamp HTML Articles</a></li>
-            </ul>
+            <div class="info-banner">
+                <h3><i class="fas fa-book-open"></i> Comprehensive Learning Resources</h3>
+                <p>Click on any resource below to access free, in-depth HTML, CSS, Javascript tutorials and documentation.</p>
+            </div>
+
+            <h2>External Learning Platforms</h2>
+            <p>Continue your HTML5 journey with these industry-leading educational resources:</p>
             
-            <div class="comet-banner" style="margin:1.5rem 0;">
-                <h3>Comet Browser for Developers</h3>
-                <p>Enhance your learning with AI-powered coding assistance and native debugging tools</p>
-                <a href="https://www.clcoding.com/2025/10/why-every-developer-should-start-using.html" class="btn btn-outline" target="_blank" rel="noopener">Learn More</a>
+            <div class="resource-card">
+                <h3><i class="fas fa-school"></i> W3Schools Tutorial</h3>
+                <p>Interactive tutorials with live examples and exercises. Perfect for beginners with step-by-step guidance and instant practice.</p>
+                <a href="https://www.w3schools.com/html/" target="_blank" class="btn" rel="noopener">
+                    <i class="fas fa-external-link-alt"></i> Start Learning on W3Schools
+                </a>
+            </div>
+
+            <div class="resource-card">
+                <h3><i class="fas fa-book"></i> MDN Web Docs (Mozilla)</h3>
+                <p>Comprehensive HTML, CSS, Javascript etc, reference and guides from Mozilla. Deep technical documentation for serious developers.</p>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="btn" rel="noopener">
+                    <i class="fas fa-external-link-alt"></i> Explore MDN Documentation
+                </a>
+            </div>
+
+            <div class="resource-card">
+                <h3><i class="fab fa-free-code-camp"></i> FreeCodeCamp</h3>
+                <p>Free coding bootcamp with certifications. Complete projects and earn certificates while building real-world skills.</p>
+                <a href="https://www.freecodecamp.org/news/tag/html/" target="_blank" class="btn" rel="noopener">
+                    <i class="fas fa-external-link-alt"></i> Learn with FreeCodeCamp
+                </a>
+            </div>
+
+            <div style="margin-top:2rem; padding:1.5rem; background:rgba(0,119,182,0.05); border-radius:8px; text-align:center;">
+                <h3><i class="fas fa-lightbulb"></i> Pro Tip</h3>
+                <p>Use all three platforms together! W3Schools for quick reference, MDN for deep understanding, and FreeCodeCamp for structured projects.</p>
             </div>
         </section>
     </main>
 
-    <footer>
+    <footer class="ftr">
         <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
-        <p>Empowering developers through learning and community mentorship.</p>
+        <p>Building Developers One Step at a Time.</p>
     </footer>
 
     <script>
-        // Loading Animation Sequence
-        document.addEventListener('DOMContentLoaded', function() {
-            const loadingScreen = document.getElementById('loadingScreen');
-            const loadingText = document.getElementById('loadingText');
-            const loadingProgress = document.getElementById('loadingProgress');
-            
-            // Loading steps
-            const steps = [
-                { text: "Loading learning resources", progress: 25, delay:5000 },
-                { text: "Connecting with:\nMDN", progress: 40, delay: 5000 },
-                { text: "Connecting with:\nW3 School", progress: 60, delay: 5000 },
-                { text: "Connecting with:\nFreeCodeCamp", progress: 80, delay: 5000 },
-                { text: "Finalizing page....", progress: 100, delay: 5000 }
-            ];
-            
-            let currentStep = 0;
-            
-            function nextStep() {
-                if (currentStep < steps.length) {
-                    const step = steps[currentStep];
-                    loadingText.innerHTML = step.text;
-                    loadingProgress.style.width = step.progress + '%';
-                    
-                    setTimeout(() => {
-                        currentStep++;
-                        nextStep();
-                    }, step.delay);
-                } else {
-                    // Hide loading screen and show content
-                    setTimeout(() => {
-                        loadingScreen.style.opacity = '0';
-                        loadingScreen.style.visibility = 'hidden';
-                        document.body.style.overflow = 'auto';
-                    }, 500);
-                }
-            }
-            
-            // Start loading sequence
-            nextStep();
-        });
-
         // Tab navigation
-        const tabs = ["home","lesson","editor","quiz","resources"];
+        const tabs = ["lesson","editor","quiz","resources"];
         
         function showTab(tab) {
             tabs.forEach(t => {
@@ -647,7 +536,6 @@
         }
         
         function markCompleted(lid) {
-            // Using sessionStorage instead of localStorage
             sessionStorage.setItem('lesson_' + lid, 'completed');
             updateLessonStatuses();
             alert('Lesson marked as completed! 🎉');
@@ -660,14 +548,15 @@
             });
         }
         
-        // Editor functionality
+        // Editor functionality - SIMPLE DIV APPROACH (NO IFRAME)
         function runEditorCode() {
             const code = document.getElementById('editorArea').value;
-            document.getElementById('output').innerHTML = code;
+            const output = document.getElementById('output');
+            output.innerHTML = code;
         }
         
         function resetEditor() {
-            document.getElementById('editorArea').value = '<h1>Hello HTML5!</h1>\n<p>Edit this code and click Run.</p>';
+            document.getElementById('editorArea').value = '<h1 style="color: #0077b6;">Hello HTML5!</h1>\n<p>Edit this code and click Run.</p>\n<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>';
             runEditorCode();
         }
         
@@ -687,13 +576,10 @@
             }
         }
         
-        // Initialize after loading screen is hidden
-        window.addEventListener('load', function() {
-            // Wait a bit more to ensure smooth transition
-            setTimeout(() => {
-                updateLessonStatuses();
-                runEditorCode();
-            }, 1000);
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLessonStatuses();
+            runEditorCode();
         });
     </script>
 </body>

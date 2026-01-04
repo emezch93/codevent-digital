@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+    <meta name="description" content="CodeVent Shop – Your Digital Hub for E-books, Coding Courses & Source Codes" />  
+    <title>CodeVent Shop – Digital Marketplace</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />  
+    <style>  
+        :root {  
+            --primary: #2563eb;  
+            --primary-dark: #1d4ed8;  
+            --secondary: #0ea5e9;  
+            --dark: #0f172a;  
+            --light: #f8fafc;  
+            --gray: #64748b;  
+            --light-gray: #e2e8f0;  
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);  
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);  
+            --locked-bg-light: repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0 10px, rgba(0,0,0,0.1) 10px 20px);  
+            --locked-bg-dark: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, rgba(255,255,255,0.06) 10px 20px);  
+        }  
+        * {  
+            margin: 0;  
+            padding: 0;  
+            box-sizing: border-box;  
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;  
+        }  
+
+        body {  
+            background-color: var(--light);  
+            color: var(--dark);  
+            line-height: 1.6;  
+            overflow-x: hidden;  
+        }  
+
+        body.dark-mode {  
+            --light: #0f172a;  
+            --dark: #f1f5f9;  
+            --gray: #94a3b8;  
+            --light-gray: #1e293b;  
+        }  
+
+        /* Scroll Progress */  
+        #scrollProgress {  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            height: 4px;  
+            background: linear-gradient(90deg, var(--primary), var(--secondary));  
+            z-index: 1000;  
+            width: 0%;  
+            transition: width 0.1s ease;  
+        }  
+
+        /* Navbar */  
+        .navbar {  
+            position: sticky;  
+            top: 0;  
+            background: white;  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);  
+            padding: 1rem 2rem;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            z-index: 1000;  
+        }  
+
+        body.dark-mode .navbar {  
+            background: var(--light);  
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);  
+        }  
+
+        .logo {  
+            font-size: 1.5rem;  
+            font-weight: 800;  
+            color: var(--primary);  
+            text-decoration: none;  
+            display: flex;  
+            align-items: center;  
+            gap: 0.5rem;  
+        }  
+
+        .logo i {  
+            color: var(--secondary);  
+        }  
+
+        .nav-links {  
+            display: flex;  
+            gap: 1.5rem;  
+        }  
+
+        .nav-link {  
+            text-decoration: none;  
+            color: var(--dark);  
+            font-weight: 600;  
+            transition: var(--transition);  
+            position: relative;  
+        }  
+
+        .nav-link:hover {  
+            color: var(--primary);  
+        }  
+
+        .nav-link::after {  
+            content: '';  
+            position: absolute;  
+            bottom: -5px;  
+            left: 0;  
+            width: 0;  
+            height: 2px;  
+            background: var(--primary);  
+            transition: width 0.3s ease;  
+        }  
+
+        .nav-link:hover::after {  
+            width: 100%;  
+        }  
+
+        .theme-toggle {  
+            background: none;  
+            border: none;  
+            font-size: 1.25rem;  
+            color: var(--dark);  
+            cursor: pointer;  
+            transition: var(--transition);  
+        }  
+
+        .hamburger {  
+            display: none;  
+            cursor: pointer;  
+            font-size: 1.5rem;  
+        }  
+
+        /* Hero */  
+        .hero {  
+            padding: 6rem 2rem 4rem;  
+            text-align: center;  
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);  
+            margin-bottom: 3rem;  
+        }  
+
+        body.dark-mode .hero {  
+            background: linear-gradient(135deg, #0c1427, #1e293b);  
+        }  
+
+        .hero h1 {  
+            font-size: 2.8rem;  
+            font-weight: 800;  
+            margin-bottom: 1.5rem;  
+            color: var(--dark);  
+        }  
+
+        .hero p {  
+            font-size: 1.25rem;  
+            color: var(--gray);  
+            max-width: 700px;  
+            margin: 0 auto 2.5rem;  
+        }  
+
+        /* Shop Grid */  
+        .shop-grid {  
+            max-width: 1200px;  
+            margin: 0 auto 4rem;  
+            padding: 0 1.5rem;  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  
+            gap: 2rem;  
+        }  
+
+        .shop-card {  
+            background: white;  
+            border-radius: 16px;  
+            overflow: hidden;  
+            box-shadow: var(--card-shadow);  
+            transition: var(--transition);  
+        }  
+
+        body.dark-mode .shop-card {  
+            background: var(--light-gray);  
+        }  
+
+        .shop-card:hover {  
+            transform: translateY(-8px);  
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);  
+        }  
+
+        .card-img {  
+            width: 100%;  
+            height: 220px;  
+            object-fit: cover;  
+            display: block;  
+        }  
+
+        .card-icon {  
+            width: 100%;  
+            height: 220px;  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            background: linear-gradient(135deg, var(--primary), var(--secondary));  
+            color: white;  
+            font-size: 4rem;  
+        }  
+
+        .card-content {  
+            padding: 1.5rem;  
+        }  
+
+        .card-title {  
+            font-size: 1.4rem;  
+            font-weight: 700;  
+            margin-bottom: 0.75rem;  
+            color: var(--dark);  
+        }  
+
+        .card-desc {  
+            color: var(--gray);  
+            margin-bottom: 1.25rem;  
+            font-size: 0.95rem;  
+            line-height: 1.6;  
+        }  
+
+        .btn {  
+            display: inline-block;  
+            padding: 0.75rem 1.5rem;  
+            border-radius: 8px;  
+            font-weight: 600;  
+            text-decoration: none;  
+            transition: var(--transition);  
+            text-align: center;  
+            width: 100%;  
+            border: 2px solid var(--primary);  
+        }  
+
+        .btn-primary {  
+            background: var(--primary);  
+            color: white;  
+        }  
+
+        .btn-primary:hover {  
+            background: var(--primary-dark);  
+            transform: translateY(-2px);  
+        }  
+
+        .btn-outline {  
+            background: transparent;  
+            color: var(--primary);  
+        }  
+
+        .btn-outline:hover {  
+            background: var(--primary);  
+            color: white;  
+        }  
+
+        /* Badge */  
+        .badge {  
+            background: linear-gradient(135deg, var(--secondary), var(--primary));  
+            color: white;  
+            font-size: 0.75rem;  
+            font-weight: 700;  
+            padding: 0.25rem 0.5rem;  
+            border-radius: 20px;  
+            align-self: flex-start;  
+            white-space: nowrap;  
+        }  
+
+        .card-content > div {  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: flex-start;  
+            gap: 0.5rem;  
+            margin-bottom: 0.75rem;  
+        }  
+
+        /* Section Headers */  
+        .section-header {  
+            text-align: center;  
+            margin: 4rem 0 2rem;  
+        }  
+
+        .section-header h2 {  
+            font-size: 2.2rem;  
+            font-weight: 800;  
+            color: var(--dark);  
+            margin-bottom: 1rem;  
+        }  
+
+        .section-header p {  
+            color: var(--gray);  
+            max-width: 700px;  
+            margin: 0 auto;  
+        }  
+
+        /* Preview Modal */  
+        .preview-modal {  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            width: 100%;  
+            height: 100%;  
+            background: rgba(0, 0, 0, 0.7);  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            z-index: 5000;  
+            opacity: 0;  
+            visibility: hidden;  
+            transition: var(--transition);  
+        }  
+
+        .preview-modal.active {  
+            opacity: 1;  
+            visibility: visible;  
+        }  
+
+        .modal-content {  
+            background: white;  
+            border-radius: 20px;  
+            width: 90%;  
+            max-width: 800px;  
+            max-height: 80vh;  
+            overflow: hidden;  
+            display: flex;  
+            flex-direction: column;  
+        }  
+
+        body.dark-mode .modal-content {  
+            background: var(--light-gray);  
+        }  
+
+        .modal-header {  
+            padding: 1.5rem 2rem;  
+            display: flex;  
+            justify-content: space-between;  
+            align-items: center;  
+            border-bottom: 1px solid var(--light-gray);  
+        }  
+
+        .modal-title {  
+            font-size: 1.5rem;  
+            font-weight: 700;  
+        }  
+
+        .close-modal {  
+            background: none;  
+            border: none;  
+            font-size: 1.5rem;  
+            color: var(--gray);  
+            cursor: pointer;  
+        }  
+
+        .modal-body {  
+            padding: 2rem;  
+            overflow-y: auto;  
+            flex: 1;  
+        }  
+
+        .modal-preview {  
+            margin-bottom: 2rem;  
+            line-height: 1.8;  
+        }  
+
+        .modal-preview ul {  
+            padding-left: 1.5rem;  
+            margin: 1rem 0;  
+        }  
+
+        .modal-preview li {  
+            margin-bottom: 0.5rem;  
+        }  
+
+        .locked-section {  
+            background: var(--locked-bg-light);  
+            padding: 2rem;  
+            border-radius: 12px;  
+            text-align: center;  
+        }  
+
+        body.dark-mode .locked-section {  
+            background: var(--locked-bg-dark);  
+        }  
+
+        /* Contact Section */  
+        .contact-section {  
+            max-width: 800px;  
+            margin: 0 auto 4rem;  
+            padding: 0 1.5rem;  
+        }  
+
+        .contact-card {  
+            background: white;  
+            border-radius: 16px;  
+            padding: 3rem;  
+            box-shadow: var(--card-shadow);  
+            text-align: center;  
+        }  
+
+        body.dark-mode .contact-card {  
+            background: var(--light-gray);  
+        }  
+
+        .contact-info {  
+            display: grid;  
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
+            gap: 1.5rem;  
+            margin-top: 2rem;  
+        }  
+
+        .contact-item {  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+            gap: 0.5rem;  
+        }  
+
+        .contact-item a {  
+            color: var(--primary);  
+            text-decoration: none;  
+            font-weight: 600;  
+            transition: var(--transition);  
+            align-items: center;  
+            gap: 0.5rem;  
+        }  
+
+        .contact-item a:hover {  
+            color: var(--primary-dark);  
+        }  
+
+        .contact-item i {  
+            font-size: 1.5rem;  
+        }  
+
+        .account-reveal {  
+            margin-top: 2rem;  
+            padding-top: 2rem;  
+            border-top: 1px solid var(--light-gray);  
+        }  
+
+        .reveal-btn {  
+            background: var(--light-gray);  
+            border: 2px solid var(--primary);  
+            color: var(--primary);  
+            padding: 0.75rem 1.5rem;  
+            border-radius: 8px;  
+            font-weight: 600;  
+            cursor: pointer;  
+            transition: var(--transition);  
+        }  
+
+        .reveal-btn:hover {  
+            background: var(--primary);  
+            color: white;  
+        }  
+
+        .account-details {  
+            margin-top: 1rem;  
+            background: var(--light-gray);  
+            padding: 1.5rem;  
+            border-radius: 8px;  
+            display: none;  
+        }  
+
+        .account-details p {  
+            margin-bottom: 0.5rem;  
+            font-weight: 600;  
+        }  
+
+        /* Footer */  
+        .footer {  
+            background: var(--dark);  
+            color: white;  
+            padding: 3rem 2rem 2rem;  
+            text-align: center;  
+        }  
+
+        .footer p {  
+            color: #94a3b8;  
+            margin-bottom: 0.5rem;  
+        }  
+
+        .footer a {  
+            color: #60a5fa;  
+            text-decoration: none;  
+            transition: var(--transition);  
+        }  
+
+        .footer a:hover {  
+            color: #93c5fd;  
+        }  
+
+        /* Responsive */  
+        @media (max-width: 768px) {  
+            .nav-links {  
+                position: fixed;  
+                top: 72px;  
+                left: -100%;  
+                width: 100%;  
+                height: calc(100vh - 72px);  
+                background: white;  
+                flex-direction: column;  
+                align-items: center;  
+                padding-top: 2rem;  
+                transition: left 0.3s ease;  
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  
+                z-index: 1000;  
+            }  
+
+            body.dark-mode .nav-links {  
+                background: var(--light);  
+            }  
+
+            .nav-links.active {  
+                left: 0;  
+            }  
+
+            .nav-link {  
+                width: 100%;  
+                text-align: center;  
+                padding: 1rem 0;  
+                border-bottom: 1px solid var(--light-gray);  
+            }  
+
+            .hamburger {  
+                display: block;  
+            }  
+
+            .hero h1 {  
+                font-size: 2.2rem;  
+            }  
+            .hero p {  
+                font-size: 1.1rem;  
+            }  
+
+            .shop-grid {  
+                grid-template-columns: 1fr;  
+            }  
+
+            .contact-info {  
+                grid-template-columns: 1fr;  
+            }  
+        }  
+
+        @media (max-width: 480px) {  
+            .navbar {  
+                padding: 1rem;  
+            }  
+            .hero {  
+                padding: 4rem 1rem 2rem;  
+            }  
+            .hero h1 {  
+                font-size: 1.8rem;  
+            }  
+            .card-title {  
+                font-size: 1.2rem;  
+            }  
+            .btn {  
+                padding: 0.6rem 1.25rem;  
+                font-size: 0.95rem;  
+            }  
+            .badge {  
+                font-size: 0.7rem;  
+                padding: 0.2rem 0.4rem;  
+            }  
+            .contact-card {  
+                padding: 2rem 1.5rem;  
+            }  
+        } 
+        
+
+    </style>
+</head>  
+<body>  
+    <div id="scrollProgress"></div>  
+
+    <nav class="navbar">  
+        <a href="#home" class="logo">  
+            <i class="fas fa-shopping-bag"></i>  
+            CodeVent Shop  
+        </a>  
+        <div class="hamburger" id="hamburger">  
+            <i class="fas fa-bars"></i>  
+        </div>  
+        <div class="nav-links" id="navLinks">  
+            <a href="#home" class="nav-link">Home</a>  
+            <a href="#ebooks" class="nav-link">E-books</a>  
+            <a href="#courses" class="nav-link">Courses</a>  
+            <a href="#source" class="nav-link">Source Code</a>  
+            <a href="#contact" class="nav-link">Contact</a>  
+        </div>  
+        <button class="theme-toggle" id="themeToggle">  
+            <i class="fas fa-moon"></i>  
+        </button>  
+    </nav>  
+
+    <section id="home" class="hero">  
+        <h1>Premium Digital Products for Developers</h1>  
+        <p>E-books, coding courses, and production-ready source codes to accelerate your learning and career.</p>  
+    </section>  
+
+    <section id="ebooks" class="section">  
+        <div class="section-header">  
+            <h2>Premium E-books</h2>  
+            <p>Expertly crafted guides on AI, business, and digital creation.</p>  
+        </div>  
+        <div class="shop-grid">  
+            <div class="shop-card">  
+                <img src="front_cover_design_20.png" alt="Just My Smartphone – Build Digital Income Using Only Your Phone" class="card-img">  
+                <div class="card-content">  
+                    <div>  
+                        <h3 class="card-title">Just My Smartphone</h3>  
+                        <span class="badge">📱 Mobile</span>  
+                    </div>  
+                    <p class="card-desc">Build digital income using only your phone. A strategic playbook for skill acquisition, monetization, and AI workflows.</p>  
+                    <button class="btn btn-primary open-preview" data-book="just-my-smartphone">Preview & Purchase</button>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <img src="ai_side_hustle_cover__2.png" alt="AI Powered Side Hustles" class="card-img">  
+                <div class="card-content">  
+                    <h3 class="card-title">AI Powered Side Hustles</h3>  
+                    <p class="card-desc">Turn AI into your 24/7 income engine with proven daily, weekly & monthly earning models.</p>  
+                    <button class="btn btn-primary open-preview" data-book="ai-hustle">Preview & Purchase</button>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <img src="alternative_cover_202.png" alt="100 Free AI Tools" class="card-img">  
+                <div class="card-content">  
+                    <h3 class="card-title">100 Free AI Tools</h3>  
+                    <p class="card-desc">100+ handpicked free AI tools to 10x your productivity, creativity & income as a creator or freelancer.</p>  
+                    <button class="btn btn-primary open-preview" data-book="ai-tools">Preview & Purchase</button>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <img src="digital_world_cover_a.png" alt="THE DIGITAL WORLD v1.0" class="card-img">  
+                <div class="card-content">  
+                    <h3 class="card-title">THE DIGITAL WORLD v1.0</h3>  
+                    <p class="card-desc">A bold guide into AI's hidden opportunities, strategic advantages, and digital pathways to wealth.</p>  
+                    <button class="btn btn-primary open-preview" data-book="ai1">Preview & Purchase</button>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <img src="digital_world_cover_p.png" alt="THE DIGITAL WORLD v2.0" class="card-img">  
+                <div class="card-content">  
+                    <h3 class="card-title">THE DIGITAL WORLD v2.0</h3>  
+                    <p class="card-desc">AI has rewritten the laws of power and wealth. Discover how to thrive in this new reality.</p>  
+                    <button class="btn btn-primary open-preview" data-book="ai2">Preview & Purchase</button>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+    <section id="courses" class="section">  
+        <div class="section-header">  
+            <h2>Coding Courses</h2>  
+            <p>Learn by building real projects with hands-on video courses.</p>  
+        </div>  
+        <div class="shop-grid">  
+            <div class="shop-card">  
+                <img src="https://placehold.co/600x400/0ea5e9/ffffff?text=HTML+CSS+JS+Course" alt="Web Development Course" class="card-img">  
+                <div class="card-content">  
+                    <h3 class="card-title">HTML, CSS & JavaScript Mastery</h3>  
+                    <p class="card-desc">Complete beginner-friendly course with 20+ projects, quizzes, and lifetime access. Video series delivered via WhatsApp.</p>  
+                    <a href="https://paystack.com/buy/swift-web-development-mastery-tevbzs" target="_blank" rel="noopener" class="btn btn-primary">Purchase Course</a>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+    <section id="source" class="section">  
+        <div class="section-header">  
+            <h2>Production-Ready Source Codes</h2>  
+            <p>Accelerate development with fully functional project templates.</p>  
+        </div>  
+        <div class="shop-grid">  
+            <div class="shop-card">  
+                <div class="card-icon">  
+                    <i class="fas fa-question-circle"></i>  
+                </div>  
+                <div class="card-content">  
+                    <h3 class="card-title">Interactive Quiz App</h3>  
+                    <p class="card-desc">Fully responsive quiz app with timer, score tracking, and admin panel.</p>  
+                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I'm%20interested%20in%20the%20Quiz%20App%20source%20code" target="_blank" rel="noopener" class="btn btn-primary">Request Source Code</a>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <div class="card-icon">  
+                    <i class="fas fa-edit"></i>  
+                </div>  
+                <div class="card-content">  
+                    <h3 class="card-title">Code Editor Project</h3>  
+                    <p class="card-desc">In-browser code editor with syntax highlighting and live preview functionality.</p>  
+                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I'm%20interested%20in%20the%20Code%20Editor%20source%20code" target="_blank" rel="noopener" class="btn btn-primary">Request Source Code</a>  
+                </div>  
+            </div>  
+
+            <div class="shop-card">  
+                <div class="card-icon">  
+                    <i class="fas fa-bolt"></i>  
+                </div>  
+                <div class="card-content">  
+                    <h3 class="card-title">Custom Project Source Code</h3>  
+                    <p class="card-desc">Get source code for any project idea. AI-powered generators, dashboards, and more.</p>  
+                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I%20need%20source%20code%20for%20a%20custom%20project" target="_blank" rel="noopener" class="btn btn-primary">Request Custom Code</a>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+    <section id="contact" class="section">  
+        <div class="section-header">  
+            <h2>Purchase & Support</h2>  
+            <p>Multiple payment options available. Contact us for inquiries.</p>  
+        </div>  
+        <div class="contact-section">  
+            <div class="contact-card">  
+                <h3>Get in Touch</h3>  
+                <div class="contact-info">  
+                    <div class="contact-item">  
+                        <i class="fab fa-whatsapp"></i>  
+                        <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20your%20digital%20products" target="_blank" rel="noopener">WhatsApp: +234 818 594 7780</a>  
+                    </div>  
+                    <div class="contact-item">  
+                        <i class="fas fa-phone"></i>  
+                        <a href="tel:+2348185947780" target="_blank">Call: +234 818 594 7780</a>  
+                    </div>  
+                    <div class="contact-item">  
+                        <i class="fas fa-envelope"></i>  
+                        <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank">codeventdigitalinfo@gmail.com</a>  
+                    </div>  
+                    <div class="contact-item">  
+                        <i class="fab fa-facebook-f"></i>  
+                        <a href="https://www.facebook.com/share/1WDxyWLVvZ/" target="_blank" rel="noopener">Facebook</a>  
+                    </div>  
+                </div>  
+                <div class="account-reveal">  
+                    <button class="reveal-btn" id="showAcct">  
+                        <i class="fas fa-lock"></i> Reveal Bank Account Details  
+                    </button>  
+                    <div class="account-details" id="acctDetails">  
+                        <p><strong>Account Name:</strong> Chidera Emmanuel Ezenwa</p>  
+                        <p><strong>Account Number:</strong> 1953129048</p>  
+                        <p><strong>Bank:</strong> Access Bank</p>  
+                        <p style="margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">After payment, send proof via WhatsApp to receive your product.</p>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+
+    <div class="preview-modal" id="previewModal">  
+        <div class="modal-content">  
+            <div class="modal-header">  
+                <h3 class="modal-title" id="modalBookTitle">E-book Preview</h3>  
+                <button class="close-modal" id="closeModal">&times;</button>  
+            </div>  
+            <div class="modal-body">  
+                <div class="modal-preview" id="modalPreviewText"></div>  
+                <div class="locked-section" id="unlockSection">  
+                    <p>🔒 <strong>Full content locked!</strong></p>  
+                    <p>Purchase to unlock complete access.</p>  
+                    <a id="unlockButton" target="_blank" class="btn btn-primary" style="max-width: 250px; margin: 1rem auto;">Purchase Now</a>  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+
+    <footer class="footer">  
+        <p>© 2025 CodeVent Digital Shop. All rights reserved.</p>  
+        <p><a href="https://emezch93.github.io/CodeVent-Digital/" target="_blank" rel="noopener">Visit CodeVent Digital Main Platform</a></p>  
+    </footer>  
+
+    <script>  
+        // Scroll Progress  
+        window.addEventListener('scroll', () => {  
+            const winScroll = document.documentElement.scrollTop;  
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;  
+            const scrolled = (winScroll / height) * 100;  
+            document.getElementById('scrollProgress').style.width = scrolled + '%';  
+        });  
+
+        // Theme Toggle  
+        const themeToggle = document.getElementById('themeToggle');  
+        const body = document.body;  
+        let isDark = false;  
+
+        themeToggle.addEventListener('click', () => {  
+            isDark = !isDark;  
+            body.classList.toggle('dark-mode');  
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';  
+        });  
+
+        // Mobile Navigation  
+        const hamburger = document.getElementById('hamburger');  
+        const navLinks = document.getElementById('navLinks');  
+
+        hamburger.addEventListener('click', () => {  
+            navLinks.classList.toggle('active');  
+        });  
+
+        document.querySelectorAll('.nav-link').forEach(link => {  
+            link.addEventListener('click', () => {  
+                navLinks.classList.remove('active');  
+            });  
+        });  
+
+        // Smooth Scrolling  
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {  
+            anchor.addEventListener('click', function(e) {  
+                e.preventDefault();  
+                const target = document.querySelector(this.getAttribute('href'));  
+                if (target) {  
+                    window.scrollTo({  
+                        top: target.offsetTop - 80,  
+                        behavior: 'smooth'  
+                    });  
+                }  
+            });  
+        });  
+
+        // E-book Previews & Unlock Logic  
+        const ebooks = {  
+            'just-my-smartphone': {  
+                title: "Just My Smartphone",  
+                content: `<p><strong>What if the only tool you needed to start building digital income was already in your hand?</strong></p>  
+                <p>Just My Smartphone is a strategic playbook for navigating the digital economy using mobile technology alone.</p>  
+                <p><strong>Inside you'll discover:</strong></p>  
+                <ul>  
+                    <li>Mobile-optimized skill acquisition paths (no laptop needed)</li>  
+                    <li>5 proven monetization models for creators, students & freelancers</li>  
+                    <li>AI-powered workflows using free mobile apps</li>  
+                    <li>Modern productivity systems that fit in your pocket</li>  
+                </ul>  
+                <p>This ebook provides clarity, structure, and real use-cases — not just motivation.</p>`,  
+                unlockUrl: "https://paystack.com/buy/just-my-smartphone-jlxyet"  
+            },  
+            'ai-hustle': {  
+                title: "AI Powered Side Hustles",  
+                content: `<p><strong>Turn AI into your 24/7 income engine with proven models that generate daily, weekly, and monthly revenue.</strong></p>  
+                <p>This isn't theory—it's battle-tested strategy.</p>  
+                <p><strong>You'll discover:</strong></p>  
+                <ul>  
+                    <li>7 AI side hustle blueprints (with real income screenshots)</li>  
+                    <li>How to automate client acquisition using free AI tools</li>  
+                    <li>Pricing frameworks that command premium rates</li>  
+                    <li>Scaling strategies to turn $100 into $5,000/month</li>  
+                </ul>`,  
+                unlockUrl: "https://paystack.com/buy/ai-powered-side-hustles-how-to-earn-daily-weekly"  
+            },  
+            'ai-tools': {  
+                title: "100 Free AI Tools for Creators, Students & Freelancers",  
+                content: `<p><strong>Your ultimate AI toolkit:</strong> 100+ handpicked, completely free AI tools organized by category—writing, design, coding, video, audio, research, and productivity.</p>  
+                <p><strong>Inside you'll find:</strong></p>  
+                <ul>  
+                    <li>Direct links + quick-start guides for each tool</li>  
+                    <li>Real-world use cases with before/after examples</li>  
+                    <li>Power combos: how to chain tools for maximum impact</li>  
+                    <li>Time-saving workflows that save 10+ hours/week</li>  
+                </ul>`,  
+                unlockUrl: "https://paystack.com/buy/100-free-ai-tools-for-creators-students--freelancers"  
+            },  
+            'ai1': {  
+                title: "THE DIGITAL WORLD — Version 1.0",  
+                content: `<p><strong>THE DIGITAL WORLD: Unveiling Opportunities In The Age Of Artificial Intelligence V1.0</strong> is a bold, electrifying guide into the most explosive technological shift in human history.</p>  
+                <p>It reveals the hidden opportunities most people cannot see… the strategic advantages they ignore… and the digital pathways that are creating silent millionaires, global influencers, and future-proof professionals.</p>  
+                <p><strong>This is not a textbook.<br>This is not theory.<br>This is a wake-up call — and a roadmap.</strong></p>`,  
+                unlockUrl: "https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--jtenyv"  
+            },  
+            'ai2': {  
+                title: "THE DIGITAL WORLD — Version 2.0",  
+                content: `<p><strong>Read this carefully — because the world you think you know no longer exists.</strong></p>  
+                <p>Artificial Intelligence has quietly rewritten the laws of power, wealth, influence, and survival. We have entered an era where algorithms make decisions, machines outperform experts, and digital intelligence decides who rises… and who becomes irrelevant.</p>  
+                <p><strong>Most people have no idea this shift has already happened.<br>But you will.</strong></p>`,  
+                unlockUrl: "https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--lpxzfo"  
+            }  
+        };  
+
+        document.querySelectorAll('.open-preview').forEach(btn => {  
+            btn.addEventListener('click', () => {  
+                const bookKey = btn.getAttribute('data-book');  
+                const book = ebooks[bookKey];  
+                document.getElementById('modalBookTitle').textContent = book.title;  
+                document.getElementById('modalPreviewText').innerHTML = book.content;  
+                document.getElementById('unlockButton').href = book.unlockUrl;  
+                document.getElementById('previewModal').classList.add('active');  
+                document.body.style.overflow = 'hidden';  
+            });  
+        });  
+
+        document.getElementById('closeModal').addEventListener('click', () => {  
+            document.getElementById('previewModal').classList.remove('active');  
+            document.body.style.overflow = 'auto';  
+        });  
+
+        document.getElementById('previewModal').addEventListener('click', (e) => {  
+            if (e.target === document.getElementById('previewModal')) {  
+                document.getElementById('previewModal').classList.remove('active');  
+                document.body.style.overflow = 'auto';  
+            }  
+        });  
+
+        document.getElementById('showAcct').addEventListener('click', () => {  
+            const acctDiv = document.getElementById('acctDetails');  
+            const btn = document.getElementById('showAcct');  
+            if (acctDiv.style.display === 'none' || acctDiv.style.display === '') {  
+                acctDiv.style.display = 'block';  
+                btn.innerHTML = '<i class="fas fa-unlock"></i> Account Details Revealed';  
+            } else {  
+                acctDiv.style.display = 'none';  
+                btn.innerHTML = '<i class="fas fa-lock"></i> Reveal Bank Account Details';  
+            }  
+        });  
+    </script>
+</body>  
+</html>

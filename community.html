@@ -109,6 +109,7 @@
             margin-top: 80px;
             padding: 4rem 2rem 2rem;
             text-align: center;
+            background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
         }
 
         .community-header h1 {
@@ -126,7 +127,7 @@
             font-size: 1.2rem;
             color: var(--gray);
             max-width: 700px;
-            margin: 0 auto;
+            margin: 0 auto 2rem;
         }
 
         /* Community Container */
@@ -136,184 +137,19 @@
             padding: 0 2rem;
         }
 
-        /* Premium Section */
-        .premium-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--card-shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .premium-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .premium-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .premium-text h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .premium-text h2 span {
-            color: var(--primary);
-        }
-
-        .premium-text p {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-
-        .premium-features {
-            list-style: none;
-            margin-bottom: 2rem;
-        }
-
-        .premium-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-
-        .premium-features li i {
-            color: var(--secondary);
-            background: rgba(16, 185, 129, 0.1);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .premium-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .premium-btn {
-            padding: 0.8rem 1.8rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .premium-btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .premium-btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .premium-btn-secondary {
-            background-color: transparent;
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .premium-btn-secondary:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .premium-image {
-            text-align: center;
-        }
-
-        .premium-image img {
-            width: 100%;
-            max-width: 400px;
-            border-radius: 1rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Announcement Section */
-        .announcement-section {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            color: white;
-            text-align: center;
-        }
-
-        .announcement-content h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .announcement-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .countdown-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            min-width: 80px;
-        }
-
-        .countdown-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
         /* Community Links Section */
         .community-links-section {
             background: white;
             border-radius: 1.5rem;
             padding: 3rem;
             box-shadow: var(--card-shadow);
+            margin-top: -3rem;
         }
 
         .community-links-section h2 {
             font-size: 2.2rem;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             color: var(--dark);
         }
 
@@ -321,18 +157,28 @@
             color: var(--primary);
         }
 
+        .section-description {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .community-links {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         .community-link {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 1.5rem;
-            padding: 2rem;
+            padding: 3rem 2rem;
             text-align: center;
             color: white;
             text-decoration: none;
@@ -353,34 +199,137 @@
             transition: opacity 0.3s ease;
         }
 
+        .community-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
         .community-link:hover::before {
             opacity: 1;
         }
 
         .community-link i {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 1.5rem;
+            display: block;
         }
 
         .community-link h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
         .community-link p {
             opacity: 0.9;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
         .whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
         .telegram { background: linear-gradient(135deg, #0088cc, #005a87); }
-        .discord { background: linear-gradient(135deg, #5865F2, #4752C4); }
+
+        /* Benefits Section */
+        .benefits-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .benefits-section h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .benefits-section h2 span {
+            color: var(--primary);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 1rem;
+            background: rgba(99, 102, 241, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .benefit-item i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .benefit-item p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Support Section */
+        .support-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-top: 3rem;
+            text-align: center;
+            color: white;
+        }
+
+        .support-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .support-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .support-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
 
         /* Footer Styles */
         .footer {
             background-color: var(--dark);
             color: white;
             padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
         }
 
         .footer-container {
@@ -460,21 +409,6 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 992px) {
-            .premium-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .premium-image {
-                order: -1;
-            }
-            
-            .premium-buttons {
-                justify-content: center;
-            }
-        }
-
         @media (max-width: 768px) {
             .hamburger {
                 display: block;
@@ -506,23 +440,14 @@
                 font-size: 1.1rem;
             }
             
-            .premium-section,
-            .announcement-section,
-            .community-links-section {
+            .community-links-section,
+            .benefits-section,
+            .support-section {
                 padding: 2rem;
             }
-            
-            .countdown {
-                gap: 1rem;
-            }
-            
-            .countdown-item {
-                padding: 1rem;
-                min-width: 60px;
-            }
-            
-            .countdown-number {
-                font-size: 2rem;
+
+            .community-links {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -539,27 +464,22 @@
                 font-size: 1.8rem;
             }
             
-            .premium-section,
-            .announcement-section,
-            .community-links-section {
+            .community-links-section,
+            .benefits-section,
+            .support-section {
                 padding: 1.5rem;
             }
             
-            .premium-text h2 {
-                font-size: 1.8rem;
+            .community-link {
+                padding: 2rem 1.5rem;
             }
-            
-            .premium-buttons {
-                flex-direction: column;
+
+            .community-link i {
+                font-size: 3rem;
             }
-            
-            .premium-btn {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .countdown {
-                flex-wrap: wrap;
+
+            .community-link h3 {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -568,7 +488,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="logo">
+            <a href="index.html" target="_blank" class="logo">
                 <i class="fas fa-code"></i>
                 CodeVent Digital
             </a>
@@ -577,11 +497,10 @@
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html" target="_blank">Home</a></li>
-                <li><a href="service.html" target="_blank">Services</a></li>
-                <li><a href="product.html" target="_blank">Products</a></li>
-                <li><a href="community.html" class="active" target="_blank">Community</a></li>
                 <li><a href="learning.html" target="_blank">Learning</a></li>
-                <li><a href="Contact.html" target="_blank">Contact</a></li>
+                <li><a href="community.html" target="_blank" class="active">Community</a></li>
+                <li><a href="testimonial.html" target="_blank">Testimonial</a></li>
+                <li><a href="shop.html" target="_blank">Shop</a></li>
             </ul>
         </div>
     </nav>
@@ -589,84 +508,64 @@
     <!-- Community Header -->
     <section class="community-header">
         <h1>Join Our <span>Community</span></h1>
-        <p>Connect with like-minded developers, digital creators, and entrepreneurs in our exclusive community spaces.</p>
+        <p>Connect with developers, share knowledge, and grow together in our supportive learning environment.</p>
     </section>
 
     <!-- Community Container -->
     <div class="community-container">
-        <!-- Premium Section -->
-        <section class="premium-section">
-            <div class="premium-content">
-                <div class="premium-text">
-                    <h2>Premium <span>Mentorship</span> & Content</h2>
-                    <p>Unlock exclusive access to personalized mentorship sessions, premium digital products, and advanced learning resources designed to accelerate your journey from beginner to professional.</p>
-                    <ul class="premium-features">
-                        <li><i class="fas fa-check"></i> 1-on-1 mentorship with industry experts</li>
-                        <li><i class="fas fa-check"></i> Access to all premium digital products</li>
-                        <li><i class="fas fa-check"></i> Exclusive community events and workshops</li>
-                        <li><i class="fas fa-check"></i> Priority support and feedback</li>
-                        <li><i class="fas fa-check"></i> Career guidance and portfolio reviews</li>
-                    </ul>
-                    <div class="premium-buttons">
-                        <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20Digital%20premium%20content" target="_blank" rel="noopener" class="premium-btn premium-btn-primary">
-                            Get Started <i class="fas fa-arrow-right"></i>
-                        </a>
-                        <a href="service.html" target="_blank" class="premium-btn premium-btn-secondary">Learn More</a>
-                    </div>
-                </div>
-                <div class="premium-image">
-                    <img src="https://placehold.co/400x300/6366f1/ffffff?text=Premium+Mentorship" alt="Premium Mentorship">
-                </div>
-            </div>
-        </section>
-
-        <!-- Announcement Section -->
-        <section class="announcement-section">
-            <div class="announcement-content">
-                <h2>🚀 Premium Content Launch</h2>
-                <p>Get ready for our biggest release yet! New premium digital products dropping soon.</p>
-                <div class="countdown" id="countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="days">00</div>
-                        <div class="countdown-label">Days</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="hours">00</div>
-                        <div class="countdown-label">Hours</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="minutes">00</div>
-                        <div class="countdown-label">Minutes</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="seconds">00</div>
-                        <div class="countdown-label">Seconds</div>
-                    </div>
-                </div>
-                <p>Don't miss out on exclusive early-bird pricing and bonus content!</p>
-            </div>
-        </section>
-
         <!-- Community Links Section -->
         <section class="community-links-section">
-            <h2>Connect on <span>Community</span> Platforms</h2>
+            <h2>Choose Your <span>Platform</span></h2>
+            <p class="section-description">Join thousands of developers on your preferred platform and start connecting today</p>
             <div class="community-links">
-                <a href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz" class="community-link whatsapp" target="_blank">
+                <a href="https://chat.whatsapp.com/K0HU0bMGPMMCJPhRK0t8It" target="_blank" class="community-link whatsapp" rel="noopener">
                     <i class="fab fa-whatsapp"></i>
                     <h3>WhatsApp Group</h3>
-                    <p>Real-time discussions and quick help</p>
+                    <p>Real-time discussions, quick help, and instant connections with fellow developers</p>
                 </a>
-                <a href="https://t.me/+2348185947780" class="community-link telegram" target="_blank">
+                <a href="https://t.me/+2348185947780" target="_blank" class="community-link telegram" rel="noopener">
                     <i class="fab fa-telegram"></i>
                     <h3>Telegram Channel</h3>
-                    <p>Announcements and resource sharing</p>
+                    <p>Daily updates, resource sharing, and announcements for the community</p>
                 </a>
-                <!--a href="https://discord.gg/+2348185947780" class="community-link discord" target="_blank">
-                    <i class="fab fa-discord"></i>
-                    <h3>Discord Server</h3>
-                    <p>24/7 community and voice chats</p>
-                </a-->
             </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <h2>Community <span>Benefits</span></h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fas fa-users"></i>
+                    <h3>Peer Support</h3>
+                    <p>Get help from experienced developers and help others grow</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-code"></i>
+                    <h3>Code Reviews</h3>
+                    <p>Share your projects and receive constructive feedback</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Learning Resources</h3>
+                    <p>Access exclusive tutorials, guides, and learning materials</p>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Opportunities</h3>
+                    <p>Discover job openings, freelance gigs, and collaboration projects</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section class="support-section">
+            <h2>Need Direct Support?</h2>
+            <p>Our team is ready to help you with personalized guidance and mentorship</p>
+            <a href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20joining%20the%20CodeVent%20community" target="_blank" class="support-btn" rel="noopener">
+                <i class="fab fa-whatsapp"></i>
+                Contact Us on WhatsApp
+            </a>
         </section>
     </div>
 
@@ -675,31 +574,22 @@
         <div class="footer-container">
             <div class="footer-section">
                 <h3>CodeVent Digital</h3>
-                <p>Empowering the next generation of developers and digital creators through innovative learning and community collaboration.</p>
+                <p>Empowering the next generation of developers through community collaboration.</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
                     <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/2348185947780?text=Hello!%20I'm%20interested%20in%20your%20CodeVent%20community%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20CodeVent" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="index.html" target="_blank">Home</a></li>
-                    <li><a href="service.html" target="_blank">Services</a></li>
-                    <li><a href="product.html" target="_blank">Products</a></li>
-                    <li><a href="community.html" target="_blank">Community</a></li>
                     <li><a href="learning.html" target="_blank">Learning</a></li>
-                    <li><a href="Contact.html" target="_blank">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Services</h3>
-                <ul class="footer-links">
-                    <li><a href="learning.html" target="_blank">Web Development</a></li>
-                    <li><a href="product.html" target="_blank">Digital Product & Marketing</a></li>
-                    <li><a href="AI-Integration.html" target="_blank">AI Integration</a></li>
+                    <li><a href="community.html" target="_blank">Community</a></li>
+                    <li><a href="testimonial.html" target="_blank">Testimonial</a></li>
+                    <li><a href="shop.html" target="_blank">Shop</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -742,35 +632,6 @@
                 icon.classList.add('fa-bars');
             });
         });
-
-        // Countdown Timer
-        function updateCountdown() {
-            // Set the launch date (30 days from now)
-            const launchDate = new Date();
-            launchDate.setDate(launchDate.getDate() + 30);
-            
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-            
-            if (distance < 0) {
-                document.getElementById('countdown').innerHTML = '<p>Launch Complete! 🎉</p>';
-                return;
-            }
-            
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            document.getElementById('days').innerHTML = days.toString().padStart(2, '0');
-            document.getElementById('hours').innerHTML = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').innerHTML = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').innerHTML = seconds.toString().padStart(2, '0');
-        }
-        
-        // Update countdown every second
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>

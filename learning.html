@@ -1,586 +1,1682 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Master HTML5 with interactive lessons, live editor, and real-world projects. Join CodeVent Digital's developer community.">
-    <title>HTML5 Learning - CodeVent Digital</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --dark: #1f2937;
-            --light: #f9fafb;
-            --gray: #6b7280;
-            --light-gray: #e5e7eb;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Master HTML5, CSS & JavaScript with interactive lessons, a sandboxed live editor, quizzes, and curated resources. CodeVent Digital — Building Developers One Step at a Time." />
+  <title>HTML · CSS · JS Learning — CodeVent Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            margin: 0;
-            background: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
-        }
+  <style>
+    /* ═══════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --primary:        #5b4cff;
+      --primary-dark:   #3d2ee0;
+      --primary-glow:   rgba(91,76,255,0.22);
+      --accent:         #00e5a0;
+      --accent-dim:     rgba(0,229,160,0.13);
+      --warn:           #fbbf24;
+      --danger:         #f87171;
+      --success:        #34d399;
 
-        body.dark-mode {
-            --light: #0a192f;
-            --dark: #e6f1ff;
-            --gray: #a0aec0;
-            --light-gray: #172a45;
-        }
+      --dark:           #0d0f1a;
+      --dark-2:         #141628;
+      --dark-3:         #1c1f38;
+      --dark-4:         #252845;
 
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.25rem 0;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,119,182,0.2);
-        }
+      --text:           #e8e9f3;
+      --text-muted:     #8b8fa8;
+      --border:         rgba(255,255,255,0.07);
+      --border-strong:  rgba(255,255,255,0.13);
 
-        .navbar {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 0 1rem;
-        }
+      --radius:         0.9rem;
+      --radius-sm:      0.5rem;
+      --transition:     all 0.25s cubic-bezier(0.4,0,0.2,1);
 
-        .nav-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 0.75rem 1.25rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-        }
+      --font-display:   'DM Serif Display', Georgia, serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      --font-mono:      'DM Mono', monospace;
 
-        .nav-btn:hover, .nav-btn.active {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
+      --shadow:         0 16px 48px rgba(0,0,0,0.45);
+      --shadow-sm:      0 4px 16px rgba(0,0,0,0.25);
+    }
 
-        main {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
+    /* ═══════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.75rem;
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2rem;
-            transition: transform 0.2s ease;
-        }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-        body.dark-mode .card {
-            background: var(--light-gray);
-        }
+    /* subtle grid bg */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .card:hover {
-            transform: translateY(-3px);
-        }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font-body); }
 
-        h1, h2, h3 {
-            margin: 0 0 1rem;
-            color: var(--primary);
-        }
+    /* ═══════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
 
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
-            color: var(--secondary);
-        }
+    /* ═══════════════════════════════════════
+       ACCESSIBILITY
+    ═══════════════════════════════════════ */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
-        .btn {
-            display: inline-block;
-            background: var(--secondary);
-            color: white;
-            padding: 0.6rem 1.25rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            border: 2px solid var(--secondary);
-            cursor: pointer;
-        }
+    /* ═══════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════ */
+    .site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,15,26,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
 
-        .btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,180,216,0.3);
-        }
+    .header-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 62px;
+    }
 
-        .btn-outline {
-            background: transparent;
-            color: var(--secondary);
-        }
+    .logo-link {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: white;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 30px; height: 30px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; color: white;
+    }
+    .logo-accent { color: var(--accent); }
 
-        .btn-outline:hover {
-            background: var(--secondary);
-            color: white;
-        }
+    /* Tab nav */
+    .tab-nav {
+      display: flex;
+      gap: 0.15rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.25rem;
+    }
 
-        .hide { display: none; }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.45rem 1rem;
+      border: none;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    .tab-btn i { font-size: 0.78rem; }
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .tab-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 2px 12px var(--primary-glow);
+    }
 
-        pre {
-            background: var(--light-gray);
-            padding: 1.25rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.95rem;
-        }
+    .header-back {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .header-back:hover { color: white; border-color: var(--border-strong); }
 
-        body.dark-mode pre {
-            background: #1e293b;
-            color: #e2e8f0;
-        }
+    /* ═══════════════════════════════════════
+       MAIN LAYOUT
+    ═══════════════════════════════════════ */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+    }
 
-        code {
-            background: var(--light-gray);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Consolas', 'Monaco', monospace;
-        }
+    .tab-section { display: none; }
+    .tab-section.active { display: block; animation: fadeIn 0.3s ease; }
 
-        body.dark-mode code {
-            background: #334155;
-        }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-        .editor-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
+    /* ═══════════════════════════════════════
+       PROGRESS BAR
+    ═══════════════════════════════════════ */
+    .progress-widget {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.75rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
 
-        @media (max-width: 768px) {
-            .editor-container {
-                grid-template-columns: 1fr;
-            }
-        }
+    .progress-info { flex: 1; min-width: 160px; }
+    .progress-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .progress-bar-track {
+      height: 7px;
+      background: var(--dark-4);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+      width: 0%;
+    }
+    .progress-pct {
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: white;
+      line-height: 1;
+    }
+    .progress-pct span { font-size: 0.85rem; color: var(--text-muted); }
 
-        .editor-panel {
-            display: flex;
-            flex-direction: column;
-        }
+    .progress-steps {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .step-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: var(--transition);
+    }
+    .step-pill.done {
+      background: var(--accent-dim);
+      border-color: rgba(0,229,160,0.3);
+      color: var(--accent);
+    }
+    .step-pill i { font-size: 0.65rem; }
 
-        .editor-label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
+    /* ═══════════════════════════════════════
+       PAGE INTRO BANNER
+    ═══════════════════════════════════════ */
+    .intro-banner {
+      position: relative;
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 2rem 1.75rem;
+      margin-bottom: 1.75rem;
+      overflow: hidden;
+    }
+    .intro-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    .intro-banner::after {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+      pointer-events: none;
+    }
+    .intro-banner h2 {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .intro-banner p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+    .intro-meta {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .meta-chip i { color: var(--accent); font-size: 0.75rem; }
 
-        body.dark-mode .editor-label {
-            color: var(--secondary);
-        }
+    /* ═══════════════════════════════════════
+       LESSONS
+    ═══════════════════════════════════════ */
+    .lessons-list { display: flex; flex-direction: column; gap: 1rem; }
 
-        #editorArea {
-            width: 100%;
-            min-height: 300px;
-            padding: 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.95rem;
-            resize: vertical;
-            box-sizing: border-box;
-        }
+    .lesson-item {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .lesson-item:hover { border-color: var(--border-strong); }
+    .lesson-item.completed { border-color: rgba(0,229,160,0.28); }
 
-        body.dark-mode #editorArea {
-            background: #1e293b;
-            color: #e2e8f0;
-            border-color: #334155;
-        }
+    .lesson-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
 
-        #output {
-            width: 100%;
-            min-height: 300px;
-            padding: 1rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            background: white;
-            box-sizing: border-box;
-            overflow: auto;
-        }
+    .lesson-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--dark-3);
+      padding: 0.25rem 0.55rem;
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
 
-        body.dark-mode #output {
-            background: #0f172a;
-            border-color: #334155;
-        }
+    .lesson-title-text {
+      flex: 1;
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: var(--text);
+    }
 
-        .lesson-item {
-            background: rgba(0, 119, 182, 0.05);
-            padding: 1.25rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary);
-        }
+    .lesson-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .badge-done   { background: var(--accent-dim); color: var(--accent); }
+    .badge-todo   { background: rgba(255,255,255,0.05); color: var(--text-muted); }
 
-        body.dark-mode .lesson-item {
-            background: rgba(0, 180, 216, 0.1);
-            border-left-color: var(--secondary);
-        }
+    .lesson-chevron {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      transition: transform 0.25s ease;
+      flex-shrink: 0;
+    }
+    .lesson-item.open .lesson-chevron { transform: rotate(180deg); }
 
-        .lesson-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
+    .lesson-body {
+      display: none;
+      padding: 0 1.5rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .lesson-item.open .lesson-body { display: block; animation: fadeIn 0.2s ease; }
 
-        .lesson-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
+    .lesson-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: white;
+      margin: 1.25rem 0 0.6rem;
+    }
+    .lesson-body h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 1.1rem 0 0.5rem;
+    }
+    .lesson-body p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      margin-bottom: 0.75rem;
+    }
+    .lesson-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+    .lesson-body ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .lesson-body ul li::before {
+      content: '▸';
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 0.05em;
+    }
 
-        .lesson-status {
-            color: var(--secondary);
-            font-weight: bold;
-        }
+    /* Code blocks */
+    pre {
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.4rem;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      line-height: 1.75;
+      color: #c9d1d9;
+      margin: 0.75rem 0 1.1rem;
+      position: relative;
+    }
+    pre .kw  { color: #c792ea; }
+    pre .tg  { color: #82aaff; }
+    pre .at  { color: #ffcb6b; }
+    pre .vl  { color: #c3e88d; }
+    pre .cm  { color: #546e7a; font-style: italic; }
 
-        .quiz-option {
-            display: flex;
-            align-items: center;
-            margin: 0.5rem 0;
-            padding: 0.75rem;
-            background: var(--light);
-            border: 2px solid var(--light-gray);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      color: var(--accent);
+    }
 
-        body.dark-mode .quiz-option {
-            background: var(--light-gray);
-            border-color: #334155;
-        }
+    /* Mark complete button */
+    .btn-complete {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 0.55rem 1.2rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-complete:hover {
+      background: rgba(0,229,160,0.22);
+      transform: translateY(-1px);
+    }
+    .btn-complete.done {
+      background: transparent;
+      border-color: rgba(0,229,160,0.2);
+      color: var(--text-muted);
+      cursor: default;
+      pointer-events: none;
+    }
 
-        .quiz-option:hover {
-            border-color: var(--primary);
-        }
+    /* ─ Community box ─ */
+    .community-box {
+      background: var(--dark-3);
+      border: 1px dashed rgba(0,229,160,0.25);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .community-box-icon {
+      width: 46px; height: 46px;
+      background: rgba(0,229,160,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .community-box-text { flex: 1; min-width: 180px; }
+    .community-box-text strong { display: block; color: white; font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .community-box-text span { font-size: 0.82rem; color: var(--text-muted); }
 
-        .quiz-option input {
-            margin-right: 0.75rem;
-        }
+    /* ═══════════════════════════════════════
+       NEXT STEP SECTION
+    ═══════════════════════════════════════ */
+    .next-step {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-top: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .next-step::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+    .next-step-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .next-step h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .next-step p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .next-step-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-        .resource-card {
-            background: linear-gradient(135deg, rgba(0,119,182,0.08), rgba(0,180,216,0.08));
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1.25rem;
-            border: 2px solid var(--light-gray);
-            transition: all 0.3s ease;
-        }
+    /* ═══════════════════════════════════════
+       BUTTONS (shared)
+    ═══════════════════════════════════════ */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 0.65rem 1.5rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 14px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(91,76,255,0.45);
+    }
 
-        .resource-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,119,182,0.15);
-        }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-ghost:hover { color: white; border-color: var(--primary); background: var(--primary-glow); }
 
-        .resource-card h3 {
-            margin-top: 0;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #25d366;
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 700;
+      padding: 0.65rem 1.4rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-whatsapp:hover { background: #1ebe57; transform: translateY(-2px); }
 
-        .resource-card h3 i {
-            color: var(--secondary);
-        }
+    /* ═══════════════════════════════════════
+       EDITOR TAB
+    ═══════════════════════════════════════ */
+    .editor-intro {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .editor-intro-icon {
+      width: 40px; height: 40px;
+      background: rgba(91,76,255,0.15);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--primary);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .editor-intro strong { display: block; color: white; font-size: 0.95rem; margin-bottom: 0.25rem; }
+    .editor-intro span { font-size: 0.83rem; color: var(--text-muted); line-height: 1.6; }
 
-        .info-banner {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
+    /* Editor toolbar */
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 0.65rem 1rem;
+      flex-wrap: wrap;
+    }
+    .toolbar-dots { display: flex; gap: 0.45rem; align-items: center; }
+    .dot-r { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+    .dot-y { width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e; }
+    .dot-g { width: 10px; height: 10px; border-radius: 50%; background: #28c840; }
+    .toolbar-file {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .toolbar-actions { display: flex; gap: 0.5rem; margin-left: auto; }
 
-        .info-banner h3 {
-            color: white;
-            margin-top: 0;
-        }
+    .btn-run {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--accent);
+      color: var(--dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.02em;
+    }
+    .btn-run:hover { background: #00cfb8; transform: translateY(-1px); }
 
-        footer {
-            text-align: center;
-            padding: 2rem 0 1.5rem;
-            background: var(--light-gray);
-            color: var(--gray);
-            margin-top: 3rem;
-        }
+    .btn-reset {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-reset:hover { color: var(--text); border-color: var(--border-strong); }
 
-        body.dark-mode footer {
-            background: #0f172a;
-            color: #94a3b8;
-        }
+    /* Editor layout */
+    .editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      overflow: hidden;
+    }
 
-        @media (max-width: 600px) {
-            .card { padding: 1.25rem; }
-            h1 { font-size: 1.75rem; }
-            .nav-btn { padding: 0.5rem 1rem; font-size: 0.9rem; }
-        }
-        .ftr{
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
-    color: white;
-        }
-    </style>
+    .editor-pane {
+      display: flex;
+      flex-direction: column;
+    }
+    .editor-pane:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .pane-label {
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--dark-3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    #editorArea {
+      flex: 1;
+      min-height: 300px;
+      padding: 1.25rem;
+      background: var(--dark-2);
+      border: none;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      line-height: 1.75;
+      resize: vertical;
+      width: 100%;
+      outline: none;
+      tab-size: 2;
+    }
+    #editorArea::selection { background: var(--primary-glow); }
+
+    .preview-pane {
+      flex: 1;
+      min-height: 300px;
+      background: white;
+      overflow: auto;
+    }
+
+    #previewFrame {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      border: none;
+      display: block;
+    }
+
+    /* Sandbox notice */
+    .sandbox-notice {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      padding: 0.5rem 0.85rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .sandbox-notice i { color: var(--warn); font-size: 0.72rem; }
+
+    /* ═══════════════════════════════════════
+       QUIZ TAB
+    ═══════════════════════════════════════ */
+    .quiz-intro {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .quiz-intro h2 {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      color: white;
+      margin-bottom: 0.4rem;
+    }
+    .quiz-intro p { font-size: 0.88rem; color: var(--text-muted); }
+
+    .quiz-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .quiz-q-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--primary);
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .quiz-question {
+      font-weight: 700;
+      font-size: 0.97rem;
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    .quiz-option:hover { border-color: var(--primary); color: var(--text); background: rgba(91,76,255,0.08); }
+    .quiz-option input[type="radio"] { accent-color: var(--primary); flex-shrink: 0; }
+    .quiz-option.correct { border-color: var(--success); background: rgba(52,211,153,0.08); color: var(--success); }
+    .quiz-option.wrong   { border-color: var(--danger);  background: rgba(248,113,113,0.08); color: var(--danger); }
+
+    .quiz-result {
+      display: none;
+      margin-top: 1.25rem;
+      padding: 1.1rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.9rem;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .quiz-result.show { display: flex; }
+    .quiz-result.pass { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); color: var(--success); }
+    .quiz-result.fail { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); color: var(--danger); }
+    .quiz-result.warn { background: rgba(251,191,36,0.1);  border: 1px solid rgba(251,191,36,0.3);  color: var(--warn); }
+
+    .quiz-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+
+    /* ═══════════════════════════════════════
+       RESOURCES TAB
+    ═══════════════════════════════════════ */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .resource-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .resource-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .resource-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+    .ri-orange { background: rgba(251,191,36,0.12); color: #fbbf24; }
+    .ri-blue   { background: rgba(130,170,255,0.12); color: #82aaff; }
+    .ri-green  { background: var(--accent-dim); color: var(--accent); }
+
+    .resource-card h3 {
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: white;
+    }
+    .resource-card p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+
+    /* Pro tip box */
+    .pro-tip {
+      background: var(--dark-3);
+      border: 1px dashed rgba(251,191,36,0.25);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .pro-tip-icon {
+      width: 36px; height: 36px;
+      background: rgba(251,191,36,0.1);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--warn);
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .pro-tip strong { display: block; color: white; font-size: 0.9rem; margin-bottom: 0.3rem; }
+    .pro-tip span { font-size: 0.83rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--dark-2);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+    footer .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: white;
+      margin-bottom: 0.4rem;
+    }
+    footer .footer-logo span { color: var(--accent); }
+    footer p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
+    footer .footer-tagline { margin-top: 0.2rem; color: var(--primary); font-weight: 600; font-size: 0.78rem; }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 720px) {
+      .header-inner { flex-wrap: wrap; height: auto; padding: 0.75rem 0; gap: 0.75rem; }
+      .tab-nav { order: 3; width: 100%; overflow-x: auto; justify-content: flex-start; }
+      .tab-btn { font-size: 0.78rem; padding: 0.4rem 0.8rem; }
+      .tab-btn .tab-label { display: none; }
+      .tab-btn i { font-size: 0.9rem; margin: 0; }
+
+      .editor-layout { grid-template-columns: 1fr; }
+      .editor-pane:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+
+      .progress-widget { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .community-box { flex-direction: column; text-align: center; }
+      .community-box-icon { margin: 0 auto; }
+
+      .next-step-btns { flex-direction: column; }
+      .btn-primary, .btn-ghost, .btn-whatsapp { justify-content: center; }
+
+      main { margin-top: 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .resources-grid { grid-template-columns: 1fr; }
+      .intro-meta { flex-direction: column; gap: 0.5rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       MICRO-INTERACTIONS
+    ═══════════════════════════════════════ */
+    @keyframes popIn {
+      0%   { transform: scale(0.85); opacity: 0; }
+      70%  { transform: scale(1.04); }
+      100% { transform: scale(1);    opacity: 1; }
+    }
+    .pop { animation: popIn 0.35s cubic-bezier(0.4,0,0.2,1) forwards; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>CodeVent Digital - HTML | CSS | Javascript Learning</h1>
-        <nav class="navbar">
-            <button class="nav-btn active" data-tab="lesson">Lessons</button>
-            <button class="nav-btn" data-tab="editor">Practice Editor</button>
-            <button class="nav-btn" data-tab="quiz">Quiz</button>
-            <button class="nav-btn" data-tab="resources">Resources</button>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Lessons -->
-        <section id="lesson" class="card">
-            <div class="info-banner">
-                <h3><i class="fas fa-graduation-cap"></i> Start Your HTML5 Journey</h3>
-                <p>Begin with our lessons below, then check the <strong>Resources</strong> tab for comprehensive learning materials from W3Schools, MDN, and FreeCodeCamp. Also join our WhatsApp group below for free coding tips.</p>
-            </div>
+  <!-- ══ HEADER ════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-link" aria-label="CodeVent Digital — Home">
+        <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
+        CodeVent <span class="logo-accent">Digital</span>
+      </a>
 
-            <h2>HTML5 Lessons</h2>
-            <p>Complete each lesson and mark it as completed to track your progress.</p>
-            
-            <div class="lesson-item">
-                <div class="lesson-header">
-                    <div class="lesson-title">Lesson 1: HTML5 Basics</div>
-                    <div class="lesson-status" id="l1-status"></div>
-                </div>
-                <button onclick="toggleLesson('l1')" class="btn btn-outline">View Lesson</button>
-                <div id="l1" class="hide" style="margin-top:1rem;">
-                    <h3>What is HTML5?</h3>
-                    <p>HTML5 is the latest version of Hypertext Markup Language, the code that describes web pages.</p>
-                    <h4>Basic Structure:</h4>
-                    <pre>&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-  &lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;My First HTML5 Page&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;Hello, World!&lt;/h1&gt;
-    &lt;p&gt;This is my first HTML5 web page.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</pre>
-                    <button onclick="markCompleted('l1')" class="btn">Mark as Completed</button>
-                </div>
-            </div>
-            
-            <div class="lesson-item">
-                <div class="lesson-header">
-                    <div class="lesson-title">Lesson 2: Common HTML5 Elements</div>
-                    <div class="lesson-status" id="l2-status"></div>
-                </div>
-                <button onclick="toggleLesson('l2')" class="btn btn-outline">View Lesson</button>
-                <div id="l2" class="hide" style="margin-top:1rem;">
-                    <h3>Essential Elements</h3>
-                    <ul>
-                        <li><code>&lt;header&gt;</code> - Defines the header section</li>
-                        <li><code>&lt;nav&gt;</code> - Navigation links</li>
-                        <li><code>&lt;main&gt;</code> - Main content area</li>
-                        <li><code>&lt;footer&gt;</code> - Footer section</li>
-                        <li><code>&lt;section&gt;</code> - Logical sections of the page</li>
-                    </ul>
-                    <button onclick="markCompleted('l2')" class="btn">Mark as Completed</button>
-                </div>
-            </div>
+      <nav class="tab-nav" aria-label="Learning sections">
+        <button class="tab-btn active" data-tab="lesson" aria-selected="true">
+          <i class="fas fa-book-open" aria-hidden="true"></i>
+          <span class="tab-label">Lessons</span>
+        </button>
+        <button class="tab-btn" data-tab="editor" aria-selected="false">
+          <i class="fas fa-code" aria-hidden="true"></i>
+          <span class="tab-label">Editor</span>
+        </button>
+        <button class="tab-btn" data-tab="quiz" aria-selected="false">
+          <i class="fas fa-clipboard-check" aria-hidden="true"></i>
+          <span class="tab-label">Quiz</span>
+        </button>
+        <button class="tab-btn" data-tab="resources" aria-selected="false">
+          <i class="fas fa-layer-group" aria-hidden="true"></i>
+          <span class="tab-label">Resources</span>
+        </button>
+      </nav>
 
-            <div style="margin-top:2rem; padding:1.5rem; background:rgba(0,119,182,0.05); border-radius:8px;">
-                <h3>Need Help?</h3>
-                <p>Join our community for support and mentorship</p>
-                <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" class="btn" rel="noopener">
-                    <i class="fab fa-whatsapp"></i> Join Community
-                </a>
-            </div>
-        </section>
+      <a href="index.html" class="header-back" aria-label="Back to homepage">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        <span>Home</span>
+      </a>
+    </div>
+  </header>
 
-        <!-- Editor -->
-        <section id="editor" class="card hide">
-            <h2>HTML5 Practice Editor</h2>
-            <p>Edit the code below and click "Run" to see your changes in real-time.</p>
-            
-            <div class="editor-container">
-                <div class="editor-panel">
-                    <div class="editor-label">HTML Code</div>
-                    <textarea id="editorArea">&lt;h1 style="color: #0077b6;"&gt;Hello HTML5!&lt;/h1&gt;
-&lt;p&gt;Edit this code and click Run.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Item 1&lt;/li&gt;
-  &lt;li&gt;Item 2&lt;/li&gt;
-&lt;/ul&gt;</textarea>
-                </div>
-                <div class="editor-panel">
-                    <div class="editor-label">Live Preview</div>
-                    <div id="output"></div>
-                </div>
-            </div>
-            
-            <button onclick="runEditorCode()" class="btn" style="margin-top:1.5rem;">
-                <i class="fas fa-play"></i> Run Code
+  <!-- ══ MAIN ══════════════════════════════════════════════ -->
+  <main>
+
+    <!-- ── PROGRESS WIDGET (always visible) ── -->
+    <div class="progress-widget" id="progressWidget" aria-label="Your learning progress">
+      <div>
+        <div class="progress-pct" id="progressPct">0<span>%</span></div>
+      </div>
+      <div class="progress-info">
+        <div class="progress-label">Course Progress</div>
+        <div class="progress-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progressBarTrack">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+        </div>
+      </div>
+      <div class="progress-steps" id="progressSteps" aria-label="Lesson completion status">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         LESSONS TAB
+    ══════════════════════════════════════ -->
+    <section id="lesson" class="tab-section active" aria-label="Lessons">
+
+      <div class="intro-banner">
+        <h2><i class="fas fa-graduation-cap" aria-hidden="true" style="color:var(--accent);margin-right:0.5rem;"></i>Start Your HTML5 Journey</h2>
+        <p>Work through the lessons below, then head to the <strong style="color:var(--text);">Resources</strong> tab for external materials from W3Schools, MDN, and FreeCodeCamp. Use the <strong style="color:var(--text);">Editor</strong> to practice live as you learn.</p>
+        <div class="intro-meta">
+          <span class="meta-chip"><i class="fas fa-bolt"></i> 2 Lessons</span>
+          <span class="meta-chip"><i class="fas fa-clock"></i> ~20 min</span>
+          <span class="meta-chip"><i class="fas fa-lock-open"></i> Free Access</span>
+          <span class="meta-chip"><i class="fas fa-certificate"></i> HTML5 · CSS · JS</span>
+        </div>
+      </div>
+
+      <div class="lessons-list" id="lessonsList">
+
+        <!-- LESSON 1 -->
+        <div class="lesson-item" id="item-l1">
+          <div class="lesson-header" onclick="toggleLesson('l1')" role="button" aria-expanded="false" aria-controls="body-l1" tabindex="0">
+            <span class="lesson-num">01</span>
+            <span class="lesson-title-text">HTML5 Basics</span>
+            <span class="lesson-badge badge-todo" id="badge-l1">Not Started</span>
+            <i class="fas fa-chevron-down lesson-chevron" aria-hidden="true"></i>
+          </div>
+          <div class="lesson-body" id="body-l1">
+            <h3>What is HTML5?</h3>
+            <p>HTML5 is the latest version of <strong style="color:var(--text);">HyperText Markup Language, </strong> the foundation of every web page. It defines the structure and meaning of web content through elements and tags.</p>
+
+            <h4>Basic Document Structure</h4>
+            <pre><span class="cm">&lt;!-- Every HTML5 page starts with this boilerplate --&gt;</span>
+<span class="tg">&lt;!DOCTYPE html&gt;</span>
+<span class="tg">&lt;html</span> <span class="at">lang</span>=<span class="vl">"en"</span><span class="tg">&gt;</span>
+  <span class="tg">&lt;head&gt;</span>
+    <span class="tg">&lt;meta</span> <span class="at">charset</span>=<span class="vl">"UTF-8"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;meta</span> <span class="at">name</span>=<span class="vl">"viewport"</span> <span class="at">content</span>=<span class="vl">"width=device-width, initial-scale=1.0"</span><span class="tg">&gt;</span>
+    <span class="tg">&lt;title&gt;</span>My First HTML5 Page<span class="tg">&lt;/title&gt;</span>
+  <span class="tg">&lt;/head&gt;</span>
+  <span class="tg">&lt;body&gt;</span>
+    <span class="tg">&lt;h1&gt;</span>Hello, World!<span class="tg">&lt;/h1&gt;</span>
+    <span class="tg">&lt;p&gt;</span>This is my first web page.<span class="tg">&lt;/p&gt;</span>
+  <span class="tg">&lt;/body&gt;</span>
+<span class="tg">&lt;/html&gt;</span></pre>
+
+            <h4>Key Concepts</h4>
+            <ul>
+              <li><code>&lt;!DOCTYPE html&gt;</code> — tells the browser this is an HTML5 document</li>
+              <li><code>&lt;html lang="en"&gt;</code> — root element; <code>lang</code> improves accessibility & SEO</li>
+              <li><code>&lt;head&gt;</code> — metadata: title, charset, viewport, styles</li>
+              <li><code>&lt;body&gt;</code> — everything visible on the page lives here</li>
+              <li><code>&lt;h1&gt;</code> to <code>&lt;h6&gt;</code> — headings in order of importance</li>
+              <li><code>&lt;p&gt;</code> — paragraph text</li>
+            </ul>
+
+            <p>💡 <em style="color:var(--text-muted);">Try this code in the <strong style="color:var(--text);">Editor</strong> tab — paste it and click Run!</em></p>
+
+            <button class="btn-complete" id="btn-l1" onclick="markCompleted('l1')" aria-label="Mark Lesson 1 as completed">
+              <i class="fas fa-check" aria-hidden="true"></i> Mark as Completed
             </button>
-            <button onclick="resetEditor()" class="btn btn-outline" style="margin-left:0.75rem;">
-                <i class="fas fa-redo"></i> Reset
+          </div>
+        </div>
+
+        <!-- LESSON 2 -->
+        <div class="lesson-item" id="item-l2">
+          <div class="lesson-header" onclick="toggleLesson('l2')" role="button" aria-expanded="false" aria-controls="body-l2" tabindex="0">
+            <span class="lesson-num">02</span>
+            <span class="lesson-title-text">Common HTML5 Elements</span>
+            <span class="lesson-badge badge-todo" id="badge-l2">Not Started</span>
+            <i class="fas fa-chevron-down lesson-chevron" aria-hidden="true"></i>
+          </div>
+          <div class="lesson-body" id="body-l2">
+            <h3>Semantic HTML5 Elements</h3>
+            <p>HTML5 introduced <strong style="color:var(--text);">semantic elements, </strong> tags that describe meaning, not just appearance. Search engines and screen readers rely on them.</p>
+
+            <h4>Structural / Layout Elements</h4>
+            <ul>
+              <li><code>&lt;header&gt;</code> — top of a page or section (logo, nav)</li>
+              <li><code>&lt;nav&gt;</code> — navigation links</li>
+              <li><code>&lt;main&gt;</code> — primary content; only one per page</li>
+              <li><code>&lt;section&gt;</code> — thematic grouping of content</li>
+              <li><code>&lt;article&gt;</code> — self-contained content (blog post, card)</li>
+              <li><code>&lt;aside&gt;</code> — sidebar or supplementary content</li>
+              <li><code>&lt;footer&gt;</code> — bottom of a page or section</li>
+            </ul>
+
+            <h4>Content Elements</h4>
+            <ul>
+              <li><code>&lt;h1&gt;–&lt;h6&gt;</code> — headings (h1 = most important)</li>
+              <li><code>&lt;p&gt;</code> — paragraph</li>
+              <li><code>&lt;a href=""&gt;</code> — hyperlink</li>
+              <li><code>&lt;img src="" alt=""&gt;</code> — image (always include <code>alt</code>)</li>
+              <li><code>&lt;ul&gt;</code> / <code>&lt;ol&gt;</code> / <code>&lt;li&gt;</code> — lists</li>
+              <li><code>&lt;div&gt;</code> — generic container (no semantic meaning)</li>
+              <li><code>&lt;span&gt;</code> — inline container</li>
+            </ul>
+
+            <h4>Example: Semantic Page Skeleton</h4>
+            <pre><span class="tg">&lt;body&gt;</span>
+  <span class="tg">&lt;header&gt;</span>
+    <span class="tg">&lt;nav&gt;</span><span class="tg">&lt;a</span> <span class="at">href</span>=<span class="vl">"/"</span><span class="tg">&gt;</span>Home<span class="tg">&lt;/a&gt;&lt;/nav&gt;</span>
+  <span class="tg">&lt;/header&gt;</span>
+  <span class="tg">&lt;main&gt;</span>
+    <span class="tg">&lt;section&gt;</span>
+      <span class="tg">&lt;h1&gt;</span>Welcome<span class="tg">&lt;/h1&gt;</span>
+      <span class="tg">&lt;p&gt;</span>This is the main content.<span class="tg">&lt;/p&gt;</span>
+    <span class="tg">&lt;/section&gt;</span>
+  <span class="tg">&lt;/main&gt;</span>
+  <span class="tg">&lt;footer&gt;</span><span class="tg">&lt;p&gt;</span>&amp;copy; 2025<span class="tg">&lt;/p&gt;&lt;/footer&gt;</span>
+<span class="tg">&lt;/body&gt;</span></pre>
+
+            <button class="btn-complete" id="btn-l2" onclick="markCompleted('l2')" aria-label="Mark Lesson 2 as completed">
+              <i class="fas fa-check" aria-hidden="true"></i> Mark as Completed
             </button>
-        </section>
+          </div>
+        </div>
 
-        <!-- Quiz -->
-        <section id="quiz" class="card hide">
-            <h2>HTML5 Knowledge Check</h2>
-            <p>Test your understanding of the lessons</p>
-            
-            <form id="quizForm">
-                <p><strong>1. What does HTML stand for?</strong></p>
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="a"> HyperText Markup Language
-                </label>
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="b"> Home Tool Markup Language
-                </label>
-                <label class="quiz-option">
-                    <input type="radio" name="q1" value="c"> Hyperlinks and Text Markup Language
-                </label>
-                
-                <button type="button" onclick="checkQuiz()" class="btn" style="margin-top:1.5rem;">Submit Quiz</button>
-            </form>
-            <div id="quizResult" style="margin-top:1rem; font-weight:600;"></div>
-        </section>
+      </div><!-- /lessons-list -->
 
-        <!-- Resources -->
-        <section id="resources" class="card hide">
-            <div class="info-banner">
-                <h3><i class="fas fa-book-open"></i> Comprehensive Learning Resources</h3>
-                <p>Click on any resource below to access free, in-depth HTML, CSS, Javascript tutorials and documentation.</p>
-            </div>
+      <!-- Community CTA -->
+      <div class="community-box">
+        <div class="community-box-icon" aria-hidden="true"><i class="fab fa-whatsapp"></i></div>
+        <div class="community-box-text">
+          <strong>Stuck? Join the Community</strong>
+          <span>Get live help, code reviews, and mentorship from fellow learners and instructors.</span>
+        </div>
+        <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Join CodeVent WhatsApp community">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i> Join Free
+        </a>
+      </div>
 
-            <h2>External Learning Platforms</h2>
-            <p>Continue your HTML5 journey with these industry-leading educational resources:</p>
-            
-            <div class="resource-card">
-                <h3><i class="fas fa-school"></i> W3Schools Tutorial</h3>
-                <p>Interactive tutorials with live examples and exercises. Perfect for beginners with step-by-step guidance and instant practice.</p>
-                <a href="https://www.w3schools.com/html/" target="_blank" class="btn" rel="noopener">
-                    <i class="fas fa-external-link-alt"></i> Start Learning on W3Schools
-                </a>
-            </div>
+      <!-- Next Step -->
+      <div class="next-step">
+        <div class="next-step-label">Up Next in Your Journey</div>
+        <h3>Ready to Practice?</h3>
+        <p>Open the Editor tab to try the code from these lessons live,  no setup needed. Then test yourself with the Quiz.</p>
+        <div class="next-step-btns">
+          <button class="btn-primary" onclick="showTab('editor')" aria-label="Open practice editor">
+            <i class="fas fa-code" aria-hidden="true"></i> Open Editor
+          </button>
+          <button class="btn-ghost" onclick="showTab('quiz')" aria-label="Take the quiz">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i> Take Quiz
+          </button>
+        </div>
+      </div>
 
-            <div class="resource-card">
-                <h3><i class="fas fa-book"></i> MDN Web Docs (Mozilla)</h3>
-                <p>Comprehensive HTML, CSS, Javascript etc, reference and guides from Mozilla. Deep technical documentation for serious developers.</p>
-                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" class="btn" rel="noopener">
-                    <i class="fas fa-external-link-alt"></i> Explore MDN Documentation
-                </a>
-            </div>
+    </section>
 
-            <div class="resource-card">
-                <h3><i class="fab fa-free-code-camp"></i> FreeCodeCamp</h3>
-                <p>Free coding bootcamp with certifications. Complete projects and earn certificates while building real-world skills.</p>
-                <a href="https://www.freecodecamp.org/news/tag/html/" target="_blank" class="btn" rel="noopener">
-                    <i class="fas fa-external-link-alt"></i> Learn with FreeCodeCamp
-                </a>
-            </div>
 
-            <div style="margin-top:2rem; padding:1.5rem; background:rgba(0,119,182,0.05); border-radius:8px; text-align:center;">
-                <h3><i class="fas fa-lightbulb"></i> Pro Tip</h3>
-                <p>Use all three platforms together! W3Schools for quick reference, MDN for deep understanding, and FreeCodeCamp for structured projects.</p>
-            </div>
-        </section>
-    </main>
+    <!-- ══════════════════════════════════════
+         EDITOR TAB
+    ══════════════════════════════════════ -->
+    <section id="editor" class="tab-section" aria-label="Practice Editor">
 
-    <footer class="ftr">
-        <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
-        <p>Building Developers One Step at a Time.</p>
-    </footer>
+      <div class="editor-intro">
+        <div class="editor-intro-icon" aria-hidden="true"><i class="fas fa-terminal"></i></div>
+        <div>
+          <strong>Sandboxed Live Editor</strong>
+          <span>Write HTML below and press <kbd style="background:var(--dark-3);border:1px solid var(--border);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:0.78rem;">Run</kbd> to see it rendered safely in real-time. Your code is isolated in a sandbox,  no scripts can escape.</span>
+        </div>
+      </div>
 
-    <script>
-        // Tab navigation
-        const tabs = ["lesson","editor","quiz","resources"];
-        
-        function showTab(tab) {
-            tabs.forEach(t => {
-                document.getElementById(t).classList.toggle('hide', t !== tab);
-                const btn = document.querySelector(`.nav-btn[data-tab='${t}']`);
-                if (btn) btn.classList.toggle('active', t === tab);
-            });
-            
-            if (tab === "lesson") updateLessonStatuses();
-            if (tab === "editor") runEditorCode();
+      <div class="editor-toolbar">
+        <div class="toolbar-dots" aria-hidden="true">
+          <span class="dot-r"></span>
+          <span class="dot-y"></span>
+          <span class="dot-g"></span>
+        </div>
+        <span class="toolbar-file" aria-hidden="true">practice.html</span>
+        <div class="toolbar-actions">
+          <button class="btn-reset" onclick="resetEditor()" aria-label="Reset editor to default code">
+            <i class="fas fa-undo" aria-hidden="true"></i> Reset
+          </button>
+          <button class="btn-run" onclick="runEditorCode()" aria-label="Run the code">
+            <i class="fas fa-play" aria-hidden="true"></i> Run
+          </button>
+        </div>
+      </div>
+
+      <div class="editor-layout">
+        <div class="editor-pane">
+          <div class="pane-label" aria-hidden="true">HTML Code</div>
+          <textarea
+            id="editorArea"
+            aria-label="HTML code editor"
+            spellcheck="false"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+          >&lt;!-- Try editing this! --&gt;
+&lt;h1 style="color:#5b4cff; font-family:sans-serif;"&gt;Hello HTML5!&lt;/h1&gt;
+&lt;p style="font-family:sans-serif; color:#555;"&gt;Edit this code and click Run.&lt;/p&gt;
+&lt;ul style="font-family:sans-serif;"&gt;
+  &lt;li&gt;🚀 Learn HTML5 structure&lt;/li&gt;
+  &lt;li&gt;🎨 Style with CSS&lt;/li&gt;
+  &lt;li&gt;⚡ Add logic with JavaScript&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p style="font-size:0.85rem;color:#888;font-family:sans-serif;"&gt;
+  Built with CodeVent Digital ✓
+&lt;/p&gt;</textarea>
+        </div>
+        <div class="editor-pane">
+          <div class="pane-label" aria-hidden="true">Live Preview</div>
+          <div class="preview-pane">
+            <iframe
+              id="previewFrame"
+              sandbox="allow-same-origin"
+              title="Code preview"
+              aria-label="Live preview of your HTML code"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sandbox-notice" role="note">
+        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+        <span>Preview runs in a sandboxed iframe. JavaScript execution is disabled for security.</span>
+      </div>
+
+      <!-- Next Step -->
+      <div class="next-step" style="margin-top:1.75rem;">
+        <div class="next-step-label">Next Step</div>
+        <h3>Test Your Knowledge</h3>
+        <p>You've practised in the editor,  now prove what you know with the quick quiz.</p>
+        <div class="next-step-btns">
+          <button class="btn-primary" onclick="showTab('quiz')">
+            <i class="fas fa-clipboard-check" aria-hidden="true"></i> Take the Quiz
+          </button>
+          <button class="btn-ghost" onclick="showTab('resources')">
+            <i class="fas fa-layer-group" aria-hidden="true"></i> Browse Resources
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         QUIZ TAB
+    ══════════════════════════════════════ -->
+    <section id="quiz" class="tab-section" aria-label="Knowledge Quiz">
+
+      <div class="quiz-intro">
+        <h2>HTML5 Knowledge Check</h2>
+        <p>Test your understanding of the lessons. Select your answers and click <strong style="color:var(--text);">Submit Quiz</strong>.</p>
+      </div>
+
+      <div id="quizForm">
+
+        <!-- Q1 -->
+        <div class="quiz-card">
+          <div class="quiz-q-num">Question 01</div>
+          <div class="quiz-question">What does HTML stand for?</div>
+          <div class="quiz-options">
+            <label class="quiz-option">
+              <input type="radio" name="q1" value="a" />
+              HyperText Markup Language
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q1" value="b" />
+              Home Tool Markup Language
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q1" value="c" />
+              Hyperlinks and Text Markup Language
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-card">
+          <div class="quiz-q-num">Question 02</div>
+          <div class="quiz-question">Which HTML5 element defines the main content of a page?</div>
+          <div class="quiz-options">
+            <label class="quiz-option">
+              <input type="radio" name="q2" value="a" />
+              <code>&lt;body&gt;</code>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q2" value="b" />
+              <code>&lt;main&gt;</code>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q2" value="c" />
+              <code>&lt;section&gt;</code>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-card">
+          <div class="quiz-q-num">Question 03</div>
+          <div class="quiz-question">What attribute must always be included on an <code>&lt;img&gt;</code> tag for accessibility?</div>
+          <div class="quiz-options">
+            <label class="quiz-option">
+              <input type="radio" name="q3" value="a" />
+              <code>src</code>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q3" value="b" />
+              <code>title</code>
+            </label>
+            <label class="quiz-option">
+              <input type="radio" name="q3" value="c" />
+              <code>alt</code>
+            </label>
+          </div>
+        </div>
+
+      </div><!-- /quizForm -->
+
+      <div id="quizResult" class="quiz-result" role="alert" aria-live="polite"></div>
+
+      <div class="quiz-actions">
+        <button class="btn-primary" onclick="checkQuiz()" aria-label="Submit quiz answers">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i> Submit Quiz
+        </button>
+        <button class="btn-ghost" onclick="resetQuiz()" aria-label="Reset quiz">
+          <i class="fas fa-undo" aria-hidden="true"></i> Try Again
+        </button>
+      </div>
+
+      <!-- Next Step -->
+      <div class="next-step" style="margin-top:1.75rem;">
+        <div class="next-step-label">Keep the Momentum</div>
+        <h3>Explore Deeper Resources</h3>
+        <p>Go beyond these lessons with W3Schools, MDN, and FreeCodeCamp, the industry's best free learning platforms.</p>
+        <div class="next-step-btns">
+          <button class="btn-primary" onclick="showTab('resources')">
+            <i class="fas fa-layer-group" aria-hidden="true"></i> Browse Resources
+          </button>
+          <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" rel="noopener" class="btn-whatsapp">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Join Community
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ══════════════════════════════════════
+         RESOURCES TAB
+    ══════════════════════════════════════ -->
+    <section id="resources" class="tab-section" aria-label="Learning Resources">
+
+      <div class="intro-banner">
+        <h2><i class="fas fa-book-open" aria-hidden="true" style="color:var(--accent);margin-right:0.5rem;"></i>Comprehensive Learning Resources</h2>
+        <p>Click any resource below to access free, in-depth HTML, CSS, and JavaScript tutorials. Use all three platforms together for the best results.</p>
+        <div class="intro-meta">
+          <span class="meta-chip"><i class="fas fa-globe"></i> 3 Platforms</span>
+          <span class="meta-chip"><i class="fas fa-lock-open"></i> All Free</span>
+          <span class="meta-chip"><i class="fas fa-star"></i> Industry Standard</span>
+        </div>
+      </div>
+
+      <div class="resources-grid">
+
+        <div class="resource-card">
+          <div class="resource-icon ri-orange"><i class="fas fa-school" aria-hidden="true"></i></div>
+          <h3>W3Schools</h3>
+          <p>Interactive tutorials with live examples and exercises. The go-to reference for quick lookups and beginners learning syntax.</p>
+          <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener" class="btn-primary" aria-label="Open W3Schools HTML tutorial">
+            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Open W3Schools
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon ri-blue"><i class="fas fa-book" aria-hidden="true"></i></div>
+          <h3>MDN Web Docs</h3>
+          <p>Mozilla's authoritative reference for web standards. Deep technical documentation for understanding how and why things work.</p>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener" class="btn-primary" aria-label="Open MDN Web Docs">
+            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Open MDN Docs
+          </a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-icon ri-green"><i class="fab fa-free-code-camp" aria-hidden="true"></i></div>
+          <h3>FreeCodeCamp</h3>
+          <p>Structured bootcamp with real projects and certifications. Build portfolio-worthy projects while earning proof of your skills.</p>
+          <a href="https://www.freecodecamp.org/news/tag/html/" target="_blank" rel="noopener" class="btn-primary" aria-label="Open FreeCodeCamp HTML content">
+            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Open FreeCodeCamp
+          </a>
+        </div>
+
+      </div>
+
+      <div class="pro-tip" role="note">
+        <div class="pro-tip-icon" aria-hidden="true"><i class="fas fa-lightbulb"></i></div>
+        <div>
+          <strong>Pro Strategy</strong>
+          <span>Use <strong style="color:var(--text);">W3Schools</strong> for quick syntax lookups, <strong style="color:var(--text);">MDN</strong> to understand the deeper "why", and <strong style="color:var(--text);">FreeCodeCamp</strong> for structured projects that go in your portfolio. Rotate between all three.</span>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="next-step" style="margin-top:1.75rem;">
+        <div class="next-step-label">Your Journey,  Monetize Stage</div>
+        <h3>Turn Your Skills Into Income</h3>
+        <p>You're learning the fundamentals. The next step is building real projects, getting them validated by the community, and discovering how to earn from your skills through the CodeVent Shop and mentorship network.</p>
+        <div class="next-step-btns">
+          <a href="shop.html" class="btn-primary" aria-label="Visit CodeVent Digital shop">
+            <i class="fas fa-store" aria-hidden="true"></i> Explore Shop
+          </a>
+          <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Join the community">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Join Community
+          </a>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer role="contentinfo">
+    <div class="footer-logo">CodeVent <span>Digital</span></div>
+    <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+    <p class="footer-tagline">Building Developers One Step at a Time.</p>
+  </footer>
+
+
+  <!-- ══ JAVASCRIPT ═════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── CONSTANTS ─────────────────────────────────────── */
+    const LESSONS     = ['l1', 'l2'];
+    const STORAGE_KEY = 'cv_lessons_v1';
+    const DEFAULT_CODE = document.getElementById('editorArea').value;
+
+    const QUIZ_ANSWERS = { q1: 'a', q2: 'b', q3: 'c' };
+
+    /* ── TAB SWITCHING ──────────────────────────────────── */
+    window.showTab = function showTab(tab) {
+      document.querySelectorAll('.tab-section').forEach(s => {
+        s.classList.toggle('active', s.id === tab);
+      });
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        const isActive = b.dataset.tab === tab;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-selected', String(isActive));
+      });
+
+      if (tab === 'editor') { setTimeout(runEditorCode, 80); }
+      if (tab === 'lesson') { updateAllUI(); }
+
+      // Scroll to top of main on mobile
+      if (window.innerWidth < 720) {
+        document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => showTab(btn.dataset.tab));
+    });
+
+    /* ── STORAGE ────────────────────────────────────────── */
+    function getCompleted() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch { return {}; }
+    }
+
+    function setCompleted(data) {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
+    }
+
+    /* ── LESSON TOGGLE ──────────────────────────────────── */
+    window.toggleLesson = function (lid) {
+      const item   = document.getElementById('item-' + lid);
+      const header = item.querySelector('.lesson-header');
+      const isOpen = item.classList.toggle('open');
+      header.setAttribute('aria-expanded', String(isOpen));
+    };
+
+    // Keyboard support for lesson headers
+    document.querySelectorAll('.lesson-header').forEach(h => {
+      h.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          h.click();
         }
-        
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', () => showTab(btn.dataset.tab));
+      });
+    });
+
+    /* ── MARK COMPLETED ─────────────────────────────────── */
+    window.markCompleted = function (lid) {
+      const data = getCompleted();
+      if (data[lid]) return; // already done
+      data[lid] = true;
+      setCompleted(data);
+      updateAllUI();
+
+      // Micro pop animation on the badge
+      const badge = document.getElementById('badge-' + lid);
+      badge.classList.add('pop');
+      badge.addEventListener('animationend', () => badge.classList.remove('pop'), { once: true });
+    };
+
+    /* ── UPDATE UI ──────────────────────────────────────── */
+    function updateAllUI() {
+      const data      = getCompleted();
+      const total     = LESSONS.length;
+      const done      = LESSONS.filter(l => data[l]).length;
+      const pct       = Math.round((done / total) * 100);
+
+      // Progress bar
+      document.getElementById('progressBarFill').style.width  = pct + '%';
+      document.getElementById('progressBarFill').parentElement.setAttribute('aria-valuenow', pct);
+      document.getElementById('progressPct').innerHTML = pct + '<span>%</span>';
+
+      // Step pills
+      const stepsEl = document.getElementById('progressSteps');
+      stepsEl.innerHTML = LESSONS.map((lid, i) => {
+        const isDone = !!data[lid];
+        return `<span class="step-pill${isDone ? ' done' : ''}" aria-label="Lesson ${i+1} ${isDone ? 'completed' : 'incomplete'}">
+          <i class="fas fa-${isDone ? 'check-circle' : 'circle'}" aria-hidden="true"></i>
+          Lesson ${i + 1}
+        </span>`;
+      }).join('');
+
+      // Individual lesson items
+      LESSONS.forEach(lid => {
+        const isDone  = !!data[lid];
+        const item    = document.getElementById('item-' + lid);
+        const badge   = document.getElementById('badge-' + lid);
+        const btn     = document.getElementById('btn-' + lid);
+
+        item.classList.toggle('completed', isDone);
+        badge.className   = 'lesson-badge ' + (isDone ? 'badge-done' : 'badge-todo');
+        badge.textContent = isDone ? '✓ Complete' : 'Not Started';
+
+        if (btn) {
+          btn.classList.toggle('done', isDone);
+          btn.innerHTML = isDone
+            ? '<i class="fas fa-check-circle" aria-hidden="true"></i> Completed'
+            : '<i class="fas fa-check" aria-hidden="true"></i> Mark as Completed';
+        }
+      });
+    }
+
+    /* ── EDITOR — SANDBOXED IFRAME ──────────────────────── */
+    window.runEditorCode = function () {
+      const code  = document.getElementById('editorArea').value;
+      const frame = document.getElementById('previewFrame');
+
+      // Write via srcdoc (safe — no innerHTML on live DOM)
+      try {
+        frame.srcdoc = code;
+      } catch (e) {
+        // Fallback: write to frame document
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        doc.open();
+        doc.write(code);
+        doc.close();
+      }
+    };
+
+    window.resetEditor = function () {
+      document.getElementById('editorArea').value = DEFAULT_CODE;
+      runEditorCode();
+    };
+
+    // Tab key inserts spaces in textarea (accessibility-friendly: 2 spaces)
+    document.getElementById('editorArea').addEventListener('keydown', function (e) {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = this.selectionStart;
+        const end   = this.selectionEnd;
+        this.value  = this.value.substring(0, start) + '  ' + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 2;
+      }
+    });
+
+    /* ── QUIZ ───────────────────────────────────────────── */
+    window.checkQuiz = function () {
+      let correct = 0;
+      let unanswered = false;
+      const questions = Object.keys(QUIZ_ANSWERS);
+
+      // Reset option styles
+      document.querySelectorAll('.quiz-option').forEach(o => {
+        o.classList.remove('correct', 'wrong');
+      });
+
+      questions.forEach(q => {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (!selected) { unanswered = true; return; }
+
+        const options = document.querySelectorAll(`input[name="${q}"]`);
+        options.forEach(opt => {
+          const label = opt.closest('.quiz-option');
+          if (opt.value === QUIZ_ANSWERS[q]) {
+            label.classList.add('correct');
+          } else if (opt.checked && opt.value !== QUIZ_ANSWERS[q]) {
+            label.classList.add('wrong');
+          }
         });
-        
-        // Lesson functionality
-        function toggleLesson(lid) {
-            document.getElementById(lid).classList.toggle('hide');
-        }
-        
-        function markCompleted(lid) {
-            sessionStorage.setItem('lesson_' + lid, 'completed');
-            updateLessonStatuses();
-            alert('Lesson marked as completed! 🎉');
-        }
-        
-        function updateLessonStatuses() {
-            ['l1','l2'].forEach(lid => {
-                const status = sessionStorage.getItem('lesson_' + lid) === 'completed' ? "✅ Completed" : "";
-                document.getElementById(`${lid}-status`).textContent = status;
-            });
-        }
-        
-        // Editor functionality - SIMPLE DIV APPROACH (NO IFRAME)
-        function runEditorCode() {
-            const code = document.getElementById('editorArea').value;
-            const output = document.getElementById('output');
-            output.innerHTML = code;
-        }
-        
-        function resetEditor() {
-            document.getElementById('editorArea').value = '<h1 style="color: #0077b6;">Hello HTML5!</h1>\n<p>Edit this code and click Run.</p>\n<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>';
-            runEditorCode();
-        }
-        
-        // Quiz functionality
-        function checkQuiz() {
-            const answer = document.querySelector('input[name="q1"]:checked');
-            const result = document.getElementById('quizResult');
-            if (answer && answer.value === "a") {
-                result.textContent = "✅ Correct! Well done.";
-                result.style.color = "#00b4d8";
-            } else if (answer) {
-                result.textContent = "❌ Incorrect. The correct answer is: HyperText Markup Language";
-                result.style.color = "#e63946";
-            } else {
-                result.textContent = "Please select an answer!";
-                result.style.color = "#ff9e00";
-            }
-        }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            updateLessonStatuses();
-            runEditorCode();
-        });
-    </script>
+
+        if (selected.value === QUIZ_ANSWERS[q]) correct++;
+      });
+
+      const resultEl = document.getElementById('quizResult');
+      resultEl.classList.remove('pass', 'fail', 'warn');
+      resultEl.classList.add('show');
+
+      if (unanswered) {
+        resultEl.className = 'quiz-result show warn';
+        resultEl.innerHTML = '<i class="fas fa-exclamation-circle" aria-hidden="true"></i> Please answer all questions before submitting.';
+        return;
+      }
+
+      const total = questions.length;
+      if (correct === total) {
+        resultEl.className = 'quiz-result show pass';
+        resultEl.innerHTML = `<i class="fas fa-trophy" aria-hidden="true"></i> Perfect score! ${correct}/${total} — Outstanding work! 🎉`;
+      } else if (correct >= Math.ceil(total / 2)) {
+        resultEl.className = 'quiz-result show pass';
+        resultEl.innerHTML = `<i class="fas fa-check-circle" aria-hidden="true"></i> Good work! ${correct}/${total} correct. Review the wrong answers above.`;
+      } else {
+        resultEl.className = 'quiz-result show fail';
+        resultEl.innerHTML = `<i class="fas fa-times-circle" aria-hidden="true"></i> ${correct}/${total} correct. Head back to the Lessons tab and try again!`;
+      }
+    };
+
+    window.resetQuiz = function () {
+      document.querySelectorAll('.quiz-option input').forEach(i => { i.checked = false; });
+      document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct', 'wrong'));
+      const resultEl = document.getElementById('quizResult');
+      resultEl.className = 'quiz-result';
+      resultEl.innerHTML = '';
+    };
+
+    /* ── INIT ───────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', function () {
+      updateAllUI();
+      runEditorCode();
+    });
+
+  })();
+  </script>
 </body>
 </html>

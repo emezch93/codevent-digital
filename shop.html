@@ -1,920 +1,1880 @@
 <!DOCTYPE html>
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8" />  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-    <meta name="description" content="CodeVent Shop – Your Digital Hub for E-books, Coding Courses & Source Codes" />  
-    <title>CodeVent Shop – Digital Marketplace</title>  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />  
-    <style>  
-        :root {  
-            --primary: #2563eb;  
-            --primary-dark: #1d4ed8;  
-            --secondary: #0ea5e9;  
-            --dark: #0f172a;  
-            --light: #f8fafc;  
-            --gray: #64748b;  
-            --light-gray: #e2e8f0;  
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);  
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);  
-            --locked-bg-light: repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0 10px, rgba(0,0,0,0.1) 10px 20px);  
-            --locked-bg-dark: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, rgba(255,255,255,0.06) 10px 20px);  
-        }  
-        * {  
-            margin: 0;  
-            padding: 0;  
-            box-sizing: border-box;  
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;  
-        }  
-
-        body {  
-            background-color: var(--light);  
-            color: var(--dark);  
-            line-height: 1.6;  
-            overflow-x: hidden;  
-        }  
-
-        body.dark-mode {  
-            --light: #0f172a;  
-            --dark: #f1f5f9;  
-            --gray: #94a3b8;  
-            --light-gray: #1e293b;  
-        }  
-
-        /* Scroll Progress */  
-        #scrollProgress {  
-            position: fixed;  
-            top: 0;  
-            left: 0;  
-            height: 4px;  
-            background: linear-gradient(90deg, var(--primary), var(--secondary));  
-            z-index: 1000;  
-            width: 0%;  
-            transition: width 0.1s ease;  
-        }  
-
-        /* Navbar */  
-        .navbar {  
-            position: sticky;  
-            top: 0;  
-            background: white;  
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);  
-            padding: 1rem 2rem;  
-            display: flex;  
-            justify-content: space-between;  
-            align-items: center;  
-            z-index: 1000;  
-        }  
-
-        body.dark-mode .navbar {  
-            background: var(--light);  
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);  
-        }  
-
-        .logo {  
-            font-size: 1.5rem;  
-            font-weight: 800;  
-            color: var(--primary);  
-            text-decoration: none;  
-            display: flex;  
-            align-items: center;  
-            gap: 0.5rem;  
-        }  
-
-        .logo i {  
-            color: var(--secondary);  
-        }  
-
-        .nav-links {  
-            display: flex;  
-            gap: 1.5rem;  
-        }  
-
-        .nav-link {  
-            text-decoration: none;  
-            color: var(--dark);  
-            font-weight: 600;  
-            transition: var(--transition);  
-            position: relative;  
-        }  
-
-        .nav-link:hover {  
-            color: var(--primary);  
-        }  
-
-        .nav-link::after {  
-            content: '';  
-            position: absolute;  
-            bottom: -5px;  
-            left: 0;  
-            width: 0;  
-            height: 2px;  
-            background: var(--primary);  
-            transition: width 0.3s ease;  
-        }  
-
-        .nav-link:hover::after {  
-            width: 100%;  
-        }  
-
-        .theme-toggle {  
-            background: none;  
-            border: none;  
-            font-size: 1.25rem;  
-            color: var(--dark);  
-            cursor: pointer;  
-            transition: var(--transition);  
-        }  
-
-        .hamburger {  
-            display: none;  
-            cursor: pointer;  
-            font-size: 1.5rem;  
-        }  
-
-        /* Hero */  
-        .hero {  
-            padding: 6rem 2rem 4rem;  
-            text-align: center;  
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);  
-            margin-bottom: 3rem;  
-        }  
-
-        body.dark-mode .hero {  
-            background: linear-gradient(135deg, #0c1427, #1e293b);  
-        }  
-
-        .hero h1 {  
-            font-size: 2.8rem;  
-            font-weight: 800;  
-            margin-bottom: 1.5rem;  
-            color: var(--dark);  
-        }  
-
-        .hero p {  
-            font-size: 1.25rem;  
-            color: var(--gray);  
-            max-width: 700px;  
-            margin: 0 auto 2.5rem;  
-        }  
-
-        /* Shop Grid */  
-        .shop-grid {  
-            max-width: 1200px;  
-            margin: 0 auto 4rem;  
-            padding: 0 1.5rem;  
-            display: grid;  
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));  
-            gap: 2rem;  
-        }  
-
-        .shop-card {  
-            background: white;  
-            border-radius: 16px;  
-            overflow: hidden;  
-            box-shadow: var(--card-shadow);  
-            transition: var(--transition);  
-        }  
-
-        body.dark-mode .shop-card {  
-            background: var(--light-gray);  
-        }  
-
-        .shop-card:hover {  
-            transform: translateY(-8px);  
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);  
-        }  
-
-        .card-img {  
-            width: 100%;  
-            height: 220px;  
-            object-fit: cover;  
-            display: block;  
-        }  
-
-        .card-icon {  
-            width: 100%;  
-            height: 220px;  
-            display: flex;  
-            align-items: center;  
-            justify-content: center;  
-            background: linear-gradient(135deg, var(--primary), var(--secondary));  
-            color: white;  
-            font-size: 4rem;  
-        }  
-
-        .card-content {  
-            padding: 1.5rem;  
-        }  
-
-        .card-title {  
-            font-size: 1.4rem;  
-            font-weight: 700;  
-            margin-bottom: 0.75rem;  
-            color: var(--dark);  
-        }  
-
-        .card-desc {  
-            color: var(--gray);  
-            margin-bottom: 1.25rem;  
-            font-size: 0.95rem;  
-            line-height: 1.6;  
-        }  
-
-        .btn {  
-            display: inline-block;  
-            padding: 0.75rem 1.5rem;  
-            border-radius: 8px;  
-            font-weight: 600;  
-            text-decoration: none;  
-            transition: var(--transition);  
-            text-align: center;  
-            width: 100%;  
-            border: 2px solid var(--primary);  
-        }  
-
-        .btn-primary {  
-            background: var(--primary);  
-            color: white;  
-        }  
-
-        .btn-primary:hover {  
-            background: var(--primary-dark);  
-            transform: translateY(-2px);  
-        }  
-
-        .btn-outline {  
-            background: transparent;  
-            color: var(--primary);  
-        }  
-
-        .btn-outline:hover {  
-            background: var(--primary);  
-            color: white;  
-        }  
-
-        /* Badge */  
-        .badge {  
-            background: linear-gradient(135deg, var(--secondary), var(--primary));  
-            color: white;  
-            font-size: 0.75rem;  
-            font-weight: 700;  
-            padding: 0.25rem 0.5rem;  
-            border-radius: 20px;  
-            align-self: flex-start;  
-            white-space: nowrap;  
-        }  
-
-        .card-content > div {  
-            display: flex;  
-            justify-content: space-between;  
-            align-items: flex-start;  
-            gap: 0.5rem;  
-            margin-bottom: 0.75rem;  
-        }  
-
-        /* Section Headers */  
-        .section-header {  
-            text-align: center;  
-            margin: 4rem 0 2rem;  
-        }  
-
-        .section-header h2 {  
-            font-size: 2.2rem;  
-            font-weight: 800;  
-            color: var(--dark);  
-            margin-bottom: 1rem;  
-        }  
-
-        .section-header p {  
-            color: var(--gray);  
-            max-width: 700px;  
-            margin: 0 auto;  
-        }  
-
-        /* Preview Modal */  
-        .preview-modal {  
-            position: fixed;  
-            top: 0;  
-            left: 0;  
-            width: 100%;  
-            height: 100%;  
-            background: rgba(0, 0, 0, 0.7);  
-            display: flex;  
-            align-items: center;  
-            justify-content: center;  
-            z-index: 5000;  
-            opacity: 0;  
-            visibility: hidden;  
-            transition: var(--transition);  
-        }  
-
-        .preview-modal.active {  
-            opacity: 1;  
-            visibility: visible;  
-        }  
-
-        .modal-content {  
-            background: white;  
-            border-radius: 20px;  
-            width: 90%;  
-            max-width: 800px;  
-            max-height: 80vh;  
-            overflow: hidden;  
-            display: flex;  
-            flex-direction: column;  
-        }  
-
-        body.dark-mode .modal-content {  
-            background: var(--light-gray);  
-        }  
-
-        .modal-header {  
-            padding: 1.5rem 2rem;  
-            display: flex;  
-            justify-content: space-between;  
-            align-items: center;  
-            border-bottom: 1px solid var(--light-gray);  
-        }  
-
-        .modal-title {  
-            font-size: 1.5rem;  
-            font-weight: 700;  
-        }  
-
-        .close-modal {  
-            background: none;  
-            border: none;  
-            font-size: 1.5rem;  
-            color: var(--gray);  
-            cursor: pointer;  
-        }  
-
-        .modal-body {  
-            padding: 2rem;  
-            overflow-y: auto;  
-            flex: 1;  
-        }  
-
-        .modal-preview {  
-            margin-bottom: 2rem;  
-            line-height: 1.8;  
-        }  
-
-        .modal-preview ul {  
-            padding-left: 1.5rem;  
-            margin: 1rem 0;  
-        }  
-
-        .modal-preview li {  
-            margin-bottom: 0.5rem;  
-        }  
-
-        .locked-section {  
-            background: var(--locked-bg-light);  
-            padding: 2rem;  
-            border-radius: 12px;  
-            text-align: center;  
-        }  
-
-        body.dark-mode .locked-section {  
-            background: var(--locked-bg-dark);  
-        }  
-
-        /* Contact Section */  
-        .contact-section {  
-            max-width: 800px;  
-            margin: 0 auto 4rem;  
-            padding: 0 1.5rem;  
-        }  
-
-        .contact-card {  
-            background: white;  
-            border-radius: 16px;  
-            padding: 3rem;  
-            box-shadow: var(--card-shadow);  
-            text-align: center;  
-        }  
-
-        body.dark-mode .contact-card {  
-            background: var(--light-gray);  
-        }  
-
-        .contact-info {  
-            display: grid;  
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));  
-            gap: 1.5rem;  
-            margin-top: 2rem;  
-        }  
-
-        .contact-item {  
-            display: flex;  
-            flex-direction: column;  
-            align-items: center;  
-            gap: 0.5rem;  
-        }  
-
-        .contact-item a {  
-            color: var(--primary);  
-            text-decoration: none;  
-            font-weight: 600;  
-            transition: var(--transition);  
-            align-items: center;  
-            gap: 0.5rem;  
-        }  
-
-        .contact-item a:hover {  
-            color: var(--primary-dark);  
-        }  
-
-        .contact-item i {  
-            font-size: 1.5rem;  
-        }  
-
-        .account-reveal {  
-            margin-top: 2rem;  
-            padding-top: 2rem;  
-            border-top: 1px solid var(--light-gray);  
-        }  
-
-        .reveal-btn {  
-            background: var(--light-gray);  
-            border: 2px solid var(--primary);  
-            color: var(--primary);  
-            padding: 0.75rem 1.5rem;  
-            border-radius: 8px;  
-            font-weight: 600;  
-            cursor: pointer;  
-            transition: var(--transition);  
-        }  
-
-        .reveal-btn:hover {  
-            background: var(--primary);  
-            color: white;  
-        }  
-
-        .account-details {  
-            margin-top: 1rem;  
-            background: var(--light-gray);  
-            padding: 1.5rem;  
-            border-radius: 8px;  
-            display: none;  
-        }  
-
-        .account-details p {  
-            margin-bottom: 0.5rem;  
-            font-weight: 600;  
-        }  
-
-        /* Footer */  
-        .footer {  
-            background: var(--dark);  
-            color: white;  
-            padding: 3rem 2rem 2rem;  
-            text-align: center;  
-        }  
-
-        .footer p {  
-            color: #94a3b8;  
-            margin-bottom: 0.5rem;  
-        }  
-
-        .footer a {  
-            color: #60a5fa;  
-            text-decoration: none;  
-            transition: var(--transition);  
-        }  
-
-        .footer a:hover {  
-            color: #93c5fd;  
-        }  
-
-        /* Responsive */  
-        @media (max-width: 768px) {  
-            .nav-links {  
-                position: fixed;  
-                top: 72px;  
-                left: -100%;  
-                width: 100%;  
-                height: calc(100vh - 72px);  
-                background: white;  
-                flex-direction: column;  
-                align-items: center;  
-                padding-top: 2rem;  
-                transition: left 0.3s ease;  
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);  
-                z-index: 1000;  
-            }  
-
-            body.dark-mode .nav-links {  
-                background: var(--light);  
-            }  
-
-            .nav-links.active {  
-                left: 0;  
-            }  
-
-            .nav-link {  
-                width: 100%;  
-                text-align: center;  
-                padding: 1rem 0;  
-                border-bottom: 1px solid var(--light-gray);  
-            }  
-
-            .hamburger {  
-                display: block;  
-            }  
-
-            .hero h1 {  
-                font-size: 2.2rem;  
-            }  
-            .hero p {  
-                font-size: 1.1rem;  
-            }  
-
-            .shop-grid {  
-                grid-template-columns: 1fr;  
-            }  
-
-            .contact-info {  
-                grid-template-columns: 1fr;  
-            }  
-        }  
-
-        @media (max-width: 480px) {  
-            .navbar {  
-                padding: 1rem;  
-            }  
-            .hero {  
-                padding: 4rem 1rem 2rem;  
-            }  
-            .hero h1 {  
-                font-size: 1.8rem;  
-            }  
-            .card-title {  
-                font-size: 1.2rem;  
-            }  
-            .btn {  
-                padding: 0.6rem 1.25rem;  
-                font-size: 0.95rem;  
-            }  
-            .badge {  
-                font-size: 0.7rem;  
-                padding: 0.2rem 0.4rem;  
-            }  
-            .contact-card {  
-                padding: 2rem 1.5rem;  
-            }  
-        } 
-        
-
-    </style>
-</head>  
-<body>  
-    <div id="scrollProgress"></div>  
-
-    <nav class="navbar">  
-        <a href="#home" class="logo">  
-            <i class="fas fa-shopping-bag"></i>  
-            CodeVent Shop  
-        </a>  
-        <div class="hamburger" id="hamburger">  
-            <i class="fas fa-bars"></i>  
-        </div>  
-        <div class="nav-links" id="navLinks">  
-            <a href="#home" class="nav-link">Home</a>  
-            <a href="#ebooks" class="nav-link">E-books</a>  
-            <a href="#courses" class="nav-link">Courses</a>  
-            <a href="#source" class="nav-link">Source Code</a>  
-            <a href="#contact" class="nav-link">Contact</a>  
-        </div>  
-        <button class="theme-toggle" id="themeToggle">  
-            <i class="fas fa-moon"></i>  
-        </button>  
-    </nav>  
-
-    <section id="home" class="hero">  
-        <h1>Premium Digital Products for Developers & Tech Enthusiasts</h1>  
-        <p>E-books, coding courses, and production-ready source codes to accelerate your learning and career.</p>  
-    </section>  
-
-    <section id="ebooks" class="section">  
-        <div class="section-header">  
-            <h2>Premium E-books</h2>  
-            <p>Expertly crafted guides on AI, business, and digital creation.</p>  
-        </div>  
-        <div class="shop-grid">  
-            <div class="shop-card">  
-                <img src="front_cover_design_20.png" alt="Just My Smartphone – Build Digital Income Using Only Your Phone" class="card-img">  
-                <div class="card-content">  
-                    <div>  
-                        <h3 class="card-title">Just My Smartphone</h3>  
-                        <span class="badge">📱 Mobile</span>  
-                    </div>  
-                    <p class="card-desc">Build digital income using only your phone. A strategic playbook for skill acquisition, monetization, and AI workflows.</p>  
-                    <button class="btn btn-primary open-preview" data-book="just-my-smartphone">Preview & Purchase</button>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <img src="ai_side_hustle_cover__2.png" alt="AI Powered Side Hustles" class="card-img">  
-                <div class="card-content">  
-                    <h3 class="card-title">AI Powered Side Hustles</h3>  
-                    <p class="card-desc">Turn AI into your 24/7 income engine with proven daily, weekly & monthly earning models.</p>  
-                    <button class="btn btn-primary open-preview" data-book="ai-hustle">Preview & Purchase</button>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <img src="alternative_cover_202.png" alt="100 Free AI Tools" class="card-img">  
-                <div class="card-content">  
-                    <h3 class="card-title">100 Free AI Tools</h3>  
-                    <p class="card-desc">100+ handpicked free AI tools to 10x your productivity, creativity & income as a creator or freelancer.</p>  
-                    <button class="btn btn-primary open-preview" data-book="ai-tools">Preview & Purchase</button>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <img src="digital_world_cover_a.png" alt="THE DIGITAL WORLD v1.0" class="card-img">  
-                <div class="card-content">  
-                    <h3 class="card-title">THE DIGITAL WORLD v1.0</h3>  
-                    <p class="card-desc">A bold guide into AI's hidden opportunities, strategic advantages, and digital pathways to wealth.</p>  
-                    <button class="btn btn-primary open-preview" data-book="ai1">Preview & Purchase</button>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <img src="digital_world_cover_p.png" alt="THE DIGITAL WORLD v2.0" class="card-img">  
-                <div class="card-content">  
-                    <h3 class="card-title">THE DIGITAL WORLD v2.0</h3>  
-                    <p class="card-desc">AI has rewritten the laws of power and wealth. Discover how to thrive in this new reality.</p>  
-                    <button class="btn btn-primary open-preview" data-book="ai2">Preview & Purchase</button>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
-
-    <section id="courses" class="section">  
-        <div class="section-header">  
-            <h2>Coding Courses</h2>  
-            <p>Learn by building real projects with hands-on video courses.</p>  
-        </div>  
-        <div class="shop-grid">  
-            <div class="shop-card">  
-                <img src="https://placehold.co/600x400/0ea5e9/ffffff?text=HTML+CSS+JS+Course" alt="Web Development Course" class="card-img">  
-                <div class="card-content">  
-                    <h3 class="card-title">HTML, CSS & JavaScript Mastery</h3>  
-                    <p class="card-desc">Complete beginner-friendly course with 20+ projects, quizzes, and lifetime access. Video series delivered via WhatsApp.</p>  
-                    <a href="https://paystack.com/buy/swift-web-development-mastery-tevbzs" target="_blank" rel="noopener" class="btn btn-primary">Purchase Course</a>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
-
-    <section id="source" class="section">  
-        <div class="section-header">  
-            <h2>Production-Ready Source Codes</h2>  
-            <p>Accelerate development with fully functional project templates.</p>  
-        </div>  
-        <div class="shop-grid">  
-            <div class="shop-card">  
-                <div class="card-icon">  
-                    <i class="fas fa-question-circle"></i>  
-                </div>  
-                <div class="card-content">  
-                    <h3 class="card-title">Interactive Quiz App</h3>  
-                    <p class="card-desc">Fully responsive quiz app with timer, score tracking, and admin panel.</p>  
-                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I'm%20interested%20in%20the%20Quiz%20App%20source%20code" target="_blank" rel="noopener" class="btn btn-primary">Request Source Code</a>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <div class="card-icon">  
-                    <i class="fas fa-edit"></i>  
-                </div>  
-                <div class="card-content">  
-                    <h3 class="card-title">Code Editor Project</h3>  
-                    <p class="card-desc">In-browser code editor with syntax highlighting and live preview functionality.</p>  
-                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I'm%20interested%20in%20the%20Code%20Editor%20source%20code" target="_blank" rel="noopener" class="btn btn-primary">Request Source Code</a>  
-                </div>  
-            </div>  
-
-            <div class="shop-card">  
-                <div class="card-icon">  
-                    <i class="fas fa-bolt"></i>  
-                </div>  
-                <div class="card-content">  
-                    <h3 class="card-title">Custom Project Source Code</h3>  
-                    <p class="card-desc">Get source code for any project idea. AI-powered generators, dashboards, and more.</p>  
-                    <a href="https://wa.me/2348185947780?text=Hi%20!%20I%20need%20source%20code%20for%20a%20custom%20project" target="_blank" rel="noopener" class="btn btn-primary">Request Custom Code</a>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
-
-    <section id="contact" class="section">  
-        <div class="section-header">  
-            <h2>Purchase & Support</h2>  
-            <p>Multiple payment options available. Contact us for inquiries.</p>  
-        </div>  
-        <div class="contact-section">  
-            <div class="contact-card">  
-                <h3>Get in Touch</h3>  
-                <div class="contact-info">  
-                    <div class="contact-item">  
-                        <i class="fab fa-whatsapp"></i>  
-                        <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20your%20digital%20products" target="_blank" rel="noopener">WhatsApp: +234 818 594 7780</a>  
-                    </div>  
-                    <div class="contact-item">  
-                        <i class="fas fa-phone"></i>  
-                        <a href="tel:+2348185947780" target="_blank">Call: +234 818 594 7780</a>  
-                    </div>  
-                    <div class="contact-item">  
-                        <i class="fas fa-envelope"></i>  
-                        <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank">codeventdigitalinfo@gmail.com</a>  
-                    </div>  
-                    <div class="contact-item">  
-                        <i class="fab fa-facebook-f"></i>  
-                        <a href="https://www.facebook.com/share/1WDxyWLVvZ/" target="_blank" rel="noopener">Facebook</a>  
-                    </div>  
-                </div>  
-                <div class="account-reveal">  
-                    <button class="reveal-btn" id="showAcct">  
-                        <i class="fas fa-lock"></i> Reveal Bank Account Details  
-                    </button>  
-                    <div class="account-details" id="acctDetails">  
-                        <p><strong>Account Name:</strong> Chidera Emmanuel Ezenwa</p>  
-                        <p><strong>Account Number:</strong> 1953129048</p>  
-                        <p><strong>Bank:</strong> Access Bank</p>  
-                        <p style="margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">After payment, send proof via WhatsApp to receive your product.</p>  
-                    </div>  
-                </div>  
-            </div>  
-        </div>  
-    </section>  
-
-    <div class="preview-modal" id="previewModal">  
-        <div class="modal-content">  
-            <div class="modal-header">  
-                <h3 class="modal-title" id="modalBookTitle">E-book Preview</h3>  
-                <button class="close-modal" id="closeModal">&times;</button>  
-            </div>  
-            <div class="modal-body">  
-                <div class="modal-preview" id="modalPreviewText"></div>  
-                <div class="locked-section" id="unlockSection">  
-                    <p>🔒 <strong>Full content locked!</strong></p>  
-                    <p>Purchase to unlock complete access.</p>  
-                    <a id="unlockButton" target="_blank" class="btn btn-primary" style="max-width: 250px; margin: 1rem auto;">Purchase Now</a>  
-                </div>  
-            </div>  
-        </div>  
-    </div>  
-
-    <footer class="footer">  
-        <p>© 2025 CodeVent Digital Shop. All rights reserved.</p>  
-        <p><a href="https://emezch93.github.io/CodeVent-Digital/" target="_blank" rel="noopener">Visit CodeVent Digital Main Platform</a></p>  
-    </footer>  
-
-    <script>  
-        // Scroll Progress  
-        window.addEventListener('scroll', () => {  
-            const winScroll = document.documentElement.scrollTop;  
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;  
-            const scrolled = (winScroll / height) * 100;  
-            document.getElementById('scrollProgress').style.width = scrolled + '%';  
-        });  
-
-        // Theme Toggle  
-        const themeToggle = document.getElementById('themeToggle');  
-        const body = document.body;  
-        let isDark = false;  
-
-        themeToggle.addEventListener('click', () => {  
-            isDark = !isDark;  
-            body.classList.toggle('dark-mode');  
-            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';  
-        });  
-
-        // Mobile Navigation  
-        const hamburger = document.getElementById('hamburger');  
-        const navLinks = document.getElementById('navLinks');  
-
-        hamburger.addEventListener('click', () => {  
-            navLinks.classList.toggle('active');  
-        });  
-
-        document.querySelectorAll('.nav-link').forEach(link => {  
-            link.addEventListener('click', () => {  
-                navLinks.classList.remove('active');  
-            });  
-        });  
-
-        // Smooth Scrolling  
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {  
-            anchor.addEventListener('click', function(e) {  
-                e.preventDefault();  
-                const target = document.querySelector(this.getAttribute('href'));  
-                if (target) {  
-                    window.scrollTo({  
-                        top: target.offsetTop - 80,  
-                        behavior: 'smooth'  
-                    });  
-                }  
-            });  
-        });  
-
-        // E-book Previews & Unlock Logic  
-        const ebooks = {  
-            'just-my-smartphone': {  
-                title: "Just My Smartphone",  
-                content: `<p><strong>What if the only tool you needed to start building digital income was already in your hand?</strong></p>  
-                <p>Just My Smartphone is a strategic playbook for navigating the digital economy using mobile technology alone.</p>  
-                <p><strong>Inside you'll discover:</strong></p>  
-                <ul>  
-                    <li>Mobile-optimized skill acquisition paths (no laptop needed)</li>  
-                    <li>5 proven monetization models for creators, students & freelancers</li>  
-                    <li>AI-powered workflows using free mobile apps</li>  
-                    <li>Modern productivity systems that fit in your pocket</li>  
-                </ul>  
-                <p>This ebook provides clarity, structure, and real use-cases — not just motivation.</p>`,  
-                unlockUrl: "https://paystack.com/buy/just-my-smartphone-jlxyet"  
-            },  
-            'ai-hustle': {  
-                title: "AI Powered Side Hustles",  
-                content: `<p><strong>Turn AI into your 24/7 income engine with proven models that generate daily, weekly, and monthly revenue.</strong></p>  
-                <p>This isn't theory—it's battle-tested strategy.</p>  
-                <p><strong>You'll discover:</strong></p>  
-                <ul>  
-                    <li>7 AI side hustle blueprints (with real income screenshots)</li>  
-                    <li>How to automate client acquisition using free AI tools</li>  
-                    <li>Pricing frameworks that command premium rates</li>  
-                    <li>Scaling strategies to turn $100 into $5,000/month</li>  
-                </ul>`,  
-                unlockUrl: "https://paystack.com/buy/ai-powered-side-hustles-how-to-earn-daily-weekly"  
-            },  
-            'ai-tools': {  
-                title: "100 Free AI Tools for Creators, Students & Freelancers",  
-                content: `<p><strong>Your ultimate AI toolkit:</strong> 100+ handpicked, completely free AI tools organized by category—writing, design, coding, video, audio, research, and productivity.</p>  
-                <p><strong>Inside you'll find:</strong></p>  
-                <ul>  
-                    <li>Direct links + quick-start guides for each tool</li>  
-                    <li>Real-world use cases with before/after examples</li>  
-                    <li>Power combos: how to chain tools for maximum impact</li>  
-                    <li>Time-saving workflows that save 10+ hours/week</li>  
-                </ul>`,  
-                unlockUrl: "https://paystack.com/buy/100-free-ai-tools-for-creators-students--freelancers"  
-            },  
-            'ai1': {  
-                title: "THE DIGITAL WORLD — Version 1.0",  
-                content: `<p><strong>THE DIGITAL WORLD: Unveiling Opportunities In The Age Of Artificial Intelligence V1.0</strong> is a bold, electrifying guide into the most explosive technological shift in human history.</p>  
-                <p>It reveals the hidden opportunities most people cannot see… the strategic advantages they ignore… and the digital pathways that are creating silent millionaires, global influencers, and future-proof professionals.</p>  
-                <p><strong>This is not a textbook.<br>This is not theory.<br>This is a wake-up call — and a roadmap.</strong></p>`,  
-                unlockUrl: "https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--jtenyv"  
-            },  
-            'ai2': {  
-                title: "THE DIGITAL WORLD — Version 2.0",  
-                content: `<p><strong>Read this carefully — because the world you think you know no longer exists.</strong></p>  
-                <p>Artificial Intelligence has quietly rewritten the laws of power, wealth, influence, and survival. We have entered an era where algorithms make decisions, machines outperform experts, and digital intelligence decides who rises… and who becomes irrelevant.</p>  
-                <p><strong>Most people have no idea this shift has already happened.<br>But you will.</strong></p>`,  
-                unlockUrl: "https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--lpxzfo"  
-            }  
-        };  
-
-        document.querySelectorAll('.open-preview').forEach(btn => {  
-            btn.addEventListener('click', () => {  
-                const bookKey = btn.getAttribute('data-book');  
-                const book = ebooks[bookKey];  
-                document.getElementById('modalBookTitle').textContent = book.title;  
-                document.getElementById('modalPreviewText').innerHTML = book.content;  
-                document.getElementById('unlockButton').href = book.unlockUrl;  
-                document.getElementById('previewModal').classList.add('active');  
-                document.body.style.overflow = 'hidden';  
-            });  
-        });  
-
-        document.getElementById('closeModal').addEventListener('click', () => {  
-            document.getElementById('previewModal').classList.remove('active');  
-            document.body.style.overflow = 'auto';  
-        });  
-
-        document.getElementById('previewModal').addEventListener('click', (e) => {  
-            if (e.target === document.getElementById('previewModal')) {  
-                document.getElementById('previewModal').classList.remove('active');  
-                document.body.style.overflow = 'auto';  
-            }  
-        });  
-
-        document.getElementById('showAcct').addEventListener('click', () => {  
-            const acctDiv = document.getElementById('acctDetails');  
-            const btn = document.getElementById('showAcct');  
-            if (acctDiv.style.display === 'none' || acctDiv.style.display === '') {  
-                acctDiv.style.display = 'block';  
-                btn.innerHTML = '<i class="fas fa-unlock"></i> Account Details Revealed';  
-            } else {  
-                acctDiv.style.display = 'none';  
-                btn.innerHTML = '<i class="fas fa-lock"></i> Reveal Bank Account Details';  
-            }  
-        });  
-    </script>
-</body>  
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ── SEO & Description ── -->
+  <meta name="description" content="CodeVent Shop — Premium e-books, coding courses, and production-ready source codes to accelerate your developer journey." />
+  <meta name="robots" content="index, follow" />
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="CodeVent Shop — Digital Marketplace for Developers" />
+  <meta property="og:description" content="Premium e-books, coding courses, and production-ready source codes. Start building. Start earning." />
+  <meta property="og:url"         content="https://emezch93.github.io/CodeVent-Digital/shop.html" />
+  <meta property="og:site_name"   content="CodeVent Digital" />
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="CodeVent Shop — Digital Marketplace for Developers" />
+  <meta name="twitter:description" content="Premium e-books, coding courses, and production-ready source codes." />
+
+  <title>CodeVent Shop — Digital Marketplace</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- ── Structured Data ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "CodeVent Shop",
+    "url": "https://emezch93.github.io/CodeVent-Digital/shop.html",
+    "description": "Premium e-books, coding courses, and source codes for developers.",
+    "currenciesAccepted": "NGN",
+    "paymentAccepted": "Bank Transfer, Paystack"
+  }
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --primary:        #5b4cff;
+      --primary-dark:   #3d2ee0;
+      --primary-glow:   rgba(91,76,255,0.22);
+      --accent:         #00e5a0;
+      --accent-dim:     rgba(0,229,160,0.13);
+      --wa-green:       #25d366;
+
+      --dark:           #0d0f1a;
+      --dark-2:         #141628;
+      --dark-3:         #1c1f38;
+      --dark-4:         #252845;
+
+      --text:           #e8e9f3;
+      --text-muted:     #8b8fa8;
+      --border:         rgba(255,255,255,0.07);
+      --border-strong:  rgba(255,255,255,0.13);
+
+      --radius:         1rem;
+      --radius-sm:      0.6rem;
+      --transition:     all 0.25s cubic-bezier(0.4,0,0.2,1);
+
+      --font-display:   'DM Serif Display', Georgia, serif;
+      --font-body:      'Plus Jakarta Sans', sans-serif;
+      --font-mono:      'DM Mono', monospace;
+
+      --shadow:         0 20px 60px rgba(0,0,0,0.5);
+      --shadow-sm:      0 6px 20px rgba(0,0,0,0.3);
+
+      /* Scroll progress bar height — prevents layout shift */
+      --scroll-bar-h:   4px;
+    }
+
+    /* ═══════════════════════════════════════
+       RESET
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    /* Prevent modal-induced layout shift */
+    body.modal-open { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
+
+    /* subtle grid bg */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font-body); cursor: pointer; }
+    img { max-width: 100%; display: block; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+    /* Accessibility */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+    /* ═══════════════════════════════════════
+       SCROLL PROGRESS
+    ═══════════════════════════════════════ */
+    #scrollProgress {
+      position: fixed;
+      top: 0; left: 0;
+      height: var(--scroll-bar-h);
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 2000;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: rgba(13,15,26,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: white;
+    }
+    .logo-word { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 0.15rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.4rem 0.85rem;
+      border-radius: 7px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: white; background: rgba(255,255,255,0.06); }
+    .nav-link.nav-cta {
+      background: var(--primary);
+      color: white;
+      margin-left: 0.25rem;
+    }
+    .nav-link.nav-cta:hover { background: var(--primary-dark); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .theme-toggle {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .theme-toggle:hover { color: white; border-color: var(--border-strong); }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      z-index: 1001;
+    }
+
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      display: none;
+    }
+    .nav-overlay.active { display: block; }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem 5rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, var(--primary-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      max-width: 760px;
+      margin-left: auto; margin-right: auto;
+      position: relative; z-index: 1;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+      position: relative; z-index: 1;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      transition: var(--transition);
+      box-shadow: 0 4px 20px var(--primary-glow);
+      position: relative; z-index: 1;
+    }
+    .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(91,76,255,0.45); }
+
+    /* ═══════════════════════════════════════
+       SECTION LAYOUT
+    ═══════════════════════════════════════ */
+    .page-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto 5rem;
+      padding: 0 1.75rem;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: white;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .section-head h2 em { font-style: italic; color: var(--accent); }
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════
+       SHOP GRID & CARDS
+    ═══════════════════════════════════════ */
+    .shop-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .shop-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+    .shop-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Card image */
+    .card-img-wrap {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+      cursor: zoom-in;
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .shop-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+    /* Zoom hint overlay on cover hover */
+    .card-img-wrap::after {
+      content: '\f00e';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      color: white;
+      background: rgba(13,15,26,0.45);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      backdrop-filter: blur(2px);
+    }
+    .card-img-wrap:hover::after { opacity: 1; }
+
+    /* ── LIGHTBOX ───────────────────────────────── */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 9000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .lightbox.active { opacity: 1; visibility: visible; }
+
+    .lightbox-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%; height: 100%;
+      overflow: hidden;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.8);
+      transform: scale(1);
+      transform-origin: center center;
+      transition: transform 0.2s ease;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+    }
+    .lightbox-img.dragging { cursor: grabbing; transition: none; }
+    .lightbox-img.zooming  { transition: none; }
+
+    .lightbox-controls {
+      position: fixed;
+      top: 1rem; right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 9001;
+    }
+
+    .lb-btn {
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 10px;
+      color: white;
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      backdrop-filter: blur(8px);
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
+
+    .lb-zoom-badge {
+      position: fixed;
+      bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.65);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+      z-index: 9001;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .lb-zoom-badge.show { opacity: 1; }
+
+    .lb-hint {
+      position: fixed;
+      bottom: 4rem; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      pointer-events: none;
+      z-index: 9001;
+      white-space: nowrap;
+      animation: hintFade 2.8s ease forwards;
+    }
+    @keyframes hintFade {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(6px); }
+      20%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* Card icon fallback */
+    .card-icon-bg {
+      width: 100%; height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: white;
+      flex-shrink: 0;
+    }
+    .ci-1 { background: linear-gradient(135deg, #5b4cff, #3d2ee0); }
+    .ci-2 { background: linear-gradient(135deg, #00e5a0, #00b37e); }
+    .ci-3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+    /* Card body */
+    .card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: 0.75rem;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.35;
+    }
+
+    .card-badge {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-ebook  { background: rgba(91,76,255,0.18); border: 1px solid rgba(91,76,255,0.35); color: #a78bfa; }
+    .badge-course { background: var(--accent-dim);     border: 1px solid rgba(0,229,160,0.3);   color: var(--accent); }
+    .badge-code   { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3);  color: #fbbf24; }
+
+    .card-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    /* CTA buttons */
+    .btn-card-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 0.87rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: none;
+      transition: var(--transition);
+      box-shadow: 0 3px 12px var(--primary-glow);
+    }
+    .btn-card-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(91,76,255,0.4); }
+
+    .btn-card-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--wa-green);
+      color: white;
+      font-size: 0.87rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      border: none;
+      transition: var(--transition);
+    }
+    .btn-card-wa:hover { background: #1ebe57; transform: translateY(-1px); }
+
+    /* ═══════════════════════════════════════
+       CONTACT SECTION
+    ═══════════════════════════════════════ */
+    .contact-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    .contact-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: white;
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .contact-card > p {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.2rem;
+      transition: var(--transition);
+    }
+    .contact-item:hover { border-color: var(--border-strong); }
+
+    .contact-item-icon {
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .ci-wa    { background: rgba(37,211,102,0.12); color: var(--wa-green); }
+    .ci-phone { background: rgba(91,76,255,0.15);  color: #a78bfa; }
+    .ci-email { background: rgba(0,229,160,0.1);   color: var(--accent); }
+    .ci-fb    { background: rgba(59,89,152,0.2);   color: #60a5fa; }
+
+    .contact-item-text { display: flex; flex-direction: column; }
+    .contact-item-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.15rem; }
+    .contact-item-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      transition: var(--transition);
+    }
+    .contact-item-link:hover { color: var(--accent); }
+
+    /* Bank reveal */
+    .bank-reveal { text-align: center; }
+
+    .btn-reveal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      padding: 0.7rem 1.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    .btn-reveal:hover { border-color: var(--primary); color: white; background: var(--primary-glow); }
+    .btn-reveal[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+
+    .bank-details {
+      display: none;
+      margin-top: 1.25rem;
+      background: var(--dark-3);
+      border: 1px solid rgba(0,229,160,0.2);
+      border-radius: var(--radius-sm);
+      padding: 1.5rem;
+      text-align: left;
+    }
+    .bank-details.visible { display: block; animation: fadeIn 0.3s ease; }
+
+    .bank-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .bank-row:last-of-type { border-bottom: none; }
+    .bank-row span:first-child { color: var(--text-muted); font-weight: 500; }
+    .bank-row strong { color: white; font-family: var(--font-mono); font-size: 0.9rem; }
+
+    .bank-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      background: rgba(91,76,255,0.08);
+      border: 1px solid rgba(91,76,255,0.2);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+    }
+    .bank-note i { color: var(--primary); margin-top: 0.05em; flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════
+       PREVIEW MODAL
+    ═══════════════════════════════════════ */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5000;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .modal-backdrop.active { opacity: 1; visibility: visible; }
+
+    .modal-box {
+      background: var(--dark-2);
+      border: 1px solid var(--border-strong);
+      border-radius: 1.25rem;
+      width: 100%;
+      max-width: 720px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      transform: scale(0.96) translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      overflow: hidden;
+    }
+    .modal-backdrop.active .modal-box { transform: scale(1) translateY(0); }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .modal-head h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .btn-modal-close {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+    .btn-modal-close:hover { background: rgba(248,113,113,0.1); border-color: rgba(248,113,113,0.4); color: #f87171; }
+
+    .modal-body {
+      padding: 1.75rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-preview {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .modal-preview p { margin-bottom: 0.75rem; }
+    .modal-preview ul {
+      padding-left: 1.25rem;
+      margin: 0.75rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .modal-preview li::marker { color: var(--accent); }
+    .modal-preview strong { color: white; }
+
+    .modal-lock {
+      background: var(--dark-3);
+      border: 1px dashed rgba(91,76,255,0.3);
+      border-radius: var(--radius-sm);
+      padding: 2rem;
+      text-align: center;
+    }
+    .lock-icon {
+      width: 52px; height: 52px;
+      background: rgba(91,76,255,0.15);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      color: #a78bfa;
+      margin: 0 auto 1rem;
+    }
+    .modal-lock h4 { color: white; font-size: 1rem; margin-bottom: 0.4rem; }
+    .modal-lock p { color: var(--text-muted); font-size: 0.83rem; margin-bottom: 1.25rem; }
+
+    .btn-modal-purchase {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+    .btn-modal-purchase:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(91,76,255,0.45); }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      position: relative;
+      z-index: 1;
+      background: var(--dark-2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.7; }
+    .footer a { color: var(--primary); transition: var(--transition); }
+    .footer a:hover { color: var(--accent); }
+
+    /* ═══════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════ */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+
+      .nav-links {
+        position: fixed;
+        top: 0; left: -100%;
+        width: 82%; max-width: 300px;
+        height: 100vh;
+        background: var(--dark-2);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 1.75rem 2rem;
+        border-right: 1px solid var(--border);
+        transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+        gap: 0.2rem;
+        z-index: 999;
+      }
+      .nav-links.active { left: 0; box-shadow: 8px 0 32px rgba(0,0,0,0.5); }
+      .nav-link { font-size: 1rem; padding: 0.65rem 0.75rem; width: 100%; }
+      .nav-link.nav-cta { width: fit-content; }
+
+      .contact-grid { grid-template-columns: 1fr; }
+      .shop-grid { grid-template-columns: 1fr; }
+
+      .modal-box { max-height: 90vh; border-radius: 1rem; }
+      .modal-head { padding: 1rem 1.25rem; }
+      .modal-body { padding: 1.25rem; }
+
+      .contact-card { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 4.5rem 1.25rem 3.5rem; }
+      .hero h1 { font-size: 1.9rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       LIGHT MODE OVERRIDES
+    ═══════════════════════════════════════ */
+    body.light-mode {
+      --dark:           #f8fafc;
+      --dark-2:         #ffffff;
+      --dark-3:         #f1f5f9;
+      --dark-4:         #e2e8f0;
+      --text:           #0f172a;
+      --text-muted:     #64748b;
+      --border:         rgba(0,0,0,0.07);
+      --border-strong:  rgba(0,0,0,0.13);
+      background-image: none;
+    }
+    body.light-mode::before { display: none; }
+    body.light-mode .navbar { background: rgba(248,250,252,0.92); }
+    body.light-mode .modal-box { background: #ffffff; }
+    body.light-mode .bank-details { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+
+  <!-- ── Scroll Progress ── -->
+  <div id="scrollProgress" role="progressbar" aria-hidden="true"></div>
+
+  <!-- ══ NAVBAR ════════════════════════════════════════════ -->
+  <nav class="navbar" aria-label="Site navigation">
+    <a href="#home" class="logo" target="_self" aria-label="CodeVent Shop — Home">
+      <span class="logo-icon" aria-hidden="true"><i class="fas fa-shopping-bag"></i></span>
+      CodeVent <span class="logo-word">Shop</span>
+    </a>
+
+    <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+
+    <nav class="nav-links" id="navLinks" aria-label="Page sections">
+      <a href="#home"    class="nav-link" target="_self">Home</a>
+      <a href="#ebooks"  class="nav-link" target="_self">E-books</a>
+      <a href="#courses" class="nav-link" target="_self">Courses</a>
+      <a href="#source"  class="nav-link" target="_self">Source Code</a>
+      <a href="#contact" class="nav-link" target="_self">Contact</a>
+      <a href="index.html" class="nav-link nav-cta" target="_self">← Back to Platform</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <section id="home" class="hero" aria-label="Shop hero">
+    <div class="hero-badge" aria-hidden="true">
+      <i class="fas fa-bolt"></i> Digital Marketplace
+    </div>
+    <h1>Premium Digital Products for <em>Developers</em> & Tech Enthusiasts</h1>
+    <p>E-books, coding courses, and production-ready source codes to accelerate your learning and career.</p>
+    <a href="#ebooks" class="hero-cta" target="_self">
+      <i class="fas fa-arrow-down" aria-hidden="true"></i> Browse Products
+    </a>
+  </section>
+
+  <!-- ══ E-BOOKS ════════════════════════════════════════════ -->
+  <section id="ebooks" class="page-section" aria-labelledby="ebooks-title">
+    <div class="section-head fade-up">
+      <p class="section-eyebrow">Digital Reading</p>
+      <h2 id="ebooks-title">Premium <em>E-books</em></h2>
+      <p>Expertly crafted guides on AI, business, and building digital income.</p>
+    </div>
+
+    <div class="shop-grid">
+
+      <article class="shop-card fade-up" aria-label="Just My Smartphone e-book">
+        <div class="card-img-wrap">
+          <img src="front_cover_design_20.png" alt="Just My Smartphone — Build Digital Income Using Only Your Phone" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">Just My Smartphone</h3>
+            <span class="card-badge badge-ebook">📱 Mobile</span>
+          </div>
+          <p class="card-desc">A strategic playbook for skill acquisition, monetization, and AI workflows — using only your phone.</p>
+          <button
+            class="btn-card-primary open-preview"
+            data-book="just-my-smartphone"
+            aria-haspopup="dialog"
+            aria-label="Preview and purchase Just My Smartphone"
+          >
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview & Purchase
+          </button>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="AI Powered Side Hustles e-book">
+        <div class="card-img-wrap">
+          <img src="ai_side_hustle_cover__2.png" alt="AI Powered Side Hustles" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">AI Powered Side Hustles</h3>
+            <span class="card-badge badge-ebook">🤖 AI</span>
+          </div>
+          <p class="card-desc">Turn AI into your 24/7 income engine with proven daily, weekly & monthly earning models.</p>
+          <button
+            class="btn-card-primary open-preview"
+            data-book="ai-hustle"
+            aria-haspopup="dialog"
+            aria-label="Preview and purchase AI Powered Side Hustles"
+          >
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview & Purchase
+          </button>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="100 Free AI Tools e-book">
+        <div class="card-img-wrap">
+          <img src="alternative_cover_202.png" alt="100 Free AI Tools" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">100 Free AI Tools</h3>
+            <span class="card-badge badge-ebook">🛠 Tools</span>
+          </div>
+          <p class="card-desc">100+ handpicked free AI tools to 10× your productivity, creativity & income as a creator or freelancer.</p>
+          <button
+            class="btn-card-primary open-preview"
+            data-book="ai-tools"
+            aria-haspopup="dialog"
+            aria-label="Preview and purchase 100 Free AI Tools"
+          >
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview & Purchase
+          </button>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="The Digital World v1.0 e-book">
+        <div class="card-img-wrap">
+          <img src="digital_world_cover_a.png" alt="THE DIGITAL WORLD v1.0" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">THE DIGITAL WORLD v1.0</h3>
+            <span class="card-badge badge-ebook">🌐 Digital</span>
+          </div>
+          <p class="card-desc">A bold guide into AI's hidden opportunities, strategic advantages, and digital pathways to wealth.</p>
+          <button
+            class="btn-card-primary open-preview"
+            data-book="ai1"
+            aria-haspopup="dialog"
+            aria-label="Preview and purchase The Digital World v1.0"
+          >
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview & Purchase
+          </button>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="The Digital World v2.0 e-book">
+        <div class="card-img-wrap">
+          <img src="digital_world_cover_p.png" alt="THE DIGITAL WORLD v2.0" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">THE DIGITAL WORLD v2.0</h3>
+            <span class="card-badge badge-ebook">🌐 Digital</span>
+          </div>
+          <p class="card-desc">AI has rewritten the laws of power and wealth. Discover how to thrive in this new reality.</p>
+          <button
+            class="btn-card-primary open-preview"
+            data-book="ai2"
+            aria-haspopup="dialog"
+            aria-label="Preview and purchase The Digital World v2.0"
+          >
+            <i class="fas fa-eye" aria-hidden="true"></i> Preview & Purchase
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══ COURSES ════════════════════════════════════════════ -->
+  <section id="courses" class="page-section" aria-labelledby="courses-title">
+    <div class="section-head fade-up">
+      <p class="section-eyebrow">Structured Learning</p>
+      <h2 id="courses-title">Coding <em>Courses</em></h2>
+      <p>Learn by building real projects with hands-on video courses delivered via WhatsApp.</p>
+    </div>
+
+    <div class="shop-grid">
+
+      <article class="shop-card fade-up" aria-label="HTML CSS JavaScript Mastery course">
+        <div class="card-icon-bg ci-1" aria-hidden="true">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">HTML, CSS & JavaScript Mastery</h3>
+            <span class="card-badge badge-course">▶ Course</span>
+          </div>
+          <p class="card-desc">Complete beginner-friendly course with 20+ projects, quizzes, and lifetime access. Video series delivered directly via WhatsApp.</p>
+          <a
+            href="https://paystack.com/buy/swift-web-development-mastery-tevbzs"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-card-primary"
+            aria-label="Purchase HTML CSS and JavaScript Mastery course on Paystack"
+          >
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i> Purchase Course
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══ SOURCE CODE ════════════════════════════════════════ -->
+  <section id="source" class="page-section" aria-labelledby="source-title">
+    <div class="section-head fade-up">
+      <p class="section-eyebrow">Production Ready</p>
+      <h2 id="source-title">Source <em>Code</em> Templates</h2>
+      <p>Accelerate development with fully functional, clean project templates — request via WhatsApp.</p>
+    </div>
+
+    <div class="shop-grid">
+
+      <article class="shop-card fade-up" aria-label="Interactive Quiz App source code">
+        <div class="card-icon-bg ci-2" aria-hidden="true">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">Interactive Quiz App</h3>
+            <span class="card-badge badge-code">{ } Code</span>
+          </div>
+          <p class="card-desc">Fully responsive quiz app with timer, score tracking, and admin panel. Clean, documented source code.</p>
+          <a
+            href="https://wa.me/2348185947780?text=Hi%21%20I%27m%20interested%20in%20the%20Quiz%20App%20source%20code"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-card-wa"
+            aria-label="Request Interactive Quiz App source code via WhatsApp"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Request Source Code
+          </a>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="Code Editor Project source code">
+        <div class="card-icon-bg ci-3" aria-hidden="true">
+          <i class="fas fa-edit"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">Code Editor Project</h3>
+            <span class="card-badge badge-code">{ } Code</span>
+          </div>
+          <p class="card-desc">In-browser code editor with syntax highlighting, live preview, and multi-language support.</p>
+          <a
+            href="https://wa.me/2348185947780?text=Hi%21%20I%27m%20interested%20in%20the%20Code%20Editor%20source%20code"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-card-wa"
+            aria-label="Request Code Editor source code via WhatsApp"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Request Source Code
+          </a>
+        </div>
+      </article>
+
+      <article class="shop-card fade-up" aria-label="Custom Project Source Code">
+        <div class="card-icon-bg ci-1" aria-hidden="true">
+          <i class="fas fa-bolt"></i>
+        </div>
+        <div class="card-body">
+          <div class="card-meta">
+            <h3 class="card-title">Custom Project Source Code</h3>
+            <span class="card-badge badge-code">✦ Custom</span>
+          </div>
+          <p class="card-desc">Any project idea — AI-powered generators, dashboards, landing pages and more. Built and delivered to spec.</p>
+          <a
+            href="https://wa.me/2348185947780?text=Hi%21%20I%20need%20source%20code%20for%20a%20custom%20project"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-card-wa"
+            aria-label="Request custom source code via WhatsApp"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Request Custom Code
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ════════════════════════════════════════════ -->
+  <section id="contact" class="page-section" aria-labelledby="contact-title">
+    <div class="section-head fade-up">
+      <p class="section-eyebrow">Purchase & Support</p>
+      <h2 id="contact-title">Get in <em>Touch</em></h2>
+      <p>Multiple payment options available. Reach out via any channel below.</p>
+    </div>
+
+    <div class="contact-wrap fade-up">
+      <div class="contact-card">
+        <h3>Contact & Payment</h3>
+        <p>Send proof of payment via WhatsApp after purchase to receive your product instantly.</p>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-item-icon ci-wa" aria-hidden="true"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">WhatsApp</span>
+              <a href="https://wa.me/2348185947780?text=Hello%21%20I%27m%20interested%20in%20your%20digital%20products"
+                 target="_blank" rel="noopener noreferrer"
+                 class="contact-item-link"
+                 aria-label="Message us on WhatsApp">
+                +234 818 594 7780
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon ci-phone" aria-hidden="true"><i class="fas fa-phone"></i></div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Phone</span>
+              <a href="tel:+2348185947780" target="_blank" class="contact-item-link" aria-label="Call us">+234 818 594 7780</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon ci-email" aria-hidden="true"><i class="fas fa-envelope"></i></div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Email</span>
+              <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank" class="contact-item-link" aria-label="Email us">
+                codeventdigitalinfo@gmail.com
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon ci-fb" aria-hidden="true"><i class="fab fa-facebook-f"></i></div>
+            <div class="contact-item-text">
+              <span class="contact-item-label">Facebook</span>
+              <a href="https://www.facebook.com/profile.php?id=61575448417610"
+                 target="_blank" rel="noopener noreferrer"
+                 class="contact-item-link"
+                 aria-label="Find us on Facebook">
+                CodeVent Digital
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bank reveal -->
+        <div class="bank-reveal">
+          <button
+            class="btn-reveal"
+            id="revealBankBtn"
+            aria-expanded="false"
+            aria-controls="bankDetails"
+          >
+            <i class="fas fa-lock" aria-hidden="true"></i>
+            <span id="revealBtnText">Reveal Bank Account Details</span>
+          </button>
+
+          <div class="bank-details" id="bankDetails" aria-live="polite">
+            <div class="bank-row">
+              <span>Account Name</span>
+              <strong>Chidera Emmanuel Ezenwa</strong>
+            </div>
+            <div class="bank-row">
+              <span>Account Number</span>
+              <strong>1953129048</strong>
+            </div>
+            <div class="bank-row">
+              <span>Bank</span>
+              <strong>Access Bank</strong>
+            </div>
+            <div class="bank-note">
+              <i class="fas fa-info-circle" aria-hidden="true"></i>
+              <span>After payment, send proof of transfer via WhatsApp to receive your product immediately.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PREVIEW MODAL ══════════════════════════════════════ -->
+  <div
+    class="modal-backdrop"
+    id="previewModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-box" id="modalBox">
+      <div class="modal-head">
+        <h3 id="modalTitle">E-book Preview</h3>
+        <button class="btn-modal-close" id="closeModal" aria-label="Close preview modal">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview" id="modalPreviewText"></div>
+        <div class="modal-lock">
+          <div class="lock-icon" aria-hidden="true"><i class="fas fa-lock"></i></div>
+          <h4>Full Content Locked</h4>
+          <p>Purchase to unlock complete access and instant delivery.</p>
+          <a
+            id="modalPurchaseBtn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-modal-purchase"
+            aria-label="Purchase this e-book"
+          >
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i> Purchase Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ LIGHTBOX ═══════════════════════════════════════════ -->
+  <div
+    class="lightbox"
+    id="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Book cover zoom view"
+    aria-hidden="true"
+  >
+    <div class="lightbox-controls">
+      <button class="lb-btn" id="lbZoomIn"  aria-label="Zoom in">
+        <i class="fas fa-search-plus"  aria-hidden="true"></i>
+      </button>
+      <button class="lb-btn" id="lbZoomOut" aria-label="Zoom out">
+        <i class="fas fa-search-minus" aria-hidden="true"></i>
+      </button>
+      <button class="lb-btn" id="lbReset"   aria-label="Reset zoom">
+        <i class="fas fa-expand"       aria-hidden="true"></i>
+      </button>
+      <button class="lb-btn" id="lbClose"   aria-label="Close lightbox">
+        <i class="fas fa-times"        aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="lightbox-inner" id="lightboxInner">
+      <img src="" alt="" class="lightbox-img" id="lightboxImg" draggable="false" />
+    </div>
+    <div class="lb-zoom-badge" id="lbZoomBadge">100%</div>
+  </div>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-logo" aria-label="CodeVent Digital">
+      <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+      CodeVent <span>Shop</span>
+    </div>
+    <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+    <p style="margin-top:0.4rem;">
+      <a href="index.html" target="_self">← Back to CodeVent Digital Platform</a>
+    </p>
+  </footer>
+
+  <!-- ══ JAVASCRIPT ═════════════════════════════════════════ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ═══════════════════════════════════════
+       1. DATA — E-book catalog (scalable)
+    ═══════════════════════════════════════ */
+    const EBOOKS = {
+      'just-my-smartphone': {
+        title: 'Just My Smartphone',
+        content: `
+          <p><strong>What if the only tool you needed to start building digital income was already in your hand?</strong></p>
+          <p>Just My Smartphone is a strategic playbook for navigating the digital economy using mobile technology alone.</p>
+          <p><strong>Inside you'll discover:</strong></p>
+          <ul>
+            <li>Mobile-optimized skill acquisition paths (no laptop needed)</li>
+            <li>5 proven monetization models for creators, students & freelancers</li>
+            <li>AI-powered workflows using free mobile apps</li>
+            <li>Modern productivity systems that fit in your pocket</li>
+          </ul>
+          <p>This ebook provides clarity, structure, and real use-cases, not just motivation.</p>`,
+        purchaseUrl: 'https://paystack.com/buy/just-my-smartphone-jlxyet'
+      },
+      'ai-hustle': {
+        title: 'AI Powered Side Hustles',
+        content: `
+          <p><strong>Turn AI into your 24/7 income engine with proven models that generate daily, weekly, and monthly revenue.</strong></p>
+          <p>This isn't theory, it's battle-tested strategy.</p>
+          <p><strong>You'll discover:</strong></p>
+          <ul>
+            <li>7 AI side hustle blueprints (with real income examples)</li>
+            <li>How to automate client acquisition using free AI tools</li>
+            <li>Pricing frameworks that command premium rates</li>
+            <li>Scaling strategies to turn ₦100k into ₦500k/month</li>
+          </ul>`,
+        purchaseUrl: 'https://paystack.com/buy/ai-powered-side-hustles-how-to-earn-daily-weekly'
+      },
+      'ai-tools': {
+        title: '100 Free AI Tools for Creators, Students & Freelancers',
+        content: `
+          <p><strong>Your ultimate AI toolkit:</strong> 100+ handpicked, completely free AI tools organized by category, writing, design, coding, video, audio, research, and productivity.</p>
+          <p><strong>Inside you'll find:</strong></p>
+          <ul>
+            <li>Direct links + quick-start guides for each tool</li>
+            <li>Real-world use cases with before/after examples</li>
+            <li>Power combos: how to chain tools for maximum impact</li>
+            <li>Time-saving workflows that save 10+ hours/week</li>
+          </ul>`,
+        purchaseUrl: 'https://paystack.com/buy/100-free-ai-tools-for-creators-students--freelancers'
+      },
+      'ai1': {
+        title: 'THE DIGITAL WORLD — Version 1.0',
+        content: `
+          <p><strong>THE DIGITAL WORLD: Unveiling Opportunities In The Age Of Artificial Intelligence V1.0</strong> is a bold, electrifying guide into the most explosive technological shift in human history.</p>
+          <p>It reveals the hidden opportunities most people cannot see, the strategic advantages they ignore, and the digital pathways creating silent millionaires and future-proof professionals.</p>
+          <p><strong>This is not a textbook. This is not theory. This is a wake-up call, and a roadmap.</strong></p>`,
+        purchaseUrl: 'https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--jtenyv'
+      },
+      'ai2': {
+        title: 'THE DIGITAL WORLD — Version 2.0',
+        content: `
+          <p><strong>Read this carefully, because the world you think you know no longer exists.</strong></p>
+          <p>Artificial Intelligence has quietly rewritten the laws of power, wealth, influence, and survival. We have entered an era where algorithms make decisions and digital intelligence decides who rises, and who becomes irrelevant.</p>
+          <p><strong>Most people have no idea this shift has already happened. But you will.</strong></p>`,
+        purchaseUrl: 'https://paystack.com/buy/the-digital-world-unveiling-opportunities-in-the-age--lpxzfo'
+      }
+    };
+
+    /* ═══════════════════════════════════════
+       2. CACHED DOM REFERENCES
+    ═══════════════════════════════════════ */
+    const dom = {
+      scrollBar:      document.getElementById('scrollProgress'),
+      hamburger:      document.getElementById('hamburger'),
+      navLinks:       document.getElementById('navLinks'),
+      navOverlay:     document.getElementById('navOverlay'),
+      themeToggle:    document.getElementById('themeToggle'),
+      modal:          document.getElementById('previewModal'),
+      modalBox:       document.getElementById('modalBox'),
+      modalTitle:     document.getElementById('modalTitle'),
+      modalPreview:   document.getElementById('modalPreviewText'),
+      modalPurchase:  document.getElementById('modalPurchaseBtn'),
+      closeModal:     document.getElementById('closeModal'),
+      revealBtn:      document.getElementById('revealBankBtn'),
+      revealBtnText:  document.getElementById('revealBtnText'),
+      bankDetails:    document.getElementById('bankDetails'),
+      body:           document.body,
+    };
+
+    /* ═══════════════════════════════════════
+       3. SCROLL PROGRESS BAR
+    ═══════════════════════════════════════ */
+    function updateScrollProgress() {
+      const scrolled = document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      dom.scrollBar.style.width = maxScroll > 0 ? (scrolled / maxScroll * 100) + '%' : '0%';
+    }
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+    /* ═══════════════════════════════════════
+       4. MOBILE NAV
+    ═══════════════════════════════════════ */
+    function openNav() {
+      dom.navLinks.classList.add('active');
+      dom.navOverlay.classList.add('active');
+      dom.hamburger.setAttribute('aria-expanded', 'true');
+      dom.hamburger.setAttribute('aria-label', 'Close navigation menu');
+      dom.hamburger.querySelector('i').className = 'fas fa-times';
+      dom.body.style.overflow = 'hidden';
+    }
+
+    function closeNav() {
+      dom.navLinks.classList.remove('active');
+      dom.navOverlay.classList.remove('active');
+      dom.hamburger.setAttribute('aria-expanded', 'false');
+      dom.hamburger.setAttribute('aria-label', 'Open navigation menu');
+      dom.hamburger.querySelector('i').className = 'fas fa-bars';
+      dom.body.style.overflow = '';
+    }
+
+    dom.hamburger.addEventListener('click', () =>
+      dom.navLinks.classList.contains('active') ? closeNav() : openNav()
+    );
+    dom.navOverlay.addEventListener('click', closeNav);
+
+    // Event delegation: close nav on any link click
+    dom.navLinks.addEventListener('click', e => {
+      if (e.target.classList.contains('nav-link')) closeNav();
+    });
+
+    /* ═══════════════════════════════════════
+       5. THEME TOGGLE — persisted to localStorage
+    ═══════════════════════════════════════ */
+    const THEME_KEY = 'cv_shop_theme';
+    let isLight = localStorage.getItem(THEME_KEY) === 'light';
+
+    function applyTheme(light) {
+      dom.body.classList.toggle('light-mode', light);
+      const icon = dom.themeToggle.querySelector('i');
+      icon.className = light ? 'fas fa-moon' : 'fas fa-sun';
+      dom.themeToggle.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
+    }
+
+    applyTheme(isLight);
+
+    dom.themeToggle.addEventListener('click', () => {
+      isLight = !isLight;
+      localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
+      applyTheme(isLight);
+    });
+
+    /* ═══════════════════════════════════════
+       6. MODAL — open / close / keyboard
+    ═══════════════════════════════════════ */
+    // Measure scrollbar width once to prevent layout shift
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', scrollbarWidth + 'px');
+
+    let lastFocused = null;
+
+    function openModal(bookKey) {
+      const book = EBOOKS[bookKey];
+      if (!book) return;
+
+      lastFocused = document.activeElement;
+
+      dom.modalTitle.textContent     = book.title;
+      dom.modalPreview.innerHTML     = book.content;
+      dom.modalPurchase.href         = book.purchaseUrl;
+      dom.modalPurchase.setAttribute('aria-label', `Purchase ${book.title}`);
+
+      dom.modal.classList.add('active');
+      dom.modal.removeAttribute('aria-hidden');
+      dom.body.classList.add('modal-open');
+
+      // Focus the close button
+      requestAnimationFrame(() => dom.closeModal.focus());
+    }
+
+    function closeModalFn() {
+      dom.modal.classList.remove('active');
+      dom.modal.setAttribute('aria-hidden', 'true');
+      dom.body.classList.remove('modal-open');
+      if (lastFocused) lastFocused.focus();
+    }
+
+    // Event delegation on shop grid — handles all preview buttons
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.open-preview');
+      if (btn) {
+        openModal(btn.dataset.book);
+        return;
+      }
+      // Close if clicking backdrop
+      if (e.target === dom.modal) closeModalFn();
+    });
+
+    dom.closeModal.addEventListener('click', closeModalFn);
+
+    // ESC key closes modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (dom.modal.classList.contains('active')) closeModalFn();
+        if (dom.navLinks.classList.contains('active')) closeNav();
+      }
+    });
+
+    /* ═══════════════════════════════════════
+       7. BANK DETAILS REVEAL
+    ═══════════════════════════════════════ */
+    dom.revealBtn.addEventListener('click', () => {
+      const isExpanded = dom.revealBtn.getAttribute('aria-expanded') === 'true';
+      const next = !isExpanded;
+
+      dom.revealBtn.setAttribute('aria-expanded', String(next));
+      dom.bankDetails.classList.toggle('visible', next);
+
+      const icon = dom.revealBtn.querySelector('i');
+      icon.className = next ? 'fas fa-unlock' : 'fas fa-lock';
+      dom.revealBtnText.textContent = next
+        ? 'Hide Bank Account Details'
+        : 'Reveal Bank Account Details';
+    });
+
+    /* ═══════════════════════════════════════
+       8. SMOOTH SCROLL (internal anchors)
+    ═══════════════════════════════════════ */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    /* ═══════════════════════════════════════
+       9. FADE-UP ON SCROLL (IntersectionObserver)
+    ═══════════════════════════════════════ */
+    const fadeObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+    /* ═══════════════════════════════════════
+       10. LIGHTBOX — click covers to zoom
+    ═══════════════════════════════════════ */
+    (function initLightbox() {
+      const lb        = document.getElementById('lightbox');
+      const lbImg     = document.getElementById('lightboxImg');
+      const lbInner   = document.getElementById('lightboxInner');
+      const lbBadge   = document.getElementById('lbZoomBadge');
+      const btnZoomIn  = document.getElementById('lbZoomIn');
+      const btnZoomOut = document.getElementById('lbZoomOut');
+      const btnReset   = document.getElementById('lbReset');
+      const btnClose   = document.getElementById('lbClose');
+
+      let scale     = 1;
+      let panX      = 0;
+      let panY      = 0;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let lastPanX  = 0;
+      let lastPanY  = 0;
+      let badgeTimer = null;
+
+      const MIN_SCALE = 1;
+      const MAX_SCALE = 5;
+      const ZOOM_STEP = 0.4;
+
+      /* ── helpers ── */
+      function clamp(val, min, max) { return Math.min(Math.max(val, min), max); }
+
+      function applyTransform(animate) {
+        lbImg.classList.toggle('zooming', !animate);
+        lbImg.style.transform = `scale(${scale}) translate(${panX / scale}px, ${panY / scale}px)`;
+      }
+
+      function showBadge() {
+        lbBadge.textContent = Math.round(scale * 100) + '%';
+        lbBadge.classList.add('show');
+        clearTimeout(badgeTimer);
+        badgeTimer = setTimeout(() => lbBadge.classList.remove('show'), 1400);
+      }
+
+      function resetTransform(animate = true) {
+        scale = 1; panX = 0; panY = 0;
+        lbImg.classList.toggle('zooming', !animate);
+        lbImg.style.transform = 'scale(1) translate(0,0)';
+        showBadge();
+      }
+
+      function zoomBy(delta, cx, cy) {
+        const prevScale = scale;
+        scale = clamp(scale + delta, MIN_SCALE, MAX_SCALE);
+        // Adjust pan so zoom centres on cursor/touch point
+        if (cx !== undefined && cy !== undefined) {
+          const rect = lbImg.getBoundingClientRect();
+          const imgCX = (cx - rect.left - rect.width  / 2);
+          const imgCY = (cy - rect.top  - rect.height / 2);
+          panX -= imgCX * (scale / prevScale - 1) * prevScale;
+          panY -= imgCY * (scale / prevScale - 1) * prevScale;
+        }
+        if (scale === MIN_SCALE) { panX = 0; panY = 0; }
+        applyTransform(false);
+        showBadge();
+      }
+
+      /* ── open / close ── */
+      function openLightbox(src, alt) {
+        lbImg.src = src;
+        lbImg.alt = alt || 'Book cover';
+        resetTransform(false);
+        lb.classList.add('active');
+        lb.removeAttribute('aria-hidden');
+        dom.body.classList.add('modal-open');
+
+        // Show hint
+        const existing = lb.querySelector('.lb-hint');
+        if (existing) existing.remove();
+        const hint = document.createElement('p');
+        hint.className = 'lb-hint';
+        hint.textContent = 'Scroll or pinch to zoom · Drag to pan · ESC to close';
+        lb.appendChild(hint);
+        hint.addEventListener('animationend', () => hint.remove());
+
+        btnClose.focus();
+      }
+
+      function closeLightbox() {
+        lb.classList.remove('active');
+        lb.setAttribute('aria-hidden', 'true');
+        dom.body.classList.remove('modal-open');
+        resetTransform(false);
+        // return focus to triggering image wrapper
+        if (dom._lbTrigger) { dom._lbTrigger.focus(); dom._lbTrigger = null; }
+      }
+
+      /* ── click on cover images ── */
+      document.addEventListener('click', e => {
+        const wrap = e.target.closest('.card-img-wrap');
+        if (wrap) {
+          const img = wrap.querySelector('img');
+          if (!img) return;
+          dom._lbTrigger = wrap;
+          openLightbox(img.src, img.alt);
+        }
+      });
+
+      /* ── control buttons ── */
+      btnClose.addEventListener('click',   closeLightbox);
+      btnReset.addEventListener('click',   () => resetTransform(true));
+      btnZoomIn.addEventListener('click',  () => zoomBy(+ZOOM_STEP));
+      btnZoomOut.addEventListener('click', () => zoomBy(-ZOOM_STEP));
+
+      /* Close on backdrop click (not on image) */
+      lb.addEventListener('click', e => {
+        if (e.target === lb || e.target === lbInner) closeLightbox();
+      });
+
+      /* ── keyboard ── */
+      document.addEventListener('keydown', e => {
+        if (!lb.classList.contains('active')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === '+' || e.key === '=') zoomBy(+ZOOM_STEP);
+        if (e.key === '-')          zoomBy(-ZOOM_STEP);
+        if (e.key === '0')          resetTransform(true);
+      });
+
+      /* ── mouse scroll to zoom ── */
+      lbInner.addEventListener('wheel', e => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? +ZOOM_STEP * 0.5 : -ZOOM_STEP * 0.5;
+        zoomBy(delta, e.clientX, e.clientY);
+      }, { passive: false });
+
+      /* ── mouse drag to pan ── */
+      lbImg.addEventListener('mousedown', e => {
+        if (scale <= 1) return;
+        isDragging = true;
+        dragStartX = e.clientX - lastPanX;
+        dragStartY = e.clientY - lastPanY;
+        lbImg.classList.add('dragging');
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        panX = e.clientX - dragStartX;
+        panY = e.clientY - dragStartY;
+        lastPanX = panX; lastPanY = panY;
+        applyTransform(false);
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        lbImg.classList.remove('dragging');
+      });
+
+      /* ── touch: pinch-to-zoom + drag ── */
+      let touches = [];
+      let startDist = 0;
+      let startScale = 1;
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      lbInner.addEventListener('touchstart', e => {
+        touches = Array.from(e.touches);
+        if (touches.length === 2) {
+          startDist = Math.hypot(
+            touches[1].clientX - touches[0].clientX,
+            touches[1].clientY - touches[0].clientY
+          );
+          startScale = scale;
+        } else if (touches.length === 1) {
+          touchStartX = touches[0].clientX - lastPanX;
+          touchStartY = touches[0].clientY - lastPanY;
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      lbInner.addEventListener('touchmove', e => {
+        touches = Array.from(e.touches);
+        if (touches.length === 2) {
+          const dist = Math.hypot(
+            touches[1].clientX - touches[0].clientX,
+            touches[1].clientY - touches[0].clientY
+          );
+          const midX = (touches[0].clientX + touches[1].clientX) / 2;
+          const midY = (touches[0].clientY + touches[1].clientY) / 2;
+          const newScale = clamp(startScale * (dist / startDist), MIN_SCALE, MAX_SCALE);
+          scale = newScale;
+          if (scale === MIN_SCALE) { panX = 0; panY = 0; }
+          applyTransform(false);
+          showBadge();
+        } else if (touches.length === 1 && scale > 1) {
+          panX = touches[0].clientX - touchStartX;
+          panY = touches[0].clientY - touchStartY;
+          lastPanX = panX; lastPanY = panY;
+          applyTransform(false);
+        }
+        e.preventDefault();
+      }, { passive: false });
+
+      lbInner.addEventListener('touchend', e => {
+        if (e.touches.length < 2) {
+          startDist = 0;
+          lastPanX = panX; lastPanY = panY;
+        }
+      });
+
+      /* ── double-tap / double-click to toggle zoom ── */
+      let lastTap = 0;
+      lbImg.addEventListener('dblclick', e => {
+        scale > 1 ? resetTransform(true) : zoomBy(+ZOOM_STEP * 3, e.clientX, e.clientY);
+      });
+      lbInner.addEventListener('touchend', e => {
+        const now = Date.now();
+        if (now - lastTap < 280 && e.changedTouches.length === 1) {
+          const t = e.changedTouches[0];
+          scale > 1 ? resetTransform(true) : zoomBy(+ZOOM_STEP * 3, t.clientX, t.clientY);
+        }
+        lastTap = now;
+      });
+
+    })(); /* end initLightbox */
+
+  })();
+  </script>
+
+</body>
 </html>

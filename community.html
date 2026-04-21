@@ -1,637 +1,1071 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community - CodeVent Digital</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Join the CodeVent Digital community. Choose structured mentorship or our free daily coding tips group — both on WhatsApp." />
+  <title>Community — CodeVent Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #10b981;
-            --dark: #1f2937;
-            --light: #f9fafb;
-            --gray: #6b7280;
-            --light-gray: #e5e7eb;
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+  <style>
+    /* ═══════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════ */
+    :root {
+      --primary:       #5b4cff;
+      --primary-dark:  #3d2ee0;
+      --primary-glow:  rgba(91,76,255,0.22);
+      --accent:        #00e5a0;
+      --accent-dim:    rgba(0,229,160,0.13);
+      --wa-green:      #25d366;
+      --wa-dark:       #1ebe57;
 
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
+      --dark:          #0d0f1a;
+      --dark-2:        #141628;
+      --dark-3:        #1c1f38;
+      --dark-4:        #252845;
 
-        /* Navbar Styles */
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 1rem 2rem;
-        }
+      --text:          #e8e9f3;
+      --text-muted:    #8b8fa8;
+      --border:        rgba(255,255,255,0.07);
+      --border-strong: rgba(255,255,255,0.13);
 
-        .navbar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      --radius:        1rem;
+      --radius-sm:     0.6rem;
+      --transition:    all 0.25s cubic-bezier(0.4,0,0.2,1);
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+      --font-display:  'DM Serif Display', Georgia, serif;
+      --font-body:     'Plus Jakarta Sans', sans-serif;
+      --font-mono:     'DM Mono', monospace;
 
-        .logo i {
-            color: var(--secondary);
-        }
+      --shadow:        0 20px 60px rgba(0,0,0,0.5);
+      --shadow-sm:     0 6px 20px rgba(0,0,0,0.3);
+    }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+    /* ═══════════════════════════════════
+       RESET
+    ═══════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-            position: relative;
-        }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-        .nav-links a:hover {
-            color: var(--primary);
-        }
+    /* grid bg */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font-body); }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+    /* ═══════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
 
-        .hamburger {
-            display: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            z-index: 1001;
-        }
+    /* ═══════════════════════════════════
+       ACCESSIBILITY
+    ═══════════════════════════════════ */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    *:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
-        /* Community Header */
-        .community-header {
-            margin-top: 80px;
-            padding: 4rem 2rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, #f5f7ff 0%, #eef2ff 100%);
-        }
+    /* ═══════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════ */
+    .navbar {
+      background: rgba(13,15,26,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      padding: 0.9rem 2rem;
+    }
 
-        .community-header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
 
-        .community-header h1 span {
-            color: var(--primary);
-        }
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; color: white;
+    }
+    .logo-word { color: var(--accent); }
 
-        .community-header p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.2rem;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.4rem 0.9rem;
+      border-radius: 7px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: white; background: rgba(255,255,255,0.07); }
 
-        /* Community Container */
-        .community-container {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-        }
+    .nav-cta {
+      background: var(--primary) !important;
+      color: white !important;
+      padding: 0.45rem 1.15rem !important;
+      border-radius: 8px !important;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; }
 
-        /* Community Links Section */
-        .community-links-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            box-shadow: var(--card-shadow);
-            margin-top: -3rem;
-        }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.4rem;
+      z-index: 1001;
+    }
 
-        .community-links-section h2 {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      display: none;
+    }
+    .nav-overlay.active { display: block; }
 
-        .community-links-section h2 span {
-            color: var(--primary);
-        }
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
+    .page-hero {
+      position: relative;
+      z-index: 1;
+      padding: 9rem 2rem 5rem;
+      text-align: center;
+      overflow: hidden;
+    }
 
-        .section-description {
-            text-align: center;
-            color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    /* Ambient glows */
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, var(--primary-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      top: 40px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(ellipse, rgba(0,229,160,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-        .community-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.28);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge .pulse {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.15; }
+    }
 
-        .community-link {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 1.5rem;
-            padding: 3rem 2rem;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+    .page-hero h1 em { font-style: italic; color: var(--accent); }
 
-        .community-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+    .page-hero p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.75;
+      position: relative;
+      z-index: 1;
+    }
 
-        .community-link:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        }
+    /* ═══════════════════════════════════
+       MAIN CONTENT
+    ═══════════════════════════════════ */
+    .page-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto 5rem;
+      padding: 0 1.75rem;
+    }
 
-        .community-link:hover::before {
-            opacity: 1;
-        }
+    /* ── Section label ── */
+    .section-eyebrow {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: white;
+      text-align: center;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      max-width: 460px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
 
-        .community-link i {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
+    /* ═══════════════════════════════════
+       COMMUNITY PATH CARDS
+    ═══════════════════════════════════ */
+    .paths-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
 
-        .community-link h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
+    /* ── BASE CARD ── */
+    .path-card {
+      position: relative;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+    .path-card:hover { transform: translateY(-4px); }
 
-        .community-link p {
-            opacity: 0.9;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
+    /* ── PREMIUM CARD (Mentorship) ── */
+    .path-card.premium {
+      background: var(--dark-2);
+      border: 1px solid rgba(91,76,255,0.45);
+      box-shadow: 0 0 0 1px rgba(91,76,255,0.1), var(--shadow);
+    }
+    .path-card.premium:hover {
+      border-color: rgba(91,76,255,0.75);
+      box-shadow: 0 0 40px rgba(91,76,255,0.18), var(--shadow);
+    }
 
-        .whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
-        .telegram { background: linear-gradient(135deg, #0088cc, #005a87); }
+    /* Top accent line */
+    .path-card.premium::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), #a78bfa);
+    }
 
-        /* Benefits Section */
-        .benefits-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 3rem;
-            margin-top: 3rem;
-            box-shadow: var(--card-shadow);
-        }
+    /* ── FREE CARD ── */
+    .path-card.free {
+      background: var(--dark-2);
+      border: 1px solid var(--border-strong);
+    }
+    .path-card.free:hover { border-color: rgba(0,229,160,0.35); }
 
-        .benefits-section h2 {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--dark);
-        }
+    .path-card.free::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--wa-green), var(--accent));
+    }
 
-        .benefits-section h2 span {
-            color: var(--primary);
-        }
+    /* ── CARD INNER ── */
+    .card-inner {
+      padding: 2.25rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
 
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
+    /* Badge */
+    .card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      width: fit-content;
+    }
+    .badge-premium {
+      background: rgba(91,76,255,0.18);
+      border: 1px solid rgba(91,76,255,0.4);
+      color: #a78bfa;
+    }
+    .badge-free {
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      color: var(--accent);
+    }
 
-        .benefit-item {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 1rem;
-            background: rgba(99, 102, 241, 0.05);
-            transition: all 0.3s ease;
-        }
+    /* Icon */
+    .card-icon-wrap {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .icon-premium { background: rgba(91,76,255,0.15); color: #a78bfa; }
+    .icon-free    { background: rgba(37,211,102,0.12); color: var(--wa-green); }
 
-        .benefit-item:hover {
-            background: rgba(99, 102, 241, 0.1);
-            transform: translateY(-5px);
-        }
+    .card-inner h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 0.65rem;
+      line-height: 1.2;
+    }
 
-        .benefit-item i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
+    .card-inner p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
 
-        .benefit-item h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
+    /* Feature list */
+    .card-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 2rem;
+    }
+    .card-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+    .card-features li .feat-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+    .premium .feat-icon { background: rgba(91,76,255,0.2); color: #a78bfa; }
+    .free    .feat-icon { background: rgba(37,211,102,0.15); color: var(--wa-green); }
 
-        .benefit-item p {
-            color: var(--gray);
-            line-height: 1.6;
-        }
+    /* CTA buttons */
+    .btn-join-premium {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.95rem 1.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 20px var(--primary-glow);
+      letter-spacing: 0.01em;
+    }
+    .btn-join-premium:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(91,76,255,0.5);
+    }
 
-        /* Support Section */
-        .support-section {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 1.5rem;
-            padding: 3rem;
-            margin-top: 3rem;
-            text-align: center;
-            color: white;
-        }
+    .btn-join-free {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.95rem 1.5rem;
+      background: var(--wa-green);
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(37,211,102,0.25);
+    }
+    .btn-join-free:hover {
+      background: var(--wa-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+    }
 
-        .support-section h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-        }
+    /* Spotlight glow behind premium card */
+    .premium-spotlight {
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+      pointer-events: none;
+    }
 
-        .support-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
+    /* ═══════════════════════════════════
+       BENEFITS SECTION
+    ═══════════════════════════════════ */
+    .benefits-wrap {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 3rem 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .benefits-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
 
-        .support-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: white;
-            color: var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-        }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
 
-        .support-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
+    .benefit-item {
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      transition: var(--transition);
+    }
+    .benefit-item:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+    }
 
-        /* Footer Styles */
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 4rem 2rem 2rem;
-            margin-top: 4rem;
-        }
+    .benefit-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      margin: 0 auto 1rem;
+    }
+    .bi-1 { background: rgba(91,76,255,0.15);  color: #a78bfa; }
+    .bi-2 { background: rgba(130,170,255,0.12); color: #82aaff; }
+    .bi-3 { background: var(--accent-dim);      color: var(--accent); }
+    .bi-4 { background: rgba(251,191,36,0.12);  color: #fbbf24; }
 
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
+    .benefit-item h3 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.4rem;
+    }
+    .benefit-item p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
 
-        .footer-section h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
+    /* ═══════════════════════════════════
+       DIRECT SUPPORT SECTION
+    ═══════════════════════════════════ */
+    .support-section {
+      background: var(--dark-3);
+      border: 1px dashed rgba(37,211,102,0.25);
+      border-radius: 1.25rem;
+      padding: 2.75rem 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .support-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 200px;
+      background: radial-gradient(circle, rgba(37,211,102,0.06), transparent 70%);
+      pointer-events: none;
+    }
 
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary);
-        }
+    .support-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      color: white;
+      margin-bottom: 0.6rem;
+    }
+    .support-section p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 400px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.7;
+    }
 
-        .footer-links {
-            list-style: none;
-        }
+    .btn-support {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--wa-green);
+      color: white;
+      font-size: 0.92rem;
+      font-weight: 800;
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      box-shadow: 0 4px 16px rgba(37,211,102,0.22);
+    }
+    .btn-support:hover {
+      background: var(--wa-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+    }
 
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
+    /* ═══════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════ */
+    .footer {
+      position: relative;
+      z-index: 1;
+      background: var(--dark-2);
+      border-top: 1px solid var(--border);
+      padding: 4rem 2rem 2rem;
+    }
 
-        .footer-links a {
-            color: var(--light-gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+    .footer-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 3rem;
+    }
 
-        .footer-links a:hover {
-            color: var(--primary);
-        }
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin: 1rem 0 1.5rem;
+      max-width: 280px;
+      line-height: 1.7;
+    }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
+    .social-links {
+      display: flex;
+      gap: 0.65rem;
+    }
+    .social-links a {
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .social-links a:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
 
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
 
-        .social-links a:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-        }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.65rem; }
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+    .footer-links a:hover { color: white; }
+    .footer-links a i,
+    .footer-links li i {
+      font-size: 0.72rem;
+      color: var(--primary);
+      width: 14px;
+    }
+    .footer-links li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
 
-        .copyright {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light-gray);
-            font-size: 0.9rem;
-        }
+    .copyright {
+      max-width: 1100px;
+      margin: 2.5rem auto 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hamburger {
-                display: block;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 80px);
-                background-color: white;
-                flex-direction: column;
-                align-items: center;
-                padding-top: 2rem;
-                transition: left 0.3s ease;
-                gap: 2rem;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .community-header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .community-header p {
-                font-size: 1.1rem;
-            }
-            
-            .community-links-section,
-            .benefits-section,
-            .support-section {
-                padding: 2rem;
-            }
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 900px) {
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-container { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
 
-            .community-links {
-                grid-template-columns: 1fr;
-            }
-        }
+    @media (max-width: 700px) {
+      .paths-grid { grid-template-columns: 1fr; }
 
-        @media (max-width: 480px) {
-            .navbar-container {
-                padding: 1rem;
-            }
-            
-            .community-header {
-                padding: 3rem 1rem 2rem;
-            }
-            
-            .community-header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .community-links-section,
-            .benefits-section,
-            .support-section {
-                padding: 1.5rem;
-            }
-            
-            .community-link {
-                padding: 2rem 1.5rem;
-            }
+      .hamburger { display: block; }
 
-            .community-link i {
-                font-size: 3rem;
-            }
+      .nav-links {
+        position: fixed;
+        top: 0; left: -100%;
+        width: 82%; max-width: 300px;
+        height: 100vh;
+        background: var(--dark-2);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 1.75rem 2rem;
+        border-right: 1px solid var(--border);
+        transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
+        gap: 0.2rem;
+        z-index: 999;
+      }
+      .nav-links.active { left: 0; box-shadow: 8px 0 32px rgba(0,0,0,0.5); }
+      .nav-links a { font-size: 1rem; padding: 0.65rem 0.75rem; width: 100%; }
 
-            .community-link h3 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+      .benefits-wrap { padding: 2rem 1.5rem; }
+      .footer-container { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-brand { grid-column: auto; }
+      .copyright { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .benefits-grid { grid-template-columns: 1fr; }
+      .page-hero { padding: 8rem 1.25rem 4rem; }
+      .card-inner { padding: 1.75rem 1.5rem; }
+    }
+
+    /* ═══════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.55s ease forwards;
+    }
+    .fade-up:nth-child(1) { animation-delay: 0.05s; }
+    .fade-up:nth-child(2) { animation-delay: 0.15s; }
+    .fade-up:nth-child(3) { animation-delay: 0.25s; }
+    .fade-up:nth-child(4) { animation-delay: 0.35s; }
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="index.html" target="_blank" class="logo">
-                <i class="fas fa-code"></i>
-                CodeVent Digital
-            </a>
-            <div class="hamburger" id="hamburger">
-                <i class="fas fa-bars"></i>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" target="_blank">Home</a></li>
-                <li><a href="learning.html" target="_blank">Learning</a></li>
-                <li><a href="community.html" target="_blank" class="active">Community</a></li>
-                <li><a href="testimonial.html" target="_blank">Testimonial</a></li>
-                <li><a href="shop.html" target="_blank">Shop</a></li>
-            </ul>
+
+  <!-- ══ NAVBAR ════════════════════════════════════════ -->
+  <nav class="navbar" aria-label="Main navigation">
+    <div class="navbar-container">
+      <a href="index.html" target="_self" class="logo" aria-label="CodeVent Digital — Home">
+        <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
+        CodeVent <span class="logo-word">Digital</span>
+      </a>
+
+      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false">
+        <i class="fas fa-bars" aria-hidden="true"></i>
+      </button>
+
+      <ul class="nav-links" id="navLinks" role="menubar">
+        <li role="none"><a href="index.html" role="menuitem">Home</a></li>
+        <li role="none"><a href="learning.html" target="_self" role="menuitem">Learning</a></li>
+        <li role="none"><a href="community.html" target="_self" role="menuitem" class="active">Community</a></li>
+        <li role="none"><a href="testimonial.html" target="_self" role="menuitem">Testimonials</a></li>
+        <li role="none"><a href="shop.html" role="menuitem">Shop</a></li>
+        <li role="none">
+          <a href="learning.html" target="_self" class="nav-cta" role="menuitem">
+            Start Free <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <!-- ══ HERO ══════════════════════════════════════════ -->
+  <section class="page-hero" aria-label="Community page hero">
+    <div class="hero-badge" aria-hidden="true">
+      <span class="pulse"></span>
+      WhatsApp Community
+    </div>
+    <h1>Choose Your<br><em>Learning Path</em></h1>
+    <p>Two communities, one mission,  helping you grow from beginner to confident developer. Pick the path that fits where you are right now.</p>
+  </section>
+
+  <!-- ══ MAIN CONTENT ═══════════════════════════════════ -->
+  <div class="page-content">
+
+    <!-- ── Community Paths ── -->
+    <p class="section-eyebrow">Community Paths</p>
+    <h2 class="section-title">Find Your Place to Grow</h2>
+    <p class="section-sub">Both communities are on WhatsApp — active, supportive, and built around real developer growth.</p>
+
+    <div class="paths-grid" role="list">
+
+      <!-- PREMIUM — Mentorship -->
+      <div class="path-card premium fade-up" role="listitem">
+        <div class="premium-spotlight" aria-hidden="true"></div>
+        <div class="card-inner">
+          <span class="card-badge badge-premium">
+            <i class="fas fa-star" aria-hidden="true"></i> Premium Path
+          </span>
+          <div class="card-icon-wrap icon-premium" aria-hidden="true">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Exclusive Mentorship Community</h3>
+          <p>Structured guidance, accountability, and direct mentorship from experienced developers. Designed for learners who want focused, serious growth, not just a chat group.</p>
+          <ul class="card-features" aria-label="Mentorship community features">
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Structured learning roadmap
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Direct mentor access & feedback
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Live code reviews & project help
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Career & freelance guidance
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Accountability check-ins
+            </li>
+          </ul>
+          <a
+            href="https://chat.whatsapp.com/H6pHgjbONEuBItu9uYwzhz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-join-premium"
+            aria-label="Join the CodeVent Mentorship Program on WhatsApp"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            Join Mentorship Program
+          </a>
         </div>
-    </nav>
+      </div>
 
-    <!-- Community Header -->
-    <section class="community-header">
-        <h1>Join Our <span>Community</span></h1>
-        <p>Connect with developers, share knowledge, and grow together in our supportive learning environment.</p>
-    </section>
+      <!-- FREE — Coding Tips -->
+      <div class="path-card free fade-up" role="listitem">
+        <div class="card-inner">
+          <span class="card-badge badge-free">
+            <i class="fas fa-lock-open" aria-hidden="true"></i> Free Access
+          </span>
+          <div class="card-icon-wrap icon-free" aria-hidden="true">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <h3>Free Coding Tips Community</h3>
+          <p>Daily coding tips, beginner support, and a welcoming space to ask questions and share progress. Perfect if you're just starting out and want to stay motivated.</p>
+          <ul class="card-features" aria-label="Free community features">
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Daily HTML, CSS & JS tips
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Beginner-friendly Q&A
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Peer support & motivation
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Resource drops & announcements
+            </li>
+            <li>
+              <span class="feat-icon"><i class="fas fa-check" aria-hidden="true"></i></span>
+              Zero cost — always free
+            </li>
+          </ul>
+          <a
+            href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-join-free"
+            aria-label="Join the free CodeVent Coding Tips community on WhatsApp"
+          >
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            Join Free Coding Community
+          </a>
+        </div>
+      </div>
 
-    <!-- Community Container -->
-    <div class="community-container">
-        <!-- Community Links Section -->
-        <section class="community-links-section">
-            <h2>Choose Your <span>Platform</span></h2>
-            <p class="section-description">Join thousands of developers on your preferred platform and start connecting today</p>
-            <div class="community-links">
-                <a href="https://chat.whatsapp.com/K0HU0bMGPMMCJPhRK0t8It" target="_blank" class="community-link whatsapp" rel="noopener">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>WhatsApp Group</h3>
-                    <p>Real-time discussions, quick help, and instant connections with fellow developers</p>
-                </a>
-                <a href="https://t.me/+2348185947780" target="_blank" class="community-link telegram" rel="noopener">
-                    <i class="fab fa-telegram"></i>
-                    <h3>Telegram Channel</h3>
-                    <p>Daily updates, resource sharing, and announcements for the community</p>
-                </a>
-            </div>
-        </section>
+    </div><!-- /paths-grid -->
 
-        <!-- Benefits Section -->
-        <section class="benefits-section">
-            <h2>Community <span>Benefits</span></h2>
-            <div class="benefits-grid">
-                <div class="benefit-item">
-                    <i class="fas fa-users"></i>
-                    <h3>Peer Support</h3>
-                    <p>Get help from experienced developers and help others grow</p>
-                </div>
-                <div class="benefit-item">
-                    <i class="fas fa-code"></i>
-                    <h3>Code Reviews</h3>
-                    <p>Share your projects and receive constructive feedback</p>
-                </div>
-                <div class="benefit-item">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Learning Resources</h3>
-                    <p>Access exclusive tutorials, guides, and learning materials</p>
-                </div>
-                <div class="benefit-item">
-                    <i class="fas fa-briefcase"></i>
-                    <h3>Opportunities</h3>
-                    <p>Discover job openings, freelance gigs, and collaboration projects</p>
-                </div>
-            </div>
-        </section>
+    <!-- ── Benefits Section ── -->
+    <div class="benefits-wrap" aria-labelledby="benefits-title">
+      <p class="section-eyebrow">Why Join</p>
+      <h2 class="section-title" id="benefits-title">Community Benefits</h2>
+      <p class="section-sub" style="margin-bottom:2rem;">Every member gets access to a thriving ecosystem built around real developer growth.</p>
 
-        <!-- Support Section -->
-        <section class="support-section">
-            <h2>Need Direct Support?</h2>
-            <p>Our team is ready to help you with personalized guidance and mentorship</p>
-            <a href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20joining%20the%20CodeVent%20community" target="_blank" class="support-btn" rel="noopener">
-                <i class="fab fa-whatsapp"></i>
-                Contact Us on WhatsApp
-            </a>
-        </section>
+      <div class="benefits-grid">
+        <div class="benefit-item fade-up">
+          <div class="benefit-icon bi-1" aria-hidden="true"><i class="fas fa-users"></i></div>
+          <h3>Peer Support</h3>
+          <p>Learn alongside others, get unstuck faster, and give back as you grow.</p>
+        </div>
+        <div class="benefit-item fade-up">
+          <div class="benefit-icon bi-2" aria-hidden="true"><i class="fas fa-code"></i></div>
+          <h3>Code Reviews</h3>
+          <p>Share your work and receive constructive, actionable feedback.</p>
+        </div>
+        <div class="benefit-item fade-up">
+          <div class="benefit-icon bi-3" aria-hidden="true"><i class="fas fa-bolt"></i></div>
+          <h3>Exclusive Resources</h3>
+          <p>Access tutorials, templates, and materials shared only in the group.</p>
+        </div>
+        <div class="benefit-item fade-up">
+          <div class="benefit-icon bi-4" aria-hidden="true"><i class="fas fa-briefcase"></i></div>
+          <h3>Opportunities</h3>
+          <p>Discover freelance gigs, job leads, and collab projects from the network.</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>CodeVent Digital</h3>
-                <p>Empowering the next generation of developers through community collaboration.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://github.com/emezch93" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-                    <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20CodeVent" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html" target="_blank">Home</a></li>
-                    <li><a href="learning.html" target="_blank">Learning</a></li>
-                    <li><a href="community.html" target="_blank">Community</a></li>
-                    <li><a href="testimonial.html" target="_blank">Testimonial</a></li>
-                    <li><a href="shop.html" target="_blank">Shop</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> codeventdigitalinfo@gmail.com</li>
-                    <li><i class="fas fa-phone"></i> +2348185947780</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Surulere, Lagos</li>
-                </ul>
-            </div>
+    <!-- ── Direct Support CTA ── -->
+    <div class="support-section" aria-labelledby="support-title">
+      <h2 id="support-title">Need Personalised Guidance?</h2>
+      <p>Reach out directly to the CodeVent team for mentorship enquiries, community questions, or anything else.</p>
+      <a
+        href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20joining%20the%20CodeVent%20community"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-support"
+        aria-label="Contact CodeVent Digital directly on WhatsApp"
+      >
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+        Message Us on WhatsApp
+      </a>
+    </div>
+
+  </div><!-- /page-content -->
+
+  <!-- ══ FOOTER ════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+
+      <div class="footer-brand">
+        <a href="index.html" target="_self" class="logo" style="display:inline-flex;">
+          <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
+          CodeVent <span class="logo-word">Digital</span>
+        </a>
+        <p>Empowering the next generation of developers through structured learning and community collaboration.</p>
+        <div class="social-links" aria-label="Social media links">
+          <a href="https://www.facebook.com/profile.php?id=61575448417610" target="_blank" rel="noopener" aria-label="Facebook">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="https://github.com/emezch93" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fab fa-github" aria-hidden="true"></i>
+          </a>
+          <a href="https://www.instagram.com/chidera_emmanuel93?igsh=MTU0N2VuZ3JmYjNzMg==" target="_blank" rel="noopener" aria-label="Instagram">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="https://wa.me/2348185947780?text=Hello!%20I%27m%20interested%20in%20CodeVent" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          </a>
         </div>
-        <div class="copyright">
-            <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
-        </div>
-    </footer>
+      </div>
 
-    <script>
-        // Mobile Navigation Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul class="footer-links">
+          <li><a href="index.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Home</a></li>
+          <li><a href="learning.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Learning</a></li>
+          <li><a href="community.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Community</a></li>
+          <li><a href="testimonial.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Testimonials</a></li>
+          <li><a href="shop.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Shop</a></li>
+        </ul>
+      </div>
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            const icon = hamburger.querySelector('i');
-            if (navLinks.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li>
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank">codeventdigitalinfo@gmail.com</a>
+          </li>
+          <li>
+            <i class="fas fa-phone" aria-hidden="true"></i>
+            <a href="tel:+2348185947780" target="_blank">+234 818 594 7780</a>
+          </li>
+          <li>
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            <a href="https://wa.me/2348185947780" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          </li>
+          <li>
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            Surulere, Lagos
+          </li>
+        </ul>
+      </div>
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                const icon = hamburger.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
-        });
-    </script>
+    </div>
+
+    <div class="copyright">
+      <span>&copy; 2025 CodeVent Digital. All rights reserved.</span>
+      <span style="color:var(--primary);font-weight:600;font-size:0.75rem;">Building Developers One Step at a Time.</span>
+    </div>
+  </footer>
+
+  <!-- ══ JAVASCRIPT ════════════════════════════════════ -->
+  <script>
+    (function () {
+      'use strict';
+
+      const hamburger  = document.getElementById('hamburger');
+      const navLinks   = document.getElementById('navLinks');
+      const navOverlay = document.getElementById('navOverlay');
+
+      function openNav() {
+        navLinks.classList.add('active');
+        navOverlay.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        hamburger.setAttribute('aria-label', 'Close navigation');
+        hamburger.querySelector('i').className = 'fas fa-times';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeNav() {
+        navLinks.classList.remove('active');
+        navOverlay.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'Open navigation');
+        hamburger.querySelector('i').className = 'fas fa-bars';
+        document.body.style.overflow = '';
+      }
+
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.contains('active') ? closeNav() : openNav();
+      });
+      navOverlay.addEventListener('click', closeNav);
+      navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && navLinks.classList.contains('active')) closeNav();
+      });
+
+    })();
+  </script>
+
 </body>
 </html>

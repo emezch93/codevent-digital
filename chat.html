@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CodeVent Digital AI — Web Dev Mentor</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080a0f;
+    --surface: #0e1117;
+    --surface2: #141820;
+    --border: #1e2433;
+    --green: #00e5a0;
+    --cyan: #00c8ff;
+    --purple: #5b4cff;
+    --text: #e8edf5;
+    --muted: #4a5270;
+    --user-bg: #0d1f3c;
+    --bot-bg: #0a1a12;
+    --radius: 16px;
+  }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Ambient glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(0,229,160,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: relative;
+    z-index: 10;
+    padding: 14px 20px;
+    background: rgba(14,17,23,0.95);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .brand-text { display: flex; flex-direction: column; }
+
+  .brand-name {
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .brand-slogan {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--green);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* NAME CAPTURE */
+  #nameScreen {
+    position: relative;
+    z-index: 5;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .welcome-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 0 40px rgba(91,76,255,0.3);
+  }
+
+  #nameScreen h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  #nameScreen h2 span { color: var(--green); }
+
+  #nameScreen p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
+    max-width: 320px;
+    line-height: 1.6;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .name-input-wrap {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .name-input-wrap input {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+
+  .name-input-wrap input:focus { border-color: var(--green); }
+  .name-input-wrap input::placeholder { color: var(--muted); font-weight: 400; }
+
+  .start-btn {
+    padding: 14px;
+    border-radius: var(--radius);
+    border: none;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+
+  .start-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* CHAT */
+  #chatScreen {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Tip bar */
+  .tip-bar {
+    padding: 8px 16px;
+    background: rgba(0,229,160,0.06);
+    border-bottom: 1px solid rgba(0,229,160,0.1);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    text-align: center;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+
+  /* MESSAGES */
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .msg {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: 88%;
+    animation: slideUp 0.25s ease both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.user { align-self: flex-end; align-items: flex-end; }
+  .msg.bot  { align-self: flex-start; align-items: flex-start; }
+
+  .msg-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    padding: 0 4px;
+  }
+
+  .bubble {
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    line-height: 1.7;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  .msg.user .bubble {
+    background: var(--user-bg);
+    border: 1px solid #1a3060;
+    border-bottom-right-radius: 4px;
+    color: #b8d0ff;
+  }
+
+  .msg.bot .bubble {
+    background: var(--bot-bg);
+    border: 1px solid #0d2e1a;
+    border-bottom-left-radius: 4px;
+    color: #a8f0cc;
+  }
+
+  /* TYPING */
+  .typing-bubble {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 14px 18px;
+  }
+
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.3; }
+    30% { transform: translateY(-7px); opacity: 1; }
+  }
+
+  /* COMMANDS */
+  .cmd-bar {
+    padding: 10px 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+
+  .cmd-bar::-webkit-scrollbar { display: none; }
+
+  .cmd-chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+    flex-shrink: 0;
+  }
+
+  .cmd-chip:hover {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(0,229,160,0.05);
+  }
+
+  /* INPUT */
+  .input-area {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: rgba(14,17,23,0.98);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    flex-shrink: 0;
+    backdrop-filter: blur(12px);
+  }
+
+  #userInput {
+    flex: 1;
+    resize: none;
+    min-height: 44px;
+    max-height: 120px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    padding: 11px 14px;
+    outline: none;
+    line-height: 1.5;
+    transition: border-color 0.2s;
+    overflow-y: auto;
+  }
+
+  #userInput:focus { border-color: var(--green); }
+  #userInput::placeholder { color: var(--muted); }
+
+  .send-btn {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--purple), var(--green));
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(91,76,255,0.3);
+  }
+
+  .send-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .send-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+  .send-btn svg { width: 18px; height: 18px; }
+
+  /* FOOTER */
+  .footer-note {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--muted);
+    padding: 6px;
+    flex-shrink: 0;
+  }
+
+  .footer-note a { color: var(--green); text-decoration: none; }
+
+  @media (max-width: 480px) {
+    .msg { max-width: 94%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">&lt;/&gt;</div>
+    <div class="brand-text">
+      <div class="brand-name">CodeVent Digital AI</div>
+      <div class="brand-slogan">Building Developers One Step at a Time</div>
+    </div>
+  </div>
+  <div class="status">
+    <div class="status-dot"></div>
+    Online
+  </div>
+</header>
+
+<!-- NAME SCREEN -->
+<div id="nameScreen">
+  <div class="welcome-icon">🧠</div>
+  <h2>Your Personal<br><span>Web Dev Mentor</span></h2>
+  <p>Powered by CodeVent Digital. Founded by Ezenwa Chidera Emmanuel.</p>
+  <div class="name-input-wrap">
+    <input type="text" id="nameInput" placeholder="Enter your first name..." maxlength="30" autocomplete="off"/>
+    <button class="start-btn" onclick="startChat()">Start Learning →</button>
+  </div>
+</div>
+
+<!-- CHAT SCREEN -->
+<div id="chatScreen">
+  <div class="tip-bar" id="tipBar"></div>
+  <div id="messages"></div>
+  <div class="cmd-bar">
+    <div class="cmd-chip" onclick="sendCmd('/help')">/help</div>
+    <div class="cmd-chip" onclick="sendCmd('/roadmap')">/roadmap</div>
+    <div class="cmd-chip" onclick="sendCmd('/topic')">/topic</div>
+    <div class="cmd-chip" onclick="sendCmd('/quiz')">/quiz</div>
+    <div class="cmd-chip" onclick="sendCmd('/project')">/project</div>
+    <div class="cmd-chip" onclick="sendCmd('/challenge')">/challenge</div>
+    <div class="cmd-chip" onclick="sendCmd('/resources')">/resources</div>
+    <div class="cmd-chip" onclick="sendCmd('/about')">/about</div>
+    <div class="cmd-chip" onclick="sendCmd('/contact')">/contact</div>
+    <div class="cmd-chip" onclick="sendCmd('/progress')">/progress</div>
+  </div>
+  <div class="input-area">
+    <textarea id="userInput" placeholder="Ask anything about HTML, CSS, JavaScript..." rows="1"
+      onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+  <div class="footer-note">
+    <a href="https://emezch93.github.io/CodeVent-Digital/" target="_blank">CodeVent Digital</a>
+    &nbsp;|&nbsp;
+    <a href="https://emezch93.github.io/Code-Editor-/" target="_blank">Code Editor</a>
+    &nbsp;|&nbsp;
+    <a href="https://t.me/codeventdigital_bot" target="_blank">Telegram Bot</a>
+  </div>
+</div>
+
+<script>
+  const WORKER_URL = "https://late-mouse-9f14.emezch93.workers.dev/";
+
+  const TIPS = [
+    "Your first website does not need to be perfect. It needs to exist.",
+    "HTML is the skeleton. CSS is the skin. JavaScript is the brain.",
+    "Build one small project a week. That is how portfolios grow.",
+    "Every professional developer Googles things. That is not cheating.",
+    "Confusion is part of learning. Push through it.",
+    "CSS makes sense once you stop memorizing and start experimenting.",
+    "The best way to learn HTML is to build something with it today.",
+  ];
+
+  let studentName = "";
+  let history = [];
+
+  // Load saved name
+  window.onload = () => {
+    const saved = localStorage.getItem("cv_name");
+    if (saved) {
+      studentName = saved;
+      launchChat();
+    }
+    document.getElementById("nameInput").addEventListener("keydown", e => {
+      if (e.key === "Enter") startChat();
+    });
+  };
+
+  function startChat() {
+    const val = document.getElementById("nameInput").value.trim();
+    if (!val) {
+      document.getElementById("nameInput").focus();
+      return;
+    }
+    studentName = val.split(" ")[0];
+    studentName = studentName.charAt(0).toUpperCase() + studentName.slice(1).toLowerCase();
+    localStorage.setItem("cv_name", studentName);
+    launchChat();
+  }
+
+  function launchChat() {
+    document.getElementById("nameScreen").style.display = "none";
+    document.getElementById("chatScreen").style.display = "flex";
+    document.getElementById("chatScreen").style.flexDirection = "column";
+
+    // Tip
+    const tip = TIPS[Math.floor(Math.random() * TIPS.length)];
+    document.getElementById("tipBar").textContent = "Tip from Emmanuel: " + tip;
+
+    // Welcome
+    const welcome = history.length === 0;
+    if (welcome) {
+      appendBot(
+        `Good to have you here, ${studentName}.\n\n` +
+        `I am CodeVent Digital AI — the teaching voice of Ezenwa Chidera Emmanuel.\n\n` +
+        `We are going to learn web development the right way: practical, step by step, no fluff.\n\n` +
+        `What do you want to start with? HTML, CSS, or JavaScript?\n` +
+        `Or type /help to see everything I can do.`
+      );
+    }
+
+    document.getElementById("userInput").focus();
+  }
+
+  function appendUser(text) {
+    const container = document.getElementById("messages");
+    const wrap = document.createElement("div");
+    wrap.className = "msg user";
+    wrap.innerHTML = `<div class="msg-label">YOU</div><div class="bubble">${escHtml(text)}</div>`;
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function appendBot(text) {
+    const container = document.getElementById("messages");
+    const wrap = document.createElement("div");
+    wrap.className = "msg bot";
+    wrap.innerHTML = `<div class="msg-label">CODEVENT AI</div><div class="bubble">${escHtml(text)}</div>`;
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function appendTyping() {
+    const container = document.getElementById("messages");
+    const wrap = document.createElement("div");
+    wrap.className = "msg bot";
+    wrap.id = "typing";
+    wrap.innerHTML = `<div class="msg-label">CODEVENT AI</div><div class="bubble"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById("typing");
+    if (el) el.remove();
+  }
+
+  function escHtml(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\n/g, "<br/>");
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById("userInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = "";
+    input.style.height = "auto";
+    document.getElementById("sendBtn").disabled = true;
+
+    appendUser(text);
+    history.push({ role: "user", content: text });
+    appendTyping();
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: `My name is ${studentName}. ${text}`,
+          history: history.slice(-20)
+        })
+      });
+
+      const data = await res.json();
+      const reply = data.reply || "Something went wrong. Please try again.";
+
+      removeTyping();
+      history.push({ role: "assistant", content: reply });
+      appendBot(reply);
+
+      // Keep history at max 20
+      if (history.length > 40) history = history.slice(-40);
+
+    } catch (err) {
+      removeTyping();
+      appendBot("Connection error. Please check your internet and try again.");
+    }
+
+    document.getElementById("sendBtn").disabled = false;
+    document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+  }
+
+  function sendCmd(cmd) {
+    document.getElementById("userInput").value = cmd;
+    sendMessage();
+  }
+
+  function handleKey(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 120) + "px";
+  }
+</script>
+</body>
+</html>

@@ -114,7 +114,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .logo {
@@ -177,7 +177,14 @@
       background: none;
       border: none;
       z-index: 1001;
+      order: 3;
     }
+
+    .nav-auth-controls {
+      order: 2;
+    }
+
+    .logo { order: 1; }
 
     /* ─── HERO ───────────────────────────────────────────── */
     .hero {
@@ -904,21 +911,227 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ═══════════════════════════════════════════════════════
+       AUTH — MODAL, FORMS, NAV CHIP, GATE LOCK
+    ═══════════════════════════════════════════════════════ */
+
+    /* Backdrop */
+    .auth-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.80);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .auth-backdrop.open { opacity: 1; visibility: visible; }
+
+    /* Modal card */
+    .auth-modal {
+      background: var(--dark-2);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      width: 100%; max-width: 420px;
+      position: relative; overflow: hidden;
+      transform: scale(0.95) translateY(10px);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .auth-backdrop.open .auth-modal { transform: scale(1) translateY(0); }
+    .auth-modal::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+    }
+
+    /* Modal header */
+    .auth-modal-head {
+      padding: 1.5rem 1.75rem 0;
+      display: flex; justify-content: space-between; align-items: flex-start;
+    }
+    .auth-modal-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.4rem; color: white; line-height: 1.2;
+    }
+    .auth-modal-head p { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* Close button */
+    .auth-close {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer;
+      transition: var(--transition); flex-shrink: 0; margin-left: 1rem;
+    }
+    .auth-close:hover {
+      background: rgba(248,113,113,0.12);
+      border-color: rgba(248,113,113,0.4); color: #f87171;
+    }
+
+    /* Tab bar */
+    .auth-tabs {
+      display: flex; gap: 0.25rem;
+      padding: 1.25rem 1.75rem 0;
+    }
+    .auth-tab {
+      flex: 1; padding: 0.55rem 0;
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+    }
+    .auth-tab:hover { color: var(--text); }
+    .auth-tab.active {
+      background: var(--primary); border-color: var(--primary);
+      color: white; box-shadow: 0 2px 12px var(--primary-glow);
+    }
+
+    /* Panels */
+    .auth-body { padding: 1.5rem 1.75rem 1.75rem; }
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    /* Form fields */
+    .auth-field { margin-bottom: 1rem; }
+    .auth-field label {
+      display: block; font-size: 0.74rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-muted); margin-bottom: 0.4rem;
+    }
+    .auth-field input {
+      width: 100%; padding: 0.75rem 1rem;
+      background: var(--dark-3);
+      border: 1px solid var(--card-border);
+      border-radius: 0.6rem;
+      color: var(--text); font-family: var(--font-body);
+      font-size: 0.9rem; outline: none;
+      transition: var(--transition);
+    }
+    .auth-field input::placeholder { color: var(--text-muted); }
+    .auth-field input:focus {
+      border-color: var(--primary); background: var(--dark-2);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    /* Submit button */
+    .auth-submit {
+      width: 100%; padding: 0.85rem; margin-top: 1.25rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white; font-family: var(--font-body);
+      font-size: 0.92rem; font-weight: 700;
+      border: none; border-radius: 0.6rem; cursor: pointer;
+      transition: var(--transition);
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+    .auth-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(91,76,255,0.45);
+    }
+    .auth-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Message */
+    .auth-msg {
+      font-size: 0.82rem; font-weight: 600; min-height: 1.1em;
+      margin-top: 0.85rem; text-align: center;
+    }
+    .auth-msg.success { color: var(--accent); }
+    .auth-msg.error   { color: #f87171; }
+
+    /* Switch link */
+    .auth-switch {
+      text-align: center; font-size: 0.8rem;
+      color: var(--text-muted); margin-top: 1rem;
+    }
+    .auth-switch button {
+      background: none; border: none; padding: 0;
+      color: var(--primary); font-weight: 700;
+      font-size: 0.8rem; cursor: pointer; transition: var(--transition);
+    }
+    .auth-switch button:hover { color: var(--accent); }
+
+    /* ── Navbar auth controls — always visible, outside mobile menu ── */
+    .nav-auth-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .nav-auth-btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: transparent;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.84rem; font-weight: 600;
+      padding: 0.4rem 1rem; border-radius: 7px;
+      cursor: pointer; transition: var(--transition);
+      white-space: nowrap;
+    }
+    .nav-auth-btn:hover { color: white; border-color: var(--primary); background: var(--primary-glow); }
+
+    .nav-user-chip {
+      display: none;
+      align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--accent);
+    }
+    .nav-user-chip.show { display: inline-flex; }
+
+    .nav-logout-btn {
+      background: none; border: none; padding: 0;
+      color: var(--text-muted); font-size: 0.75rem;
+      cursor: pointer; transition: var(--transition);
+      font-family: var(--font-body);
+    }
+    .nav-logout-btn:hover { color: #f87171; }
+
+    /* ── Protected content lock ── */
+    .auth-locked {
+      position: relative;
+      filter: blur(6px);
+      pointer-events: none;
+      user-select: none;
+    }
+    .auth-locked::after {
+      content: '🔒 Login to unlock';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(13,15,26,0.6);
+      color: var(--text-muted);
+      font-size: 0.85rem; font-weight: 600;
+      border-radius: inherit;
+      filter: none;
+      pointer-events: all;
+      cursor: pointer;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Password strength indicator */
+    .pw-strength {
+      height: 3px; border-radius: 100px;
+      margin-top: 0.4rem; width: 0%;
+      transition: width 0.3s ease, background 0.3s ease;
+    }
+    .pw-strength.weak   { width: 33%; background: #f87171; }
+    .pw-strength.medium { width: 66%; background: var(--warn, #fbbf24); }
+    .pw-strength.strong { width: 100%; background: var(--accent); }
   </style>
 </head>
 <body>
 
-  <!-- Announcement Bar -->
-  <div class="announce-bar" role="banner">
-    🎉 New cohort launching soon —
-    <a href="https://whatsapp.com/channel/0029Vb7curtKrWQwkVy1ih2s" target="_blank" rel="noopener">Join the WhatsApp Channel</a>
-    to get early access.
-  </div>
-
   <!-- Navbar -->
   <nav class="navbar" aria-label="Main navigation">
     <div class="navbar-container">
-      <a href="index.html" class="logo" aria-label="CodeVent Digital — Home">
+      <a href="index.html" target="_self" class="logo" aria-label="CodeVent Digital — Home">
         <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
         CodeVent <span class="logo-word">Digital</span>
       </a>
@@ -929,16 +1142,28 @@
 
       <ul class="nav-links" id="navLinks" role="menubar">
         <li role="none"><a href="index.html" role="menuitem">Home</a></li>
-        <li role="none"><a href="learning.html" role="menuitem">Learning</a></li>
-        <li role="none"><a href="community.html" role="menuitem">Community</a></li>
-        <li role="none"><a href="testimonial.html" role="menuitem">Testimonials</a></li>
-        <li role="none"><a href="shop.html" role="menuitem">Shop</a></li>
+        <li role="none"><a href="learning.html" target="_self" role="menuitem">Learning</a></li>
+        <li role="none"><a href="community.html" target="_self" role="menuitem">Community</a></li>
+        <li role="none"><a href="testimonial.html" target="_self" role="menuitem">Testimonials</a></li>
+        <li role="none"><a href="shop.html" target="_blank" role="menuitem">Shop</a></li>
         <li role="none">
-          <a href="learning.html" class="nav-cta" role="menuitem">
+          <a href="learning.html" target="_self" class="nav-cta" role="menuitem">
             Start Free <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </a>
         </li>
       </ul>
+
+      <!-- AUTH — always visible, outside the mobile menu -->
+      <div class="nav-auth-controls" id="navAuthControls">
+        <button class="nav-auth-btn" id="navSignInBtn" aria-label="Sign in or create account">
+          <i class="fas fa-user" aria-hidden="true"></i> Sign In
+        </button>
+        <span class="nav-user-chip" id="navUserChip" aria-live="polite">
+          <i class="fas fa-circle-check" aria-hidden="true"></i>
+          <span id="navUserName"></span>
+          <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Log out">Log out</button>
+        </span>
+      </div>
     </div>
   </nav>
   <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
@@ -961,18 +1186,18 @@
 
         <p class="hero-sub">
           Learn to code for free. Follow a structured path. Ship real projects. 
-          Turn your skills into income — all inside one growing community.
+          Turn your skills into income,  all inside one growing community.
         </p>
 
         <div class="hero-cta-group">
           <div class="cta-row">
             <!-- PRIMARY CTA -->
-            <a href="learning.html" class="btn-primary" aria-label="Start learning for free">
+            <a href="learning.html" target="_self" class="btn-primary" aria-label="Start learning for free">
               <i class="fas fa-rocket" aria-hidden="true"></i>
               Start Learning — It's Free
             </a>
             <!-- SECONDARY CTA -->
-            <a href="https://whatsapp.com/channel/0029Vb7curtKrWQwkVy1ih2s" target="_blank" rel="noopener" class="btn-secondary" aria-label="Join our WhatsApp community channel">
+            <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20CodeVent-Digital%20community%20my %20name%20is%20________________%20" target="_blank" r" target="_blank" rel="noopener" class="btn-secondary" aria-label="Join our WhatsApp community channel">
               <i class="fab fa-whatsapp" aria-hidden="true"></i>
               Join Community
             </a>
@@ -981,14 +1206,25 @@
           <!-- Trust line -->
           <div class="trust-line">
             <div class="trust-avatars" aria-hidden="true">
-              <span class="av1">A</span>
-              <span class="av2">K</span>
-              <span class="av3">T</span>
-              <span class="av4">J</span>
+              <span class="av1">C</span>
+              <span class="av2">C</span>
+             
+              <span class="av4">E</span>
             </div>
             <span class="trust-stars" aria-hidden="true">★★★★★</span>
             <span>Trusted by <strong style="color:var(--text)">500+ learners</strong> across Lagos & beyond</span>
           </div>
+          <!-- Auth nudge -->
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.85rem;" data-auth="logged-out">
+            Already have an account?
+            <button id="heroSignInLink" style="background:none;border:none;color:var(--primary);font-weight:700;font-size:0.8rem;cursor:pointer;padding:0;text-decoration:underline;">
+              Sign in here
+            </button>
+          </p>
+          <p style="font-size:0.8rem;color:var(--accent);margin-top:0.85rem;display:none;" data-auth="logged-in">
+            <i class="fas fa-circle-check" aria-hidden="true"></i>
+            You're logged in — full access unlocked.
+          </p>
         </div>
       </div>
 
@@ -1108,7 +1344,7 @@
         <div class="journey-num">01 / ENTRY</div>
         <div class="journey-icon-wrap ji-1"><i class="fas fa-book-open"></i></div>
         <h3>Learn</h3>
-        <p>Access free beginner-friendly courses. HTML, CSS, JavaScript, and beyond — in structured bitesize modules.</p>
+        <p>Access free beginner-friendly courses. HTML, CSS, JavaScript, and beyond, in structured bitesize modules.</p>
         <span class="journey-tag jt-free">Free Access</span>
       </div>
       <div class="journey-card fade-up" style="transition-delay:0.1s">
@@ -1125,7 +1361,7 @@
         <p>Submit projects for community feedback. Get reviewed, iterate, and build a portfolio that proves your skills.</p>
         <span class="journey-tag jt-proj">Projects</span>
       </div>
-      <div class="journey-card fade-up" style="transition-delay:0.3s">
+      <div class="journey-card fade-up" style="transition-delay:0.3s" data-auth="protected">
         <div class="journey-num">04 / INCOME</div>
         <div class="journey-icon-wrap ji-4"><i class="fas fa-coins"></i></div>
         <h3>Monetize</h3>
@@ -1146,9 +1382,9 @@
         <div class="test-stars" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="test-text">"CodeVent turned my confusion into clarity. The structured path meant I always knew what to do next. I shipped my first project in 6 weeks."</p>
         <div class="test-author">
-          <div class="test-avatar" style="background:#5b4cff;color:white">AO</div>
+          <div class="test-avatar" style="background:#5b4cff;color:white">CN</div>
           <div>
-            <div class="test-name">Adaeze O.</div>
+            <div class="test-name">Chisom N.</div>
             <div class="test-role">Frontend Developer</div>
           </div>
         </div>
@@ -1157,9 +1393,9 @@
         <div class="test-stars" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="test-text">"The community alone is worth it. I asked questions at midnight and got answers. The mentorship energy in this group is unmatched."</p>
         <div class="test-author">
-          <div class="test-avatar" style="background:#00e5a0;color:#0d0f1a">KI</div>
+          <div class="test-avatar" style="background:#00e5a0;color:#0d0f1a">CA</div>
           <div>
-            <div class="test-name">Kelechi I.</div>
+            <div class="test-name">Caleb A.</div>
             <div class="test-role">Web Dev Student</div>
           </div>
         </div>
@@ -1168,9 +1404,9 @@
         <div class="test-stars" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="test-text">"Starting for free with zero pressure was the nudge I needed. Three months later, I landed my first freelance client through the network here."</p>
         <div class="test-author">
-          <div class="test-avatar" style="background:#ffa94d;color:white">TN</div>
+          <div class="test-avatar" style="background:#ffa94d;color:white">EO</div>
           <div>
-            <div class="test-name">Tunde N.</div>
+            <div class="test-name">Ego O.</div>
             <div class="test-role">Freelance Developer</div>
           </div>
         </div>
@@ -1182,15 +1418,15 @@
   <section class="cta-section" aria-labelledby="cta-title">
     <div class="cta-box">
       <h2 id="cta-title">The future is yours to build.</h2>
-      <p>Take the leap today. No credit card, no prerequisites — just the drive to grow. Your developer journey starts with one click.</p>
+      <p>Take the leap today. No credit card, no prerequisites, just the drive to grow. Your developer journey starts with one click.</p>
       <div class="cta-btns">
         <!-- PRIMARY -->
-        <a href="learning.html" class="btn-primary" aria-label="Start learning for free now">
+        <a href="learning.html" target="_self" class="btn-primary" aria-label="Start learning for free now">
           <i class="fas fa-rocket" aria-hidden="true"></i>
           Start Learning Now
         </a>
         <!-- TERTIARY — shop -->
-        <a href="shop.html" class="btn-secondary" aria-label="Browse the CodeVent shop">
+        <a href="shop.html" target="_blank" class="btn-secondary" aria-label="Browse the CodeVent shop">
           <i class="fas fa-store" aria-hidden="true"></i>
           Explore Shop
         </a>
@@ -1208,7 +1444,7 @@
         </a>
         <p>Empowering the next generation of developers through structured learning, real projects, and community collaboration.</p>
         <div class="social-links" aria-label="Social media links">
-          <a href="https://www.facebook.com/share/16B1BmjNjp/" target="_blank" rel="noopener" aria-label="Facebook">
+          <a href="https://www.facebook.com/profile.php?id=61575448417610" target="_blank" rel="noopener" aria-label="Facebook">
             <i class="fab fa-facebook-f" aria-hidden="true"></i>
           </a>
           <a href="https://github.com/emezch93" target="_blank" rel="noopener" aria-label="GitHub">
@@ -1226,11 +1462,11 @@
       <div class="footer-col">
         <h4>Navigate</h4>
         <ul class="footer-links">
-          <li><a href="index.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Home</a></li>
-          <li><a href="learning.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Learning</a></li>
-          <li><a href="community.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Community</a></li>
-          <li><a href="testimonial.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Testimonials</a></li>
-          <li><a href="shop.html"><i class="fas fa-chevron-right" aria-hidden="true"></i>Shop</a></li>
+          <li><a href="index.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Home</a></li>
+          <li><a href="learning.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Learning</a></li>
+          <li><a href="community.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Community</a></li>
+          <li><a href="testimonial.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Testimonials</a></li>
+          <li><a href="shop.html" target="_self"><i class="fas fa-chevron-right" aria-hidden="true"></i>Shop</a></li>
         </ul>
       </div>
 
@@ -1238,13 +1474,13 @@
         <h4>Contact</h4>
         <ul class="footer-links">
           <li>
-            <a href="mailto:codeventdigitalinfo@gmail.com">
+            <a href="mailto:codeventdigitalinfo@gmail.com" target="_blank">
               <i class="fas fa-envelope" aria-hidden="true"></i>
               codeventdigitalinfo@gmail.com
             </a>
           </li>
           <li>
-            <a href="tel:+2348185947780">
+            <a href="tel:+2348185947780" target="_blank">
               <i class="fas fa-phone" aria-hidden="true"></i>
               +234 818 594 7780
             </a>
@@ -1269,14 +1505,100 @@
     </div>
   </footer>
 
+  <!-- ══ AUTH MODAL ══════════════════════════════════════════ -->
+  <div
+    class="auth-backdrop"
+    id="authBackdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="authTitle"
+    aria-hidden="true"
+  >
+    <div class="auth-modal" id="authModal">
+
+      <div class="auth-modal-head">
+        <div>
+          <h2 id="authTitle">Welcome Back</h2>
+          <p id="authSubtitle">Sign in to your CodeVent account</p>
+        </div>
+        <button class="auth-close" id="authCloseBtn" aria-label="Close">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="loginTabBtn"  role="tab" aria-selected="true"  aria-controls="loginPanel">Sign In</button>
+        <button class="auth-tab"        id="signupTabBtn" role="tab" aria-selected="false" aria-controls="signupPanel">Create Account</button>
+      </div>
+
+      <div class="auth-body">
+
+        <!-- LOGIN PANEL -->
+        <div class="auth-panel active" id="loginPanel" role="tabpanel">
+          <form id="loginForm" novalidate>
+            <div class="auth-field">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" type="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <div class="auth-field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password" placeholder="Your password" required autocomplete="current-password" />
+            </div>
+            <button type="submit" class="auth-submit" id="loginSubmitBtn">
+              <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> Sign In
+            </button>
+            <p class="auth-msg" id="loginMsg" aria-live="polite"></p>
+          </form>
+          <p class="auth-switch">No account? <button id="switchToSignup">Create one free</button></p>
+        </div>
+
+        <!-- SIGNUP PANEL -->
+        <div class="auth-panel" id="signupPanel" role="tabpanel">
+          <form id="signupForm" novalidate>
+            <div class="auth-field">
+              <label for="signupName">Full Name</label>
+              <input id="signupName" type="text" placeholder="Your full name" required autocomplete="name" />
+            </div>
+            <div class="auth-field">
+              <label for="signupEmail">Email</label>
+              <input id="signupEmail" type="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <div class="auth-field">
+              <label for="signupPassword">Password <span style="font-weight:400;text-transform:none;letter-spacing:0">(min 6 chars)</span></label>
+              <input id="signupPassword" type="password" placeholder="Create a password" required autocomplete="new-password" />
+              <div class="pw-strength" id="pwStrength"></div>
+            </div>
+            <div class="auth-field">
+              <label for="confirmPassword">Confirm Password</label>
+              <input id="confirmPassword" type="password" placeholder="Repeat your password" required autocomplete="new-password" />
+            </div>
+            <button type="submit" class="auth-submit" id="signupSubmitBtn">
+              <i class="fas fa-user-plus" aria-hidden="true"></i> Create Account
+            </button>
+            <p class="auth-msg" id="signupMsg" aria-live="polite"></p>
+          </form>
+          <p class="auth-switch">Have an account? <button id="switchToLogin">Sign in</button></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- ══ JAVASCRIPT ═════════════════════════════════════════ -->
-  <script>
+  <script type="module">
+    // ── Import Firebase auth helpers ────────────────────────
+    import { signUp, logIn, logOut, onAuthChange, applyAuthGate, friendlyError }
+      from "./auth.js";
+
+    // ════════════════════════════════════════════════════════
+    // EXISTING SITE JS (preserved exactly)
+    // ════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', () => {
 
-      // ── Mobile nav ───────────────────────────────────────
-      const hamburger   = document.getElementById('hamburger');
-      const navLinks    = document.getElementById('navLinks');
-      const navOverlay  = document.getElementById('navOverlay');
+      // Mobile nav
+      const hamburger  = document.getElementById('hamburger');
+      const navLinks   = document.getElementById('navLinks');
+      const navOverlay = document.getElementById('navOverlay');
 
       function openNav() {
         navLinks.classList.add('active');
@@ -1286,7 +1608,6 @@
         hamburger.querySelector('i').className = 'fas fa-times';
         document.body.style.overflow = 'hidden';
       }
-
       function closeNav() {
         navLinks.classList.remove('active');
         navOverlay.classList.remove('active');
@@ -1295,21 +1616,19 @@
         hamburger.querySelector('i').className = 'fas fa-bars';
         document.body.style.overflow = '';
       }
-
-      hamburger.addEventListener('click', () => {
-        navLinks.classList.contains('active') ? closeNav() : openNav();
-      });
+      hamburger.addEventListener('click', () => navLinks.classList.contains('active') ? closeNav() : openNav());
       navOverlay.addEventListener('click', closeNav);
       navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-
-      // Close on Esc
       document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) closeNav();
+        if (e.key === 'Escape') {
+          if (navLinks.classList.contains('active')) closeNav();
+          if (backdrop.classList.contains('open'))   closeModal();
+        }
       });
 
-      // ── Scroll fade-up ───────────────────────────────────
-      const fadeEls = document.querySelectorAll('.fade-up');
-      const observer = new IntersectionObserver((entries) => {
+      // Scroll fade-up
+      const fadeEls  = document.querySelectorAll('.fade-up');
+      const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
@@ -1317,20 +1636,75 @@
           }
         });
       }, { threshold: 0.15 });
-
       fadeEls.forEach(el => observer.observe(el));
 
-      // ── Navbar scroll shadow ─────────────────────────────
+      // Navbar scroll shadow
       const navbar = document.querySelector('.navbar');
       window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-          navbar.style.boxShadow = '0 4px 32px rgba(0,0,0,0.4)';
-        } else {
-          navbar.style.boxShadow = 'none';
-        }
+        navbar.style.boxShadow = window.scrollY > 20 ? '0 4px 32px rgba(0,0,0,0.4)' : 'none';
       }, { passive: true });
 
-    });
+
+      // ════════════════════════════════════════════════════
+      // AUTH MODAL
+      // ════════════════════════════════════════════════════
+      const backdrop       = document.getElementById('authBackdrop');
+      const authTitle      = document.getElementById('authTitle');
+      const authSubtitle   = document.getElementById('authSubtitle');
+      const closeBtn       = document.getElementById('authCloseBtn');
+      const loginTabBtn    = document.getElementById('loginTabBtn');
+      const signupTabBtn   = document.getElementById('signupTabBtn');
+      const loginPanel     = document.getElementById('loginPanel');
+      const signupPanel    = document.getElementById('signupPanel');
+
+      function openModal(tab = 'login') {
+        backdrop.classList.add('open');
+        backdrop.removeAttribute('aria-hidden');
+        document.body.style.overflow = 'hidden';
+        switchTab(tab);
+        setTimeout(() => backdrop.querySelector('.auth-panel.active input')?.focus(), 150);
+      }
+
+      function closeModal() {
+        backdrop.classList.remove('open');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        clearMsgs();
+      }
+
+      function switchTab(tab) {
+        const isLogin = tab === 'login';
+        loginTabBtn.classList.toggle('active', isLogin);
+        signupTabBtn.classList.toggle('active', !isLogin);
+        loginTabBtn.setAttribute('aria-selected', String(isLogin));
+        signupTabBtn.setAttribute('aria-selected', String(!isLogin));
+        loginPanel.classList.toggle('active', isLogin);
+        signupPanel.classList.toggle('active', !isLogin);
+        authTitle.textContent    = isLogin ? 'Welcome Back'    : 'Create Account';
+        authSubtitle.textContent = isLogin ? 'Sign in to your CodeVent account' : 'Join CodeVent Digital — free';
+        clearMsgs();
+      }
+
+      function clearMsgs() {
+        ['loginMsg','signupMsg'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.textContent = ''; el.className = 'auth-msg'; }
+        });
+      }
+
+      function showMsg(id, text, type) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.textContent = text;
+        el.className   = `auth-msg ${type}`;
+      }
+
+      function setLoading(btn, loading, original) {
+        btn.disabled   = loading;
+        btn.innerHTML  = loading
+          ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Please wait…'
+          : original;
+      }});
   </script>
 </body>
 </html>

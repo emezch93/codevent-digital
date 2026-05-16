@@ -860,7 +860,7 @@
       .footer-container { grid-template-columns: 1fr; gap: 2rem; }
       .footer-brand { grid-column: auto; }
       .copyright { flex-direction: column; text-align: center; }
-      .hamburger { display: block; }
+      .hamburger { display: none; }
       .nav-links {
         position: fixed;
         top: 0;
@@ -887,6 +887,28 @@
         backdrop-filter: blur(4px);
       }
       .nav-overlay.active { display: block; }
+
+      /* Fix 1 — user chip on mobile: shrink, truncate, never overflow */
+      .nav-auth-controls {
+        max-width: calc(100vw - 200px);
+        overflow: hidden;
+      }
+      .nav-user-chip {
+        max-width: 100%;
+        overflow: hidden;
+      }
+      .nav-user-chip #navUserName {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+      }
+      .nav-auth-btn {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.78rem;
+      }
+      .nav-auth-btn i { display: none; }
     }
 
     @media (max-width: 520px) {
@@ -1124,6 +1146,28 @@
     .pw-strength.weak   { width: 33%; background: #f87171; }
     .pw-strength.medium { width: 66%; background: var(--warn, #fbbf24); }
     .pw-strength.strong { width: 100%; background: var(--accent); }
+    /* Fix 2 — show/hide password toggle */
+    .pw-wrap {
+      position: relative;
+    }
+    .pw-wrap input {
+      padding-right: 2.75rem;
+    }
+    .pw-eye {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+    .pw-eye:hover { color: var(--text); }
   </style>
 </head>
 <body>
@@ -1141,6 +1185,16 @@
       </button>
 
       <ul class="nav-links" id="navLinks" role="menubar">
+        <!-- Mobile auth greeting — shown when logged in -->
+        <li id="mobileUserGreeting" style="display:none; padding: 0 0.75rem 0.75rem; border-bottom: 1px solid var(--border); margin-bottom: 0.5rem;">
+          <span style="font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted);">Logged in as</span>
+          <br/>
+          <span id="mobileUserName" style="font-size:1rem; font-weight:700; color:var(--accent);"></span>
+          <br/>
+          <button id="mobileLogoutBtn" style="margin-top:0.5rem; background:none; border:1px solid rgba(248,113,113,0.4); color:#f87171; font-size:0.8rem; font-weight:600; padding:0.3rem 0.75rem; border-radius:6px; cursor:pointer; font-family:var(--font-body);">
+            Log out
+          </button>
+        </li>
         <li role="none"><a href="index.html" role="menuitem">Home</a></li>
         <li role="none"><a href="learning.html" target="_self" role="menuitem">Learning</a></li>
         <li role="none"><a href="community.html" target="_self" role="menuitem">Community</a></li>
@@ -1160,7 +1214,7 @@
         </button>
         <span class="nav-user-chip" id="navUserChip" aria-live="polite">
           <i class="fas fa-circle-check" aria-hidden="true"></i>
-          <span id="navUserName"></span>
+          <!--span id="navUserName"></span-->
           <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Log out">Log out</button>
         </span>
       </div>
@@ -1456,6 +1510,9 @@
           <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20CodeVent%20and%20would%20love%20to%20know%20more" target="_blank" rel="noopener" aria-label="WhatsApp">
             <i class="fab fa-whatsapp" aria-hidden="true"></i>
           </a>
+          <a href="https://whatsapp.com/channel/0029Vb7curtKrWQwkVy1ih2s" target="_blank" rel="noopener" aria-label="WhatsApp Channel" title="Join our WhatsApp Channel">
+            <i class="fas fa-broadcast-tower" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
 
@@ -1542,7 +1599,12 @@
             </div>
             <div class="auth-field">
               <label for="loginPassword">Password</label>
-              <input id="loginPassword" type="password" placeholder="Your password" required autocomplete="current-password" />
+              <div class="pw-wrap">
+                <input id="loginPassword" type="password" placeholder="Your password" required autocomplete="current-password" />
+                <button type="button" class="pw-eye" data-target="loginPassword" aria-label="Show password">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
             </div>
             <button type="submit" class="auth-submit" id="loginSubmitBtn">
               <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> Sign In
@@ -1565,12 +1627,22 @@
             </div>
             <div class="auth-field">
               <label for="signupPassword">Password <span style="font-weight:400;text-transform:none;letter-spacing:0">(min 6 chars)</span></label>
-              <input id="signupPassword" type="password" placeholder="Create a password" required autocomplete="new-password" />
+              <div class="pw-wrap">
+                <input id="signupPassword" type="password" placeholder="Create a password" required autocomplete="new-password" />
+                <button type="button" class="pw-eye" data-target="signupPassword" aria-label="Show password">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
               <div class="pw-strength" id="pwStrength"></div>
             </div>
             <div class="auth-field">
               <label for="confirmPassword">Confirm Password</label>
-              <input id="confirmPassword" type="password" placeholder="Repeat your password" required autocomplete="new-password" />
+              <div class="pw-wrap">
+                <input id="confirmPassword" type="password" placeholder="Repeat your password" required autocomplete="new-password" />
+                <button type="button" class="pw-eye" data-target="confirmPassword" aria-label="Show password">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
             </div>
             <button type="submit" class="auth-submit" id="signupSubmitBtn">
               <i class="fas fa-user-plus" aria-hidden="true"></i> Create Account
@@ -1704,7 +1776,144 @@
         btn.innerHTML  = loading
           ? '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Please wait…'
           : original;
-      }});
+      }
+
+      // ── Triggers ──
+      document.getElementById('navSignInBtn')  ?.addEventListener('click', () => openModal('login'));
+      document.getElementById('heroSignInLink')?.addEventListener('click', () => openModal('login'));
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+      loginTabBtn.addEventListener('click',  () => switchTab('login'));
+      signupTabBtn.addEventListener('click', () => switchTab('signup'));
+      document.getElementById('switchToSignup')?.addEventListener('click', () => switchTab('signup'));
+      document.getElementById('switchToLogin') ?.addEventListener('click', () => switchTab('login'));
+
+      // Locked content → open modal on click
+      document.addEventListener('click', e => {
+        if (e.target.closest('.auth-locked')) openModal('signup');
+      });
+
+      // ── Password strength ──
+      document.getElementById('signupPassword')?.addEventListener('input', function () {
+        const bar = document.getElementById('pwStrength');
+        if (!bar) return;
+        const v = this.value;
+        if (v.length === 0)      { bar.className = 'pw-strength'; bar.style.width='0'; }
+        else if (v.length < 6)   bar.className = 'pw-strength weak';
+        else if (v.length < 10)  bar.className = 'pw-strength medium';
+        else                     bar.className = 'pw-strength strong';
+      });
+
+      // ── LOGIN FORM ──
+      document.getElementById('loginForm')?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn  = document.getElementById('loginSubmitBtn');
+        const orig = btn.innerHTML;
+        setLoading(btn, true, orig);
+        const email    = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        try {
+          await logIn(email, password);
+          showMsg('loginMsg', 'Signed in successfully ✓', 'success');
+          setTimeout(closeModal, 1000);
+        } catch (err) {
+          showMsg('loginMsg', friendlyError(err.code), 'error');
+        } finally {
+          setLoading(btn, false, orig);
+        }
+      });
+
+      // ── SIGNUP FORM ──
+      document.getElementById('signupForm')?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn  = document.getElementById('signupSubmitBtn');
+        const orig = btn.innerHTML;
+        const name     = document.getElementById('signupName').value.trim();
+        const email    = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const confirm  = document.getElementById('confirmPassword').value;
+
+        if (!name)               return showMsg('signupMsg', 'Please enter your name.', 'error');
+        if (password !== confirm) return showMsg('signupMsg', 'Passwords do not match.', 'error');
+
+        setLoading(btn, true, orig);
+        try {
+          await signUp(name, email, password);
+          showMsg('signupMsg', `Welcome, ${name}! Account created 🎉`, 'success');
+          setTimeout(closeModal, 1400);
+        } catch (err) {
+          showMsg('signupMsg', friendlyError(err.code), 'error');
+        } finally {
+          setLoading(btn, false, orig);
+        }
+      });
+
+      // ── LOGOUT ──
+      document.getElementById('navLogoutBtn')?.addEventListener('click', async () => {
+        await logOut();
+      });
+
+      // Mobile logout button
+      document.getElementById('mobileLogoutBtn')?.addEventListener('click', async () => {
+        const { logOut } = await import('./auth.js');
+        await logOut();
+        closeNav();
+      });
+
+      // Fix 2 — show/hide password toggle
+      document.querySelectorAll('.pw-eye').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = document.getElementById(btn.dataset.target);
+          const icon  = btn.querySelector('i');
+          if (input.type === 'password') {
+            input.type   = 'text';
+            icon.className = 'fas fa-eye-slash';
+            btn.setAttribute('aria-label', 'Hide password');
+          } else {
+            input.type   = 'password';
+            icon.className = 'fas fa-eye';
+            btn.setAttribute('aria-label', 'Show password');
+          }
+        });
+      });
+
+    }); // end DOMContentLoaded
+
+
+    // ════════════════════════════════════════════════════════
+    // AUTH STATE — runs outside DOMContentLoaded so it fires
+    // as early as possible with the persisted session
+    // ════════════════════════════════════════════════════════
+    onAuthChange(user => {
+      applyAuthGate(user);
+
+      const signInBtn      = document.getElementById('navSignInBtn');
+      const userChip       = document.getElementById('navUserChip');
+      const nameEl         = document.getElementById('navUserName');
+      const hamburger      = document.getElementById('hamburger');
+      const mobileGreeting = document.getElementById('mobileUserGreeting');
+      const mobileNameEl   = document.getElementById('mobileUserName');
+
+      if (user) {
+        const firstName = (user.displayName || user.email).split(' ')[0];
+        // Desktop chip
+        if (nameEl)    nameEl.textContent = firstName;
+        if (signInBtn) signInBtn.style.display = 'none';
+        if (userChip)  userChip.classList.add('show');
+        // Mobile: show hamburger, hide Sign In
+        if (hamburger) hamburger.style.display = 'block';
+        // Mobile menu greeting
+        if (mobileNameEl)   mobileNameEl.textContent = user.displayName || user.email;
+        if (mobileGreeting) mobileGreeting.style.display = '';
+      } else {
+        // Logged out
+        if (signInBtn) signInBtn.style.display = '';
+        if (userChip)  userChip.classList.remove('show');
+        // Mobile: hide hamburger, show Sign In button instead
+        if (hamburger) hamburger.style.display = 'none';
+        if (mobileGreeting) mobileGreeting.style.display = 'none';
+      }
+    });
   </script>
 </body>
 </html>

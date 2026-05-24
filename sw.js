@@ -1,4 +1,3 @@
-// sw.js — CodeVent Digital Service Worker
 const CACHE = 'codevent-v1';
 
 const PRECACHE = [
@@ -10,11 +9,11 @@ const PRECACHE = [
   '/codevent-digital/shop.html',
   '/codevent-digital/auth.js',
   '/codevent-digital/firebase-config.js',
+  '/codevent-digital/manifest.json',
   '/codevent-digital/icons/icon-192.png',
   '/codevent-digital/icons/icon-512.png',
 ];
 
-// Install — cache core files
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(cache => cache.addAll(PRECACHE))
@@ -22,7 +21,6 @@ self.addEventListener('install', e => {
   self.skipWaiting();
 });
 
-// Activate — clear old caches
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
@@ -32,11 +30,8 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Fetch — network first, fall back to cache
 self.addEventListener('fetch', e => {
-  // Skip Firebase and external requests
   if (!e.request.url.startsWith(self.location.origin)) return;
-
   e.respondWith(
     fetch(e.request)
       .then(res => {

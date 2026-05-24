@@ -887,6 +887,7 @@
         transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
         gap: 0.25rem;
         z-index: 999;
+        
       }
       .nav-links.active { left: 0; box-shadow: 8px 0 32px rgba(0,0,0,0.5); }
       .nav-links a { font-size: 1rem; padding: 0.65rem 0.75rem; width: 100%; }
@@ -1179,6 +1180,61 @@
       transition: color 0.2s ease;
     }
     .pw-eye:hover { color: var(--text); }
+
+    /* ── Auth loading overlay ── */
+    .auth-loading {
+      position: fixed; inset: 0;
+      background: rgba(13,15,26,0.92);
+      backdrop-filter: blur(10px);
+      z-index: 8999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .auth-loading.show { opacity: 1; visibility: visible; }
+    .auth-loading-spinner {
+      width: 44px; height: 44px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .auth-loading-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* ── Logout toast ── */
+    .logout-toast {
+      position: fixed;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--dark-2);
+      border: 1px solid rgba(0,229,160,0.35);
+      color: var(--accent);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .logout-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -1224,9 +1280,9 @@
           <i class="fas fa-user" aria-hidden="true"></i> Sign In
         </button>
         <span class="nav-user-chip" id="navUserChip" aria-live="polite">
-          <!--i class="fas fa-circle-check" aria-hidden="true"></i-->
-          <!--span id="navUserName"></span-->
-          <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Log out">Log out</button>
+          <!--i class="fas fa-circle-check" aria-hidden="true"></i>
+          <span id="navUserName"></span-->
+          <!--button class="nav-logout-btn" id="navLogoutBtn" aria-label="Log out">Log out</button-->
         </span>
       </div>
     </div>
@@ -1262,7 +1318,7 @@
               Start Learning — It's Free
             </a>
             <!-- SECONDARY CTA -->
-            <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20CodeVent-Digital%20community%20my %20name%20is%20________________%20" target="_blank" r" target="_blank" rel="noopener" class="btn-secondary" aria-label="Join our WhatsApp community channel">
+            <a href="https://wa.me/2348185947780?text=Hello%20!%20I'm%20interested%20in%20codevent-digital%20community%20my%20name%20is%20________________%20" target="_blank" rel="noopener" class="btn-secondary" aria-label="Join our WhatsApp community channel">
               <i class="fab fa-whatsapp" aria-hidden="true"></i>
               Join Community
             </a>
@@ -1573,6 +1629,18 @@
     </div>
   </footer>
 
+  <!-- Auth loading overlay -->
+  <div class="auth-loading" id="authLoading">
+    <div class="auth-loading-spinner"></div>
+    <p class="auth-loading-text">Loading...</p>
+  </div>
+
+  <!-- Logout toast -->
+  <div class="logout-toast" id="logoutToast">
+    <i class="fas fa-circle-check" aria-hidden="true"></i>
+    You have successfully logged out.
+  </div>
+
   <!-- ══ AUTH MODAL ══════════════════════════════════════════ -->
   <div
     class="auth-backdrop"
@@ -1790,8 +1858,30 @@
       }
 
       // ── Triggers ──
-      document.getElementById('navSignInBtn')  ?.addEventListener('click', () => openModal('login'));
-      document.getElementById('heroSignInLink')?.addEventListener('click', () => openModal('login'));
+      const authLoading = document.getElementById('authLoading');
+      const logoutToast = document.getElementById('logoutToast');
+
+      function showLoader(text = 'Loading...') {
+        authLoading.querySelector('.auth-loading-text').textContent = text;
+        authLoading.classList.add('show');
+      }
+      function hideLoader() {
+        authLoading.classList.remove('show');
+      }
+
+      function showLogoutToast() {
+        logoutToast.classList.add('show');
+        setTimeout(() => logoutToast.classList.remove('show'), 2800);
+      }
+
+      document.getElementById('navSignInBtn')?.addEventListener('click', () => {
+        showLoader('Opening Sign In...');
+        setTimeout(() => { hideLoader(); openModal('login'); }, 700);
+      });
+      document.getElementById('heroSignInLink')?.addEventListener('click', () => {
+        showLoader('Opening Sign In...');
+        setTimeout(() => { hideLoader(); openModal('login'); }, 700);
+      });
       closeBtn.addEventListener('click', closeModal);
       backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
       loginTabBtn.addEventListener('click',  () => switchTab('login'));

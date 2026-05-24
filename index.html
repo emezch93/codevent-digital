@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeVent Digital — Building Developers One Step at a Time</title>
   <meta name="description" content="CodeVent Digital — Building Developers One Step at a Time. Learn, Build, Validate, and Monetize your coding skills through structured courses, real projects, and a thriving community." />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#5b4cff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="CodeVent" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="icons/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
@@ -1214,7 +1225,7 @@
         </button>
         <span class="nav-user-chip" id="navUserChip" aria-live="polite">
           <i class="fas fa-circle-check" aria-hidden="true"></i>
-          <!--span id="navUserName"></span-->
+          <span id="navUserName"></span>
           <button class="nav-logout-btn" id="navLogoutBtn" aria-label="Log out">Log out</button>
         </span>
       </div>
@@ -1855,7 +1866,6 @@
 
       // Mobile logout button
       document.getElementById('mobileLogoutBtn')?.addEventListener('click', async () => {
-        const { logOut } = await import('./auth.js');
         await logOut();
         closeNav();
       });
@@ -1914,6 +1924,11 @@
         if (mobileGreeting) mobileGreeting.style.display = 'none';
       }
     });
+
+    // Register Service Worker (PWA)
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/codevent-digital/sw.js');
+    }
   </script>
 </body>
 </html>

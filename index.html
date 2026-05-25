@@ -1876,11 +1876,11 @@
 
       document.getElementById('navSignInBtn')?.addEventListener('click', () => {
         showLoader('Opening Sign In...');
-        setTimeout(() => { hideLoader(); openModal('login'); }, 700);
+        setTimeout(() => { hideLoader(); openModal('login'); }, 2000);
       });
       document.getElementById('heroSignInLink')?.addEventListener('click', () => {
         showLoader('Opening Sign In...');
-        setTimeout(() => { hideLoader(); openModal('login'); }, 700);
+        setTimeout(() => { hideLoader(); openModal('login'); }, 2000);
       });
       closeBtn.addEventListener('click', closeModal);
       backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
@@ -1916,7 +1916,7 @@
         try {
           await logIn(email, password);
           showMsg('loginMsg', 'Signed in successfully ✓', 'success');
-          setTimeout(closeModal, 1000);
+          setTimeout(closeModal, 2000);
         } catch (err) {
           showMsg('loginMsg', friendlyError(err.code), 'error');
         } finally {
@@ -1941,7 +1941,7 @@
         try {
           await signUp(name, email, password);
           showMsg('signupMsg', `Welcome, ${name}! Account created 🎉`, 'success');
-          setTimeout(closeModal, 1400);
+          setTimeout(closeModal, 2000);
         } catch (err) {
           showMsg('signupMsg', friendlyError(err.code), 'error');
         } finally {
@@ -1951,13 +1951,21 @@
 
       // ── LOGOUT ──
       document.getElementById('navLogoutBtn')?.addEventListener('click', async () => {
+        showLoader('Logging out...');
+        await new Promise(r => setTimeout(r, 1200));
         await logOut();
+        hideLoader();
+        showLogoutToast();
       });
 
       // Mobile logout button
       document.getElementById('mobileLogoutBtn')?.addEventListener('click', async () => {
+        showLoader('Logging out...');
+        await new Promise(r => setTimeout(r, 1200));
         await logOut();
+        hideLoader();
         closeNav();
+        showLogoutToast();
       });
 
       // Fix 2 — show/hide password toggle

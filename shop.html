@@ -352,6 +352,19 @@
       gap: 1.5rem;
     }
 
+    /* When the grid has only a few cards (e.g. one course), center them
+       instead of left-aligning via auto-fill stretch */
+    .courses-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .courses-grid .shop-card {
+      width: 100%;
+      max-width: 360px;
+    }
+
     .shop-card {
       background: var(--dark-2);
       border: 1px solid var(--border);
@@ -1119,7 +1132,8 @@
       <p>Learn by building real projects with hands-on video courses delivered via WhatsApp.</p>
     </div>
 
-    <div class="shop-grid">
+    <!-- courses-grid centers cards; when there's only one it won't stretch edge-to-edge -->
+    <div class="shop-grid courses-grid">
 
       <article class="shop-card fade-up" aria-label="HTML CSS JavaScript Mastery course">
         <div class="card-icon-bg ci-1" aria-hidden="true">

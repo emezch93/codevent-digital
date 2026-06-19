@@ -181,7 +181,7 @@
     }
 
     .hamburger {
-      display: none; 
+      display: none;
       cursor: pointer;
       color: var(--text);
       font-size: 1.4rem;
@@ -189,12 +189,16 @@
       border: none;
       z-index: 1001;
       order: 3;
-      margin-left: auto;
-      
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
     }
 
     .nav-auth-controls {
       order: 2;
+      flex-shrink: 0;
     }
 
     .logo { order: 1; }
@@ -873,7 +877,12 @@
       .footer-container { grid-template-columns: 1fr; gap: 2rem; }
       .footer-brand { grid-column: auto; }
       .copyright { flex-direction: column; text-align: center; }
-      .hamburger { display: block; } /* always visible on mobile */
+      .navbar { padding: 0.75rem 1rem; }
+      .navbar-container { gap: 0.5rem; }
+      .hamburger {
+        display: flex;
+        flex-shrink: 0;
+      }
       .nav-links {
         position: fixed;
         top: 0;
@@ -902,11 +911,20 @@
       }
       .nav-overlay.active { display: block; }
 
-      /* Fix 1 — user chip on mobile: shrink, truncate, never overflow */
+      /* Fix 1 — auth controls: constrained so they never push hamburger off screen */
       .nav-auth-controls {
-        max-width: calc(100vw - 200px);
+        max-width: calc(100vw - 160px);
         overflow: hidden;
+        flex-shrink: 1;
+        min-width: 0;
       }
+      .nav-auth-btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+      }
+      .nav-auth-btn i { display: none; }
+      /* Fix 1 — user chip on mobile: shrink, truncate, never overflow */
       .nav-user-chip {
         max-width: 100%;
         overflow: hidden;
@@ -918,11 +936,6 @@
         white-space: nowrap;
         display: inline-block;
       }
-      .nav-auth-btn {
-        padding: 0.35rem 0.65rem;
-        font-size: 0.78rem;
-      }
-      .nav-auth-btn i { display: none; }
     }
 
     @media (max-width: 520px) {
@@ -1213,37 +1226,16 @@
     }
 
     /* ── Google Sign-In button ── */
-    .btn-google {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      padding: 0.78rem 1rem;
-      background: #fff;
-      color: #3c4043;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      font-weight: 700;
-      border: 1px solid #dadce0;
-      border-radius: 0.6rem;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .btn-google:hover { background: #f8f9fa; border-color: #c0c4cb; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
-    .btn-google svg { flex-shrink: 0; }
-
-    /* Divider "or" between Google and email form */
     .auth-divider {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      margin: 1rem 0;
+      margin: 1.1rem 0;
       color: var(--text-muted);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
     }
     .auth-divider::before,
     .auth-divider::after {
@@ -1252,6 +1244,44 @@
       height: 1px;
       background: var(--border);
     }
+    .btn-google {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      background: #fff;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 0.6rem;
+      color: #3c4043;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.25);
+    }
+    .btn-google:hover { background: #f7f8f9; box-shadow: 0 3px 12px rgba(0,0,0,0.3); transform: translateY(-1px); }
+    .btn-google:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-google svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    /* ── Forgot password link ── */
+    .forgot-link {
+      display: block;
+      text-align: right;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: 0.3rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: color 0.2s ease;
+    }
+    .forgot-link:hover { color: var(--primary); }
 
     /* ── Logout toast ── */
     .logout-toast {
@@ -1714,17 +1744,6 @@
 
         <!-- LOGIN PANEL -->
         <div class="auth-panel active" id="loginPanel" role="tabpanel">
-          <!-- Google Sign-In -->
-          <button type="button" class="btn-google" id="googleSignInBtn" aria-label="Sign in with Google">
-            <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-            Continue with Google
-          </button>
-          <div class="auth-divider">or sign in with email</div>
           <form id="loginForm" novalidate>
             <div class="auth-field">
               <label for="loginEmail">Email</label>
@@ -1738,28 +1757,29 @@
                   <i class="fas fa-eye"></i>
                 </button>
               </div>
+              <button type="button" class="forgot-link" id="forgotPasswordBtn">Forgot password?</button>
             </div>
             <button type="submit" class="auth-submit" id="loginSubmitBtn">
               <i class="fas fa-arrow-right-to-bracket" aria-hidden="true"></i> Sign In
             </button>
             <p class="auth-msg" id="loginMsg" aria-live="polite"></p>
           </form>
+          <div class="auth-divider">or</div>
+          <button class="btn-google" id="googleLoginBtn" type="button" aria-label="Sign in with Google">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+            Continue with Google
+          </button>
           <p class="auth-switch">No account? <button id="switchToSignup">Create one free</button></p>
         </div>
 
         <!-- SIGNUP PANEL -->
         <div class="auth-panel" id="signupPanel" role="tabpanel">
-          <!-- Google Sign-Up -->
-          <button type="button" class="btn-google" id="googleSignUpBtn" aria-label="Sign up with Google">
-            <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-            Continue with Google
-          </button>
-          <div class="auth-divider">or create account with email</div>
           <form id="signupForm" novalidate>
             <div class="auth-field">
               <label for="signupName">Full Name</label>
@@ -1793,7 +1813,36 @@
             </button>
             <p class="auth-msg" id="signupMsg" aria-live="polite"></p>
           </form>
+          <div class="auth-divider">or</div>
+          <button class="btn-google" id="googleSignupBtn" type="button" aria-label="Sign up with Google">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+              <path fill="none" d="M0 0h48v48H0z"/>
+            </svg>
+            Sign up with Google
+          </button>
           <p class="auth-switch">Have an account? <button id="switchToLogin">Sign in</button></p>
+        </div>
+
+        <!-- RESET PANEL -->
+        <div class="auth-panel" id="resetPanel" role="tabpanel">
+          <p style="font-size:0.83rem;color:var(--text-muted);margin-bottom:1.25rem;line-height:1.6;">
+            Enter your email and we'll send you a link to reset your password.
+          </p>
+          <form id="resetForm" novalidate>
+            <div class="auth-field">
+              <label for="resetEmail">Email</label>
+              <input id="resetEmail" type="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <button type="submit" class="auth-submit" id="resetSubmitBtn">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Reset Link
+            </button>
+            <p class="auth-msg" id="resetMsg" aria-live="polite"></p>
+          </form>
+          <p class="auth-switch"><button id="backToLogin">← Back to Sign In</button></p>
         </div>
 
       </div>
@@ -1803,7 +1852,7 @@
   <!-- ══ JAVASCRIPT ═════════════════════════════════════════ -->
   <script type="module">
     // ── Import Firebase auth helpers ────────────────────────
-    import { signUp, logIn, logOut, onAuthChange, applyAuthGate, friendlyError, signInWithGoogle }
+    import { signUp, logIn, logOut, onAuthChange, applyAuthGate, friendlyError, resetPassword, signInWithGoogle }
       from "./auth.js";
 
     // ════════════════════════════════════════════════════════
@@ -1872,6 +1921,7 @@
       const signupTabBtn   = document.getElementById('signupTabBtn');
       const loginPanel     = document.getElementById('loginPanel');
       const signupPanel    = document.getElementById('signupPanel');
+      const resetPanel     = document.getElementById('resetPanel');
 
       function openModal(tab = 'login') {
         backdrop.classList.add('open');
@@ -1889,20 +1939,25 @@
       }
 
       function switchTab(tab) {
-        const isLogin = tab === 'login';
+        const isLogin  = tab === 'login';
+        const isSignup = tab === 'signup';
+        const isReset  = tab === 'reset';
         loginTabBtn.classList.toggle('active', isLogin);
-        signupTabBtn.classList.toggle('active', !isLogin);
+        signupTabBtn.classList.toggle('active', isSignup);
         loginTabBtn.setAttribute('aria-selected', String(isLogin));
-        signupTabBtn.setAttribute('aria-selected', String(!isLogin));
-        loginPanel.classList.toggle('active', isLogin);
-        signupPanel.classList.toggle('active', !isLogin);
-        authTitle.textContent    = isLogin ? 'Welcome Back'    : 'Create Account';
-        authSubtitle.textContent = isLogin ? 'Sign in to your CodeVent account' : 'Join CodeVent Digital — free';
+        signupTabBtn.setAttribute('aria-selected', String(isSignup));
+        loginPanel.classList.toggle('active',  isLogin);
+        signupPanel.classList.toggle('active', isSignup);
+        resetPanel.classList.toggle('active',  isReset);
+        // Hide tabs row when on reset screen
+        document.querySelector('.auth-tabs').style.display = isReset ? 'none' : '';
+        authTitle.textContent    = isLogin ? 'Welcome Back'    : isSignup ? 'Create Account' : 'Reset Password';
+        authSubtitle.textContent = isLogin ? 'Sign in to your CodeVent account' : isSignup ? 'Join CodeVent Digital — free' : 'We\'ll email you a reset link';
         clearMsgs();
       }
 
       function clearMsgs() {
-        ['loginMsg','signupMsg'].forEach(id => {
+        ['loginMsg','signupMsg','resetMsg'].forEach(id => {
           const el = document.getElementById(id);
           if (el) { el.textContent = ''; el.className = 'auth-msg'; }
         });
@@ -1953,6 +2008,30 @@
       signupTabBtn.addEventListener('click', () => switchTab('signup'));
       document.getElementById('switchToSignup')?.addEventListener('click', () => switchTab('signup'));
       document.getElementById('switchToLogin') ?.addEventListener('click', () => switchTab('login'));
+      document.getElementById('forgotPasswordBtn')?.addEventListener('click', () => switchTab('reset'));
+      document.getElementById('backToLogin')?.addEventListener('click', () => switchTab('login'));
+
+      // ── GOOGLE AUTH (shared handler for both login + signup buttons) ──
+      async function handleGoogleAuth(msgId) {
+        const btn = document.getElementById(msgId === 'loginMsg' ? 'googleLoginBtn' : 'googleSignupBtn');
+        const origHTML = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Please wait…';
+        try {
+          const user = await signInWithGoogle();
+          showMsg(msgId, `Welcome, ${user.displayName || 'there'}! ✓`, 'success');
+          setTimeout(closeModal, 1500);
+        } catch (err) {
+          if (err.code !== 'auth/popup-closed-by-user') {
+            showMsg(msgId, friendlyError(err.code), 'error');
+          }
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = origHTML;
+        }
+      }
+      document.getElementById('googleLoginBtn') ?.addEventListener('click', () => handleGoogleAuth('loginMsg'));
+      document.getElementById('googleSignupBtn')?.addEventListener('click', () => handleGoogleAuth('signupMsg'));
 
       // Locked content → open modal on click
       document.addEventListener('click', e => {
@@ -2014,6 +2093,25 @@
         }
       });
 
+      // ── RESET PASSWORD FORM ──
+      document.getElementById('resetForm')?.addEventListener('submit', async e => {
+        e.preventDefault();
+        const btn  = document.getElementById('resetSubmitBtn');
+        const orig = btn.innerHTML;
+        const email = document.getElementById('resetEmail').value.trim();
+        if (!email) return showMsg('resetMsg', 'Please enter your email address.', 'error');
+        setLoading(btn, true, orig);
+        try {
+          await resetPassword(email);
+          showMsg('resetMsg', 'Reset link sent! Check your inbox.', 'success');
+          setTimeout(() => switchTab('login'), 3000);
+        } catch (err) {
+          showMsg('resetMsg', friendlyError(err.code), 'error');
+        } finally {
+          setLoading(btn, false, orig);
+        }
+      });
+
       // ── LOGOUT ──
       document.getElementById('navLogoutBtn')?.addEventListener('click', async () => {
         showLoader('Logging out...');
@@ -2032,23 +2130,6 @@
         closeNav();
         showLogoutToast();
       });
-
-      // ── GOOGLE SIGN-IN / SIGN-UP ──
-      async function handleGoogleAuth(msgId) {
-        showLoader('Opening Google Sign-In...');
-        try {
-          await signInWithGoogle();
-          hideLoader();
-          showMsg(msgId, 'Signed in with Google ✓', 'success');
-          setTimeout(closeModal, 1200);
-        } catch (err) {
-          hideLoader();
-          showMsg(msgId, friendlyError(err.code), 'error');
-        }
-      }
-
-      document.getElementById('googleSignInBtn')?.addEventListener('click', () => handleGoogleAuth('loginMsg'));
-      document.getElementById('googleSignUpBtn')?.addEventListener('click', () => handleGoogleAuth('signupMsg'));
 
       // Fix 2 — show/hide password toggle
       document.querySelectorAll('.pw-eye').forEach(btn => {
@@ -2099,7 +2180,6 @@
         if (userChip)  userChip.classList.remove('show');
         if (mobileGreeting) mobileGreeting.style.display = 'none';
       }
-      // Hamburger visibility is handled purely by CSS media query — no JS override needed.
     });
 
     // Register Service Worker (PWA)

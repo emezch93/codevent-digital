@@ -1,102 +1,42 @@
 {
   "name": "CodeVent Digital",
   "short_name": "CodeVent",
-  "description": "Building Developers One Step at a Time — free structured coding courses, projects, and community.",
-  "start_url": "/codevent-digital/index.html?utm_source=pwa",
-  "scope": "/codevent-digital/",
+  "description": "Building Developers One Step at a Time — free structured coding courses, real projects, and community.",
+  "start_url": "index.html?utm_source=pwa",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#0d0f1a",
   "theme_color": "#5b4cff",
   "lang": "en",
-  "dir": "ltr",
   "categories": ["education", "developer tools"],
   "icons": [
-    {
-      "src": "icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icons/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "icons/screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "CodeVent Digital — Home"
-    },
-    {
-      "src": "icons/screenshot-narrow.png",
-      "sizes": "390x844",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "CodeVent Digital — Mobile"
-    }
+    { "src": "icons/icon-72x72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-96x96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-128x128.png","sizes": "128x128", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-144x144.png","sizes": "144x144", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-152x152.png","sizes": "152x152", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192x192.png","sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-384x384.png","sizes": "384x384", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512x512.png","sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ],
   "shortcuts": [
     {
       "name": "Start Learning",
       "short_name": "Learn",
-      "description": "Jump into free coding courses",
-      "url": "/codevent-digital/learning.html?utm_source=pwa_shortcut",
+      "url": "learning.html?utm_source=pwa_shortcut",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "Community",
       "short_name": "Community",
-      "description": "Join the CodeVent builder community",
-      "url": "/codevent-digital/community.html?utm_source=pwa_shortcut",
+      "url": "community.html?utm_source=pwa_shortcut",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "Shop",
       "short_name": "Shop",
-      "description": "Browse digital products & eBooks",
-      "url": "/codevent-digital/shop.html?utm_source=pwa_shortcut",
+      "url": "shop.html?utm_source=pwa_shortcut",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     }
   ],

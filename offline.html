@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#5b4cff" />
+  <title>You're Offline — CodeVent Digital</title>
+  <link rel="icon" href="/codevent-digital/icons/icon-192x192.png" />
+  <style>
+    /* ── CodeVent Design Tokens ── */
+    :root {
+      --bg:      #0d0f1a;
+      --primary: #5b4cff;
+      --accent:  #00e5a0;
+      --text:    #e8e8f0;
+      --muted:   #6b7280;
+      --card:    #13162a;
+      --border:  rgba(91,76,255,.25);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem;
+      text-align: center;
+    }
+
+    /* ── Animated signal icon ── */
+    .signal {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 2rem;
+      position: relative;
+    }
+    .signal svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 12px rgba(91,76,255,.6));
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: .55; transform: scale(.94); }
+    }
+
+    /* ── Brand wordmark ── */
+    .brand {
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.75rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(1.9rem, 5vw, 2.8rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 36ch;
+      margin: 0 auto 2.25rem;
+    }
+
+    /* ── Buttons ── */
+    .actions { display: flex; gap: .85rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .72rem 1.6rem;
+      border-radius: .55rem;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text);
+    }
+
+    /* ── Status pill ── */
+    .status {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      font-size: .78rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: .4rem .9rem;
+      border-radius: 99px;
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--muted);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: .2; }
+    }
+
+    /* ── Cached pages list ── */
+    .cached-pages {
+      margin-top: 2.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: .85rem;
+      padding: 1.25rem 1.5rem;
+      max-width: 380px;
+      width: 100%;
+      text-align: left;
+    }
+    .cached-pages h3 {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--accent);
+      margin-bottom: .9rem;
+    }
+    .cached-pages ul { list-style: none; }
+    .cached-pages li { margin-bottom: .5rem; }
+    .cached-pages a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: .88rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      transition: color .2s;
+    }
+    .cached-pages a:hover { color: var(--accent); }
+    .cached-pages a::before { content: '→'; color: var(--primary); font-weight: 700; }
+  </style>
+  <!-- Preconnect for when connection returns -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+</head>
+<body>
+
+  <!-- Signal icon -->
+  <div class="signal">
+    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" stroke="#5b4cff" stroke-width="1.5" opacity=".25"/>
+      <!-- WiFi arcs -->
+      <path d="M21 44 C26 36 54 36 59 44" stroke="#5b4cff" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+      <path d="M28 37 C32 30 48 30 52 37" stroke="#5b4cff" stroke-width="2.5" stroke-linecap="round" opacity=".65"/>
+      <path d="M34 30 C36.5 25.5 43.5 25.5 46 30" stroke="#5b4cff" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Strike-through -->
+      <line x1="18" y1="18" x2="62" y2="62" stroke="#00e5a0" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+      <circle cx="40" cy="52" r="3.5" fill="#5b4cff"/>
+    </svg>
+  </div>
+
+  <p class="brand">CodeVent Digital</p>
+
+  <h1>You're <em>offline</em><br/>right now</h1>
+
+  <p>No internet connection detected. Check your network and try again — your cached pages are still accessible below.</p>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="window.location.reload()">
+      ↺ &nbsp;Try Again
+    </button>
+    <a href="/codevent-digital/index.html" class="btn btn-outline">
+      ⌂ &nbsp;Home
+    </a>
+  </div>
+
+  <!-- Cached pages the user can still visit -->
+  <div class="cached-pages">
+    <h3>Available offline</h3>
+    <ul>
+      <li><a href="/codevent-digital/index.html">Home</a></li>
+      <li><a href="/codevent-digital/learning.html">Learning</a></li>
+      <li><a href="/codevent-digital/community.html">Community</a></li>
+      <li><a href="/codevent-digital/testimonial.html">Testimonials</a></li>
+      <li><a href="/codevent-digital/shop.html">Shop</a></li>
+      <li><a href="/codevent-digital/contact.html">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Live status indicator -->
+  <div class="status" id="status-pill">
+    <span class="dot"></span>
+    <span id="status-text">Checking connection…</span>
+  </div>
+
+  <script>
+    // Watch for connection restoration and auto-redirect
+    function updateStatus() {
+      const pill = document.getElementById('status-pill');
+      const txt  = document.getElementById('status-text');
+      const dot  = pill.querySelector('.dot');
+
+      if (navigator.onLine) {
+        dot.style.background = '#00e5a0';
+        txt.textContent = 'Connection restored — reloading…';
+        setTimeout(() => window.location.reload(), 1200);
+      } else {
+        dot.style.background = '#6b7280';
+        txt.textContent = 'No connection detected';
+      }
+    }
+
+    window.addEventListener('online',  updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+  </script>
+
+</body>
+</html>

@@ -1362,35 +1362,63 @@ Give me a step-by-step plan starting with the simplest MVP version."</div></div>
   function copyTemplate(id) {
     const el = document.getElementById(id);
     const btn = el.parentElement.querySelector('.copy-btn');
-    const text = el.innerText || el.textContent;
     
-    navigator.clipboard.writeText(text).then(() => {
-      const originalText = btn.innerText;
+    // Get text and clean it (remove extra whitespace/newlines)
+    let text = el.innerText || el.textContent;
+    text = text.trim();
+    
+    const originalText = btn.innerText;
+
+    function showSuccess() {
       btn.innerText = 'Copied!';
+      btn.classList.add('copy-success');
       btn.style.background = 'var(--accent)';
       btn.style.color = 'var(--bg)';
-      
       setTimeout(() => {
         btn.innerText = originalText;
+        btn.classList.remove('copy-success');
         btn.style.background = '';
         btn.style.color = '';
       }, 2000);
-    }).catch(err => {
-      console.error('Failed to copy:', err);
-      // Fallback for older browsers or non-secure contexts
+    }
+
+    // Modern API
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text)
+        .then(showSuccess)
+        .catch(() => fallbackCopy(text, btn));
+    } else {
+      fallbackCopy(text, btn);
+    }
+
+    function fallbackCopy(text, button) {
       const textArea = document.createElement("textarea");
       textArea.value = text;
+      
+      // Ensure it's not visible but still in the DOM
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      textArea.style.top = "0";
       document.body.appendChild(textArea);
+      
+      textArea.focus();
       textArea.select();
+      
       try {
-        document.execCommand('copy');
-        btn.innerText = 'Copied!';
-      } catch (e) {
-        btn.innerText = 'Error';
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showSuccess();
+        } else {
+          button.innerText = 'Error';
+        }
+      } catch (err) {
+        console.error('Fallback copy failed', err);
+        button.innerText = 'Error';
       }
+      
       document.body.removeChild(textArea);
-      setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
-    });
+      setTimeout(() => { button.innerText = originalText; }, 2000);
+    }
   }
 
   document.getElementById('main').addEventListener('scroll', e => {

@@ -1359,6 +1359,40 @@ Give me a step-by-step plan starting with the simplest MVP version."</div></div>
     document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function copyTemplate(id) {
+    const el = document.getElementById(id);
+    const btn = el.parentElement.querySelector('.copy-btn');
+    const text = el.innerText || el.textContent;
+    
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = btn.innerText;
+      btn.innerText = 'Copied!';
+      btn.style.background = 'var(--accent)';
+      btn.style.color = 'var(--bg)';
+      
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      // Fallback for older browsers or non-secure contexts
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        btn.innerText = 'Copied!';
+      } catch (e) {
+        btn.innerText = 'Error';
+      }
+      document.body.removeChild(textArea);
+      setTimeout(() => { btn.innerText = 'Copy'; }, 2000);
+    });
+  }
+
   document.getElementById('main').addEventListener('scroll', e => {
     const btn = document.getElementById('scroll-top');
     btn.classList.toggle('visible', e.target.scrollTop > 300);

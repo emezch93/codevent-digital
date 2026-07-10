@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.emezch93.codeventdigital",
+        "sha256_cert_fingerprints": ["66:2E:2A:5A:C4:E8:01:99:80:9F:C6:86:C9:36:C0:D7:E3:09:ED:7F:7C:ED:D3:F1:C1:BE:09:22:AB:B4:23:9F"]
+      }
+    }]

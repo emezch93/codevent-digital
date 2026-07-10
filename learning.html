@@ -940,6 +940,9 @@
     footer .footer-logo span { color: var(--accent); }
     footer p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; }
     footer .footer-tagline { margin-top: 0.2rem; color: var(--primary); font-weight: 600; font-size: 0.78rem; }
+    footer .footer-links { margin-top: 0.9rem; display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; }
+    footer .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; font-weight: 600; }
+    footer .footer-links a:hover { color: var(--accent); }
 
     /* ═══════════════════════════════════════
        RESPONSIVE
@@ -985,7 +988,7 @@
   <!-- ══ HEADER ════════════════════════════════════════════ -->
   <header class="site-header">
     <div class="header-inner">
-      <a href="index.html" class="logo-link" aria-label="CodeVent Digital — Home">
+      <a href="index.html" target="_self" class="logo-link" aria-label="CodeVent Digital — Home">
         <span class="logo-icon" aria-hidden="true"><i class="fas fa-code"></i></span>
         CodeVent <span class="logo-accent">Digital</span>
       </a>
@@ -1009,7 +1012,7 @@
         </button>
       </nav>
 
-      <a href="index.html" class="header-back" aria-label="Back to homepage">
+      <a href="index.html" target="_self" class="header-back" aria-label="Back to homepage">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
         <span>Home</span>
       </a>
@@ -1436,7 +1439,7 @@
         <h3>Turn Your Skills Into Income</h3>
         <p>You're learning the fundamentals. The next step is building real projects, getting them validated by the community, and discovering how to earn from your skills through the CodeVent Shop and mentorship network.</p>
         <div class="next-step-btns">
-          <a href="shop.html" class="btn-primary" aria-label="Visit CodeVent Digital shop">
+          <a href="shop.html" target="_self" class="btn-primary" aria-label="Visit CodeVent Digital shop">
             <i class="fas fa-store" aria-hidden="true"></i> Explore Shop
           </a>
           <a href="https://chat.whatsapp.com/ECGzdZA28hd7Y6hNomo3I4" target="_blank" rel="noopener" class="btn-whatsapp" aria-label="Join the community">
@@ -1452,7 +1455,13 @@
   <!-- ══ FOOTER ════════════════════════════════════════════ -->
   <footer role="contentinfo">
     <div class="footer-logo">CodeVent <span>Digital</span></div>
-    <p>&copy; 2025 CodeVent Digital. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html" target="_self">Home</a>
+      <a href="toolkit.html" target="_self">Toolkit</a>
+      <a href="chat.html" target="_self">AI Chat</a>
+      <a href="shop.html" target="_self">Shop</a>
+    </div>
+    <p>&copy; 2026 CodeVent Digital. All rights reserved.</p>
     <p class="footer-tagline">Building Developers One Step at a Time.</p>
   </footer>
 

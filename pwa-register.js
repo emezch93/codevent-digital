@@ -75,14 +75,25 @@
 
   /* ── Install Badge ── */
   let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
-    showInstallBadge();
-  });
+
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true; // iOS Safari fallback
+  }
+
+  // If already running as an installed app, never show the badge —
+  // and don't bother listening for beforeinstallprompt at all.
+  if (!isStandalone()) {
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      showInstallBadge();
+    });
+  }
 
   function showInstallBadge() {
     if (document.getElementById('cv-install-badge')) return;
+    if (isStandalone()) return; // defensive: never show once installed
     const badge = document.createElement('button');
     badge.id = 'cv-install-badge';
     badge.textContent = '⬇ Install App';
@@ -110,6 +121,16 @@
     const b = document.getElementById('cv-install-badge');
     if (b) b.remove();
     deferredPrompt = null;
+  });
+
+  /* Re-check on visibility change too — covers the case where a user
+     installs the app in another tab/window, or launches the installed
+     app while this tab is still open in the browser. */
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && isStandalone()) {
+      const b = document.getElementById('cv-install-badge');
+      if (b) b.remove();
+    }
   });
 
 })();

@@ -9,24 +9,24 @@
  * Auto-update: skipWaiting + clientsClaim ensures new SW activates immediately.
  */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const SHELL_CACHE   = `codevent-shell-${CACHE_VERSION}`;
 const PAGES_CACHE   = `codevent-pages-${CACHE_VERSION}`;
 const ALL_CACHES    = [SHELL_CACHE, PAGES_CACHE];
 
 /* ── Assets to pre-cache on install ─────────────────────────────────────── */
 const SHELL_ASSETS = [
-  '/codevent-digital/',
-  '/codevent-digital/index.html',
-  '/codevent-digital/learning.html',
-  '/codevent-digital/community.html',
-  '/codevent-digital/testimonial.html',
-  '/codevent-digital/shop.html',
-  '/codevent-digital/contact.html',
-  '/codevent-digital/offline.html',
-  '/codevent-digital/manifest.json',
-  '/codevent-digital/icons/icon-192x192.png',
-  '/codevent-digital/icons/icon-512x512.png',
+  './',
+  'index.html',
+  'learning.html',
+  'community.html',
+  'testimonial.html',
+  'shop.html',
+  'contact.html',
+  'offline.html',
+  'manifest.json',
+  'icons/icon-192x192.png',
+  'icons/icon-512x512.png',
 ];
 
 /* ── Install: pre-cache shell ────────────────────────────────────────────── */
@@ -93,7 +93,7 @@ async function networkFirst(request) {
     if (cached) return cached;
     // Final fallback: offline page
     const shellCache = await caches.open(SHELL_CACHE);
-    return shellCache.match('/codevent-digital/offline.html');
+    return shellCache.match('offline.html');
   }
 }
 
@@ -134,16 +134,16 @@ self.addEventListener('push', event => {
   event.waitUntil(
     self.registration.showNotification(data.title || 'CodeVent Digital', {
       body: data.body || 'New update from CodeVent!',
-      icon: '/codevent-digital/icons/icon-192x192.png',
-      badge: '/codevent-digital/icons/icon-96x96.png',
-      data: { url: data.url || '/codevent-digital/' }
+      icon: 'icons/icon-192x192.png',
+      badge: 'icons/icon-96x96.png',
+      data: { url: data.url || './' }
     })
   );
 });
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-  const target = event.notification.data?.url || '/codevent-digital/';
+  const target = event.notification.data?.url || './';
   event.waitUntil(clients.openWindow(target));
 });
 

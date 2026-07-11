@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://emezch93.github.io/codevent-digital/sitemap.xml
+Sitemap: https://codeventdigital.site/sitemap.xml

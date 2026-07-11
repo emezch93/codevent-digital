@@ -1,10 +1,9 @@
 /**
  * CodeVent Digital — pwa-register.js
- * Add before </body> on every page EXCEPT index.html
- * (index.html already registers the SW in its own script block)
+ * Add before </body> on every page, including index.html.
  *
  * This file handles:
- *  - SW registration (for non-index pages only — it checks first)
+ *  - SW registration (checks for an existing registration first)
  *  - Update banner
  *  - Install badge (Add to Home Screen)
  */

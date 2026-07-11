@@ -2190,10 +2190,7 @@
       }
     });
 
-    // Register Service Worker (PWA)
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/codevent-digital/sw.js');
-    }
+    // Service Worker registration is handled by pwa-register.js below
   </script>
   <script src="pwa-register.js"></script>
 </body>

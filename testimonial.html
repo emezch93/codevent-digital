@@ -960,7 +960,7 @@
   <nav class="navbar" aria-label="Main navigation">
     <div class="navbar-container">
       <a href="index.html" target="_self" class="logo" aria-label="CodeVent Digital — Home">
-        <img src="/icons/icon-192x192.png" alt="" class="logo-icon" aria-hidden="true">
+        <img src="icons/icon-192x192.png" alt="" class="logo-icon" aria-hidden="true">
         CodeVent <span class="logo-word">Digital</span>
       </a>
 
@@ -977,7 +977,7 @@
         <li role="none"><a href="toolkit.html" target="_self" role="menuitem">Toolkit</a></li>
         <li role="none"><a href="chat.html" target="_self" role="menuitem">AI Chat</a></li>
         <li role="none">
-          <a href="learning.html" target="_self" class="nav-cta" role="menuitem">
+          <a href="#" data-enroll-link class="nav-cta" role="menuitem">
             Start Free <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </a>
         </li>
@@ -1001,22 +1001,22 @@
     <!-- ── Stats ── -->
     <div class="stats-strip fade-up" aria-label="Platform statistics">
       <div class="stat-item">
-        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-num" data-count-to="500" data-suffix="+">0<span>+</span></div>
         <div class="stat-lbl">Active Learners</div>
       </div>
       <div class="stat-divider" aria-hidden="true"></div>
       <div class="stat-item">
-        <div class="stat-num">150<span>+</span></div>
+        <div class="stat-num" data-count-to="150" data-suffix="+">0<span>+</span></div>
         <div class="stat-lbl">Projects Built</div>
       </div>
       <div class="stat-divider" aria-hidden="true"></div>
       <div class="stat-item">
-        <div class="stat-num">50<span>+</span></div>
+        <div class="stat-num" data-count-to="50" data-suffix="+">0<span>+</span></div>
         <div class="stat-lbl">Career Changes</div>
       </div>
       <div class="stat-divider" aria-hidden="true"></div>
       <div class="stat-item">
-        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-num" data-count-to="98" data-suffix="%">0<span>%</span></div>
         <div class="stat-lbl">Satisfaction Rate</div>
       </div>
     </div>
@@ -1362,7 +1362,7 @@
     <div class="footer-container">
       <div class="footer-brand">
         <a href="index.html" target="_self" class="logo" style="display:inline-flex;">
-          <img src="/icons/icon-192x192.png" alt="" class="logo-icon" aria-hidden="true">
+          <img src="icons/icon-192x192.png" alt="" class="logo-icon" aria-hidden="true">
           CodeVent <span class="logo-word">Digital</span>
         </a>
         <p>Empowering the next generation of developers through learning, community, and real-world skills.</p>
@@ -1468,5 +1468,7 @@
     })();
   </script>
 <script src="pwa-register.js"></script>
+<script src="enroll-config.js"></script>
+<script src="counter.js"></script>
 </body>
 </html>

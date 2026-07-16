@@ -12,7 +12,8 @@
       if (!start) start = ts;
       var progress = Math.min((ts - start) / duration, 1);
       var eased = 1 - Math.pow(1 - progress, 3);
-      var value = Math.round(target * eased);
+      var floor = 0.6; // never animate from zero, always start at 60% of target
+      var value = Math.round(target * (floor + (1 - floor) * eased));
       el.textContent = value + suffix;
       if (progress < 1) requestAnimationFrame(step);
     }

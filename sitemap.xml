@@ -16,6 +16,36 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://codeventdigital.site/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://codeventdigital.site/blog/html-for-beginners-complete-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codeventdigital.site/blog/css-flexbox-tutorial.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codeventdigital.site/blog/css-grid-layout-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codeventdigital.site/blog/javascript-dom-manipulation-guide.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://codeventdigital.site/blog/javascript-fetch-api-tutorial.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://codeventdigital.site/community.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

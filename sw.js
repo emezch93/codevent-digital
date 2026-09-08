@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'cv-v5';
+const CACHE_VERSION = 'cv-v6';
 const SHELL_CACHE   = `codevent-shell-${CACHE_VERSION}`;
 const PAGES_CACHE   = `codevent-pages-${CACHE_VERSION}`;
 const ALL_CACHES    = [SHELL_CACHE, PAGES_CACHE];

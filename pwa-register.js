@@ -1,14 +1,3 @@
-/**
- * CodeVent Digital — pwa-register.js
- * Add before </body> on every page, including index.html.
- *
- * This file handles:
- *  - SW registration (checks for an existing registration first)
- *  - Update banner
- *  - Manual install trigger (Add to Home Screen) — NO auto popup.
- *    Wire any element with id="cv-install-btn" (e.g. in your sidebar)
- *    to trigger the native install prompt on click.
- */
 const host = location.hostname;
 if (host === 'emezch93.github.io' || host === 'codevent-digital.emezch93.workers.dev') {
   const newPath = location.pathname.replace('/codevent-digital', '') || '/';
